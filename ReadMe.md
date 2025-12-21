@@ -95,13 +95,13 @@ The platform allows:
 ---
 
 ## 🏗 Project Structure (Monorepo)
-
+```
 sasyamarg/
 ├─ backend/ # Node.js + Express + MongoDB
 ├─ frontend/ # React (Vite)
 ├─ .gitignore
 └─ README.md
-
+```
 
 ---
 

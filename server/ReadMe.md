@@ -3,8 +3,6 @@
 
 # 📘 `backend/README.md`
 
-```md
-# 🖥 SasyaMarg Backend
 
 This is the **backend service** for **SasyaMarg**, built using **Node.js, Express, and MongoDB**.
 
@@ -30,7 +28,7 @@ The backend provides:
 
 ## 📁 Folder Structure
 
-src/
+```src/
 ├─ app.js # Express app configuration
 ├─ server.js # Server entry point
 ├─ config/ # DB & environment config
@@ -41,5 +39,5 @@ src/
 ├─ middlewares/ # Auth, role, error handlers
 ├─ utils/ # ApiError, ApiResponse, asyncHandler
 └─ validators/ # Input validation
-
+```
 ---

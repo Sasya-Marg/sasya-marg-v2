@@ -21,7 +21,7 @@ The frontend handles:
 ---
 
 ## 📁 Folder Structure
-
+```
 ├─ routes/ # App & role-based routes
 ├─ pages/ # Screens (Farmer / Buyer / Admin)
 ├─ components/ # Reusable UI components
@@ -32,4 +32,4 @@ The frontend handles:
 ├─ utils/ # Helper functions
 ├─ assets/ # Images & icons
 └─ styles/ # Global styles
-
+```
