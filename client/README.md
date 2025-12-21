@@ -1,16 +1,35 @@
-# React + Vite
+# 🌐 SasyaMarg Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **frontend application** for **SasyaMarg**, built using **React (Vite)**.
 
-Currently, two official plugins are available:
+The frontend handles:
+- User interfaces for Farmer, Buyer, and Admin
+- Role-based navigation
+- API integration with the backend
+- Wishlist and discovery flows
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React (Vite)
+- JavaScript
+- React Router
+- Axios
+- Tailwind CSS / CSS (optional)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Folder Structure
+
+├─ routes/ # App & role-based routes
+├─ pages/ # Screens (Farmer / Buyer / Admin)
+├─ components/ # Reusable UI components
+├─ layouts/ # Role-based layouts
+├─ services/ # API service layer
+├─ context/ # Global state (auth, user)
+├─ hooks/ # Custom React hooks
+├─ utils/ # Helper functions
+├─ assets/ # Images & icons
+└─ styles/ # Global styles
+
