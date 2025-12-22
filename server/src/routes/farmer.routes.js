@@ -3,23 +3,24 @@ import { validate } from '../middleware/validate.middleware.js'
 import { authLayer } from '../middleware/auth.middleware.js'
 import { registerFarmerSchema, loginFarmerUsingOtpSchema, loginFarmerWithPasswordSchema, forgotPasswordSchema, changePasswordSchema, changeFarmerDataSchema } from '../validator/farmer.validator.js'
 import { register, loginFarmerUsingOtp, loginFarmerUsingPassword, forgotPassword, logoutFarmer, currentUser, changePassword, toggleIsContactVisible, changeFarmerData } from '../controllers/farmer.controller.js'
+import { loginFarmerLimiter, changePasswordLimiter } from '../middleware/rate limiter/authRateLimiter.middleware.js'
 
 export const farmerRoutes = Router()
 
 farmerRoutes.post("/register", validate(registerFarmerSchema), register)
 
-farmerRoutes.post("/login/otp", validate(loginFarmerUsingOtpSchema), loginFarmerUsingOtp)
+farmerRoutes.post("/login/otp", loginFarmerLimiter, validate(loginFarmerUsingOtpSchema), loginFarmerUsingOtp)
 
-farmerRoutes.post("/login/password", validate(loginFarmerWithPasswordSchema), loginFarmerUsingPassword)
+farmerRoutes.post("/login/password", loginFarmerLimiter, validate(loginFarmerWithPasswordSchema), loginFarmerUsingPassword)
 
-farmerRoutes.put("/forgot-password", authLayer, validate(forgotPasswordSchema), forgotPassword)
+farmerRoutes.put("/forgot-password", loginFarmerLimiter, authLayer, validate(forgotPasswordSchema), forgotPassword)
 
 farmerRoutes.post("/logout", authLayer, logoutFarmer)
 
 farmerRoutes.post("/me", authLayer, currentUser)
 
-farmerRoutes.put("/change/password", authLayer, validate(changePasswordSchema), changePassword)
+farmerRoutes.put("/change/password", changePasswordLimiter, authLayer, validate(changePasswordSchema), changePassword)
 
-farmerRoutes.put("/change/contact-visibility", authLayer, toggleIsContactVisible)
+farmerRoutes.put("/change/contact-visibility", changePasswordLimiter, authLayer, toggleIsContactVisible)
 
 farmerRoutes.put("/change/farmer-data", authLayer, validate(changeFarmerDataSchema), authLayer, changeFarmerData)
