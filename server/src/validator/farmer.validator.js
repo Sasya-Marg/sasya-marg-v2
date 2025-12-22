@@ -35,9 +35,24 @@ export const loginFarmerWithPasswordSchema = z.object({
 })
 
 export const forgotPasswordSchema = z.object({
-    body : z.object({
-        phone : z.coerce.string().regex(/^[6-9]\d{9}$/, "Invalid phone number"),
-        newPassword : z.string().min(8, "Password must contain at least 8 character"),
+    body: z.object({
+        phone: z.coerce.string().regex(/^[6-9]\d{9}$/, "Invalid phone number"),
+        newPassword: z.string().min(8, "Password must contain at least 8 character"),
         otp: z.string().length(6, "Otp must be of 6 digits")
+    })
+})
+
+
+export const changePasswordSchema = z.object({
+    body: z.object({
+        oldPassword: z.string().min(8, "Password must contain at least 8 character"),
+        newPassword: z.string().min(8, "Password must contain at least 8 character"),
+    })
+})
+
+export const changeFarmerDataSchema = z.object({
+    body: z.object({
+        email : z.string().email("Invalid email").transform((email)=>email.toLowerCase()),
+        fullname: z.string().min(2, "Name too sort"),
     })
 })

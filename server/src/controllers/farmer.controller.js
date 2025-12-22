@@ -1,6 +1,6 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
-import { currentUserService, forgotPasswordService, loginFarmerUsingOtpService, loginFarmerUsingPasswordService, registerFarmerService } from '../services/farmer.service.js'
+import { changeFarmerDataService, changePasswordService, currentUserService, forgotPasswordService, loginFarmerUsingOtpService, loginFarmerUsingPasswordService, registerFarmerService, toggleContactInfoService } from '../services/farmer.service.js'
 
 
 
@@ -61,6 +61,29 @@ export const logoutFarmer = asyncHandler(async (req, res) => {
         )
         .status(200)
         .json(new ApiResponse(200, null, "Logout Successfull"))
+})
+
+export const changePassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body
+    const userId = req.user._id
+
+    await changePasswordService({ oldPassword, newPassword, _id: userId })
+
+    return res.status(200).json(new ApiResponse(200, null, "Password changes successfully"))
+})
+
+export const toggleIsContactVisible = asyncHandler(async (req, res) => {
+    const userId = req.user._id
+    const visibility = await toggleContactInfoService({ _id: userId })
+    return res.status(200).json(new ApiResponse(200, { contactVisibility: visibility }, "contact visibility changed successfully"))
+})
+
+export const changeFarmerData = asyncHandler(async (req, res) => {
+    const _id = req.user._id
+    const { fullname, email } = req.body
+    const farmer = await changeFarmerDataService({ _id, fullname, email })
+
+    return res.status(200).json(new ApiResponse(200, farmer, "Data changed successfully"))
 })
 
 export const currentUser = asyncHandler(async (req, res) => {

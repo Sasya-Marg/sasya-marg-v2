@@ -23,7 +23,6 @@ export const registerFarmerService = async ({ fullname, phone, otp, password }) 
     return { farmer, token }
 }
 
-
 export const loginFarmerUsingOtpService = async ({ phone, otp }) => {
     const farmer = await Farmer.findOne({ phone })
 
@@ -37,7 +36,6 @@ export const loginFarmerUsingOtpService = async ({ phone, otp }) => {
 
 
 }
-
 
 export const loginFarmerUsingPasswordService = async ({ phone, password }) => {
     const farmer = await Farmer.findOne({ phone }).select("+password")
@@ -55,7 +53,6 @@ export const loginFarmerUsingPasswordService = async ({ phone, password }) => {
     return { farmer, token }
 }
 
-
 export const forgotPasswordService = async ({ phone, otp, newPassword }) => {
     const farmer = await Farmer.findOne({ phone }).select("+password")
 
@@ -67,8 +64,66 @@ export const forgotPasswordService = async ({ phone, otp, newPassword }) => {
     return { farmer }
 }
 
+export const changePasswordService = async ({ oldPassword, newPassword, _id }) => {
+    const farmer = await Farmer.findById(_id).select("+password")
+
+    if (!farmer) {
+        throw new ApiError(404, "Farmer not found")
+    }
+
+    if (farmer.isActive === false) {
+        throw new ApiError(403, "Account is deactivated")
+    }
+
+    const validOldPassword = await verifyPassword(oldPassword, farmer.password)
+
+    if (!validOldPassword) throw new ApiError(401, "Old password is Incorrect")
+
+    const isNewPasswordIsSame = await verifyPassword(newPassword, farmer.password)
+    if (isNewPasswordIsSame) {
+        throw new ApiError(
+            400,
+            "New password must be different from old password"
+        )
+    }
+
+    farmer.password = newPassword
+    await farmer.save()
+
+    return true
+
+}
 
 export const currentUserService = async ({ req }) => {
     const farmer = await Farmer.findOne({ _id: req.user._id })
     return { farmer }
+}
+
+export const toggleContactInfoService = async ({ _id }) => {
+    const farmer = await Farmer.findById(_id)
+
+    if (!farmer) {
+        throw new ApiError(404, "Farmer not found")
+    }
+
+    if (farmer.isActive === false) {
+        throw new ApiError(403, "Account is deactivated")
+    }
+
+    farmer.isContactVisible = !farmer.isContactVisible
+    await farmer.save()
+
+    return farmer.isContactVisible
+
+}
+
+
+export const changeFarmerDataService = async({fullname, email, _id})=>{
+    const farmer = await Farmer.findByIdAndUpdate(
+        _id,
+        {fullname , email},
+        {new: true}
+    )
+    return farmer
+
 }

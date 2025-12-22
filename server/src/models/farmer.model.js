@@ -31,6 +31,10 @@ const farmerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isActive: {   //check user block status
+        type: Boolean,
+        default: true
+    }
 
 }, { timestamps: true })
 
