@@ -1,0 +1,13 @@
+import { asyncHandler } from '../utils/asyncHandler.js'
+import { ApiResponse } from '../utils/apiResponse.js'
+import { ApiError } from "../utils/apiError.js"
+import { sendOtpService } from '../services/otp.service.js'
+
+export const sendOtp = asyncHandler(async (req, res) => {
+    const { phone, purpose } = req.body
+
+    await sendOtpService({ phone, purpose })
+
+    return res.status(200).json(new ApiResponse(200, null, "Otp sent successfully"))
+
+})

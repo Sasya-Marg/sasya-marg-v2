@@ -15,29 +15,32 @@ const farmerSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select : false
+        select: false
     },
-    email : {
-        type : String,
-        trim : true,
-        unique : true,
-        lowercase : true 
+    email: {
+        type: String,
+        trim: true,
+        unique: true,
+        lowercase: true
     },
-    isContactVisible : {
-        type : Boolean,
-        default : true
+    isContactVisible: {
+        type: Boolean,
+        default: true
+    },
+    isVarified: {
+        type: Boolean,
+        default: false
     },
 
 }, { timestamps: true })
 
 
-farmerSchema.pre('save' , async function (next){
-    if(!this.isModified("password")){
-        return next()
+farmerSchema.pre('save', async function (next) {
+    if (!this.isModified("password")) {
+        return next
     }
 
     this.password = await bcrypt.hash(this.password, 10)
-    return next()
 })
 
-export const Farmer = mongoose.model("Farmer" , farmerSchema)
+export const Farmer = mongoose.model("Farmer", farmerSchema)

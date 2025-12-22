@@ -3,11 +3,12 @@ import jwt from 'jsonwebtoken'
 
 
 export const authLayer = (req , res, next) =>{
+    console.log("Request in auth Middleware")
     try {
         let token;
     
         if(req.cookies?.token){
-            token = cookies.token
+            token = req.cookies.token
         }else if(req.headers.authorization && req.headers.authorization.startsWith("Bearer ")){
             token = req.headers.authorization.split(" ")[1];
         }
@@ -25,6 +26,6 @@ export const authLayer = (req , res, next) =>{
     
         next()
     } catch (error) {
-        throw new ApiError(401 , "Invalid or expired T=token")
+        throw new ApiError(401 , "Invalid or expired token")
     }
 }

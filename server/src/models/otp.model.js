@@ -21,17 +21,26 @@ const otpSchema = new mongoose.Schema({
         required: true,
         index: { expires: 0 }
     },
-    isUsed : {
-        type : Boolean,
-        default : false
+    isUsed: {
+        type: Boolean,
+        default: false
+    },
+    attempts: {
+        type: Number,
+        default: 0,
+
+    },
+    maxAttempts: {
+        type: Number,
+        default: 5,
+
     }
 }, { timestamps: true })
 
 otpSchema.pre('save', async function (next) {
-    if (!this.isModified("otp")) return next();
+    if (!this.isModified("otp")) return next;
 
     this.otp = await bcrypt.hash(this.otp, 10)
-    return next()
 })
 
 export const Otp = mongoose.model("Otp", otpSchema)

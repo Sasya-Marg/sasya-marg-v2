@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import { ApiError } from './utils/apiError.js';
 import { ApiResponse } from './utils/apiResponse.js';
 import { errorHandler } from './middleware/error.middleware.js';
+import { farmerRoutes } from './routes/farmer.routes.js';
+import { otpRoutes } from './routes/otp.routes.js';
 
 
 
@@ -24,9 +26,13 @@ app.get("/error-test", async (req, res) => {
     throw new ApiError(404, "New error");
 });
 
-app.get("/response-test", async (req, res) => {
+app.post("/response-test", async (req, res) => {
     res.status(200).json(new ApiResponse(200, null));
 });
+
+
+app.use('/api/v2/farmer', farmerRoutes)
+app.use('/api/v2/otp', otpRoutes)
 
 
 

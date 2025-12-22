@@ -1,7 +1,18 @@
 import { ApiError } from "../utils/apiError.js";
+import { ZodError } from "zod"
 
 export const errorHandler = (err, req, res, next) => {
   let error = err;
+
+  console.log("Request in error middleware")
+  if (error instanceof ZodError) {
+    const formattedErrors = error.errors.map((e) => ({
+      path: e.path.join("."),
+      message: e.message,
+    }));
+
+    error = new ApiError(400, "Validation error", formattedErrors);
+  }
 
   if (!(error instanceof ApiError)) {
     let statusCode = error.statusCode || 500;
@@ -30,11 +41,12 @@ export const errorHandler = (err, req, res, next) => {
     }
   }
 
+
   const finalStatusCode = Number.isInteger(error.statusCode)
     ? error.statusCode
     : 500;
 
-  res.status(finalStatusCode).json({
+  return res.status(finalStatusCode).json({
     success: error.success ?? false,
     message: error.message || "Something went wrong",
     errors: error.errors || [],
