@@ -7,6 +7,7 @@ import { errorHandler } from './middleware/error.middleware.js';
 import { farmerRoutes } from './routes/farmer.routes.js';
 import { otpRoutes } from './routes/otp.routes.js';
 import { farmLandRoutes } from './routes/farmLand.routes.js';
+import { weatherRoutes } from './routes/weather.routes.js';
 
 
 
@@ -35,6 +36,7 @@ app.post("/response-test", async (req, res) => {
 app.use('/api/v2/auth/farmer', farmerRoutes)
 app.use('/api/v2/otp', otpRoutes)
 app.use('/api/v2/farmland', farmLandRoutes)
+app.use('/api/v2/weather', weatherRoutes)
 
 
 
