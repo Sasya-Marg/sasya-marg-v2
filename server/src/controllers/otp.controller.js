@@ -4,7 +4,8 @@ import { ApiError } from "../utils/apiError.js"
 import { sendOtpService } from '../services/otp.service.js'
 
 export const sendOtp = asyncHandler(async (req, res) => {
-    const { phone, purpose } = req.body
+    const { purpose } = req.query
+    const { phone } = req.body
 
     await sendOtpService({ phone, purpose })
 

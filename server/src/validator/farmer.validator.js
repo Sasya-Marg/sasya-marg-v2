@@ -2,11 +2,15 @@ import { z } from 'zod'
 
 
 export const sendOtpSchema = z.object({
+    query: z.object({
+        purpose: z.enum(["login", "register", "forgot_password"]),
+    }),
+
     body: z.object({
         phone: z
             .string()
             .regex(/^[6-9]\d{9}$/, "Invalid phone number"),
-        purpose: z.enum(["login", "register", "forgot_password"]),
+
     }),
 });
 
@@ -52,7 +56,7 @@ export const changePasswordSchema = z.object({
 
 export const changeFarmerDataSchema = z.object({
     body: z.object({
-        email : z.string().email("Invalid email").transform((email)=>email.toLowerCase()),
+        email: z.string().email("Invalid email").transform((email) => email.toLowerCase()),
         fullname: z.string().min(2, "Name too sort"),
     })
 })
