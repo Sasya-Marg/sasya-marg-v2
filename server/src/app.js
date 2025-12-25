@@ -9,6 +9,7 @@ import { otpRoutes } from './routes/otp.routes.js';
 import { farmLandRoutes } from './routes/farmLand.routes.js';
 import { weatherRoutes } from './routes/weather.routes.js';
 import { previousCropRoutes } from './routes/previousCrop.routes.js';
+import { suggestionRoutes } from './routes/cropSuggestion.routes.js';
 
 
 
@@ -38,6 +39,7 @@ app.use('/api/v2/otp', otpRoutes)
 app.use('/api/v2/farmland', farmLandRoutes)
 app.use('/api/v2/weather', weatherRoutes)
 app.use('/api/v2/previous-crop', previousCropRoutes)
+app.use('/api/v2/crop-suggestion', suggestionRoutes)
 
 
 
