@@ -4,11 +4,11 @@ import { authLayer } from '../middleware/auth.middleware.js'
 import { addPreviousCrop as addPreviousCropValidator } from '../validator/previousCrop.validator.js'
 import { addPreviousCrop, updatePreviousCrop } from '../controllers/previousCrop.controller.js'
 import { previousCropLimiter } from '../middleware/rate limiter/previousCropLimiter.js'
-
+import { authorize } from '../middleware/role.middleware.js'
 
 
 export const previousCropRoutes = Router()
 
-previousCropRoutes.post("/:farmLandId", previousCropLimiter, validate(addPreviousCropValidator), authLayer, addPreviousCrop)
+previousCropRoutes.post("/:farmLandId", previousCropLimiter, validate(addPreviousCropValidator), authLayer, authorize("farmer"), addPreviousCrop)
 
-previousCropRoutes.patch("/:farmLandId", previousCropLimiter, validate(addPreviousCropValidator), authLayer, updatePreviousCrop)
+previousCropRoutes.patch("/:farmLandId", previousCropLimiter, validate(addPreviousCropValidator), authLayer, authorize("farmer"), updatePreviousCrop)
