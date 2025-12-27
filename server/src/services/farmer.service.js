@@ -3,17 +3,20 @@ import { ApiError } from '../utils/apiError.js'
 import { verifyOtpService } from './otp.service.js'
 import { generateToken } from '../utils/generateToken.js'
 import { verifyPassword } from '../utils/verifyPassword.js'
+import { Buyer } from '../models/buyer.model.js'
 
 export const registerFarmerService = async ({ fullname, phone, otp, password }) => {
     const existing = await Farmer.findOne({ phone })
     if (existing) throw new ApiError(409, "Farmer already registered")
+
+    const isBuyer = await Buyer.findOne({ phone })
+    if (isBuyer) throw new ApiError(409, "Number si already in use for buyer")
 
     await verifyOtpService({ phone, otp, purpose: "register" })
 
     const farmer = await Farmer.create({
         fullname,
         phone,
-        otp,
         password,
         isVarified: true,
     })
@@ -56,6 +59,9 @@ export const loginFarmerUsingPasswordService = async ({ phone, password }) => {
 export const forgotPasswordService = async ({ phone, otp, newPassword }) => {
     const farmer = await Farmer.findOne({ phone }).select("+password")
 
+    if (!farmer) {
+        throw new ApiError(404, "Buyer not found")
+    }
     await verifyOtpService({ otp, purpose: "forgot_password", phone })
 
     farmer.password = newPassword
@@ -117,12 +123,11 @@ export const toggleContactInfoService = async ({ _id }) => {
 
 }
 
-
-export const changeFarmerDataService = async({fullname, email, _id})=>{
+export const changeFarmerDataService = async ({ fullname, email, _id }) => {
     const farmer = await Farmer.findByIdAndUpdate(
         _id,
-        {fullname , email},
-        {new: true}
+        { fullname, email },
+        { new: true }
     )
     return farmer
 

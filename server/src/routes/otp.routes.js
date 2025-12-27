@@ -7,4 +7,4 @@ import { sendOtpLimit } from '../middleware/rate limiter/authRateLimiter.js'
 export const otpRoutes = Router()
 
 
-otpRoutes.post("/send",sendOtpLimit, validate(sendOtpSchema), sendOtp)
+otpRoutes.post("/send", validate(sendOtpSchema), sendOtp)
