@@ -8,7 +8,6 @@ export const validate = (schema) => (req, res, next) => {
             params: req.params,
             query: req.query
         })
-        console.log("Request in validate middleware")
 
         next()
     } catch (error) {
