@@ -11,4 +11,5 @@ export const requireSuperAdmin = (req, res, next) => {
     if (req.user.role !== "super_admin") {
         throw new ApiError(403, "Super Admin Access required")
     }
+    next()
 }
