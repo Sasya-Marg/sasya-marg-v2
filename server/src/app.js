@@ -14,6 +14,7 @@ import { historyRoutes } from './routes/predictHistory.routes.js'
 import { buyerRouter } from './routes/buyer.routes.js';
 import { preHarvestListingRoute } from './routes/preHarvestListing.routes.js';
 import { adminRoutes } from './routes/admin.routes.js';
+import { queryRoutes } from './routes/query.routes.js';
 
 
 
@@ -47,6 +48,7 @@ app.use('/api/v2/crop-suggestion', suggestionRoutes)
 app.use('/api/v2/suggestion/history', historyRoutes)
 app.use('/api/v2/auth/buyer', buyerRouter)
 app.use('/api/v2/product/pre-harvest', preHarvestListingRoute)
+app.use('/api/v2/query', queryRoutes)
 
 
 //Admin Routes
