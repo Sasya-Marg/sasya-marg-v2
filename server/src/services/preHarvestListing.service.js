@@ -1,7 +1,7 @@
 import { ApiError } from '../utils/apiError.js'
 import { PreHarvestListing } from '../models/preHarvetedListing.model.js'
 import { FarmLand } from '../models/farmLand.model.js'
-import { uploadToCloudinary } from '../utils/upload.cloudinary.js'
+import { uploadToCloudinary, deleteUploadedFile } from '../utils/upload.cloudinary.js'
 import { Location } from '../models/location.model.js'
 
 
@@ -50,7 +50,7 @@ export const getPreHarvestListingService = async (query) => {
 
 
     const filter = {
-        moderation: 'approved',
+        moderation: 'pending',
         status: 'Open'
     }
 
@@ -189,3 +189,86 @@ export const getMyPreHarvestListingService = async (farmerId, query) => {
     }
 }
 
+
+
+export const getSinglePreharvestListingService = async (farmerId, role, listingId) => {
+    const listing = await PreHarvestListing.findById(listingId).populate({
+        path: "farmer",
+        select: "fullname phone isContactVisible"
+    })
+        .populate({
+            path: "farmland",
+            select: "name size soilType farmingType",
+            populate: {
+                path: "location",
+                select: "locality state district"
+            }
+        })
+
+    if (!listing) {
+        throw new ApiError(404, "Listing not found")
+    }
+
+    if (role === 'buyer') {
+        if (listing.moderation !== "approved" || listing.status !== "open") {
+            throw new ApiError(403, "This listing is not available")
+        }
+    }
+
+    if (role === 'farmer') {
+        if (listing.farmer._id.toString() !== farmerId.toString()) {
+            throw new ApiError(403, "Access denied")
+        }
+    }
+
+    if (role === 'buyer' && listing.farmer.isContactVisible === false) {
+        listing.farmer.phone = false
+    }
+
+    return listing
+}
+
+
+export const updatePreHarvestListingService = async (listingId, farmerId, payload, files = null) => {
+    const listing = await PreHarvestListing.findById(listingId)
+
+    if (!listing) throw new ApiError(404, "Listing not found")
+
+    if (listing.farmer.toString() !== farmerId.toString()) {
+        throw new ApiError(403, "You are not allowed to update listing")
+    }
+
+    const allowedFields = [
+        "title",
+        "description",
+        "expectedHarvest",
+        "expectedYield",
+        "expectedPrice",
+        "qualityGrade",
+        "minimumOrderQuantity",
+    ]
+
+
+    for (const field of allowedFields) {
+        if (payload[field] !== undefined) {
+            listing[field] = payload[field]
+        }
+    }
+
+
+    //IMAGE REMOVAL OR ADDITION LOGIC HERE 
+
+
+    // if(payload.removeImages?.length){
+    //     for(let img of payload.removeImages){
+    //         await deleteUploadedFile()
+    //     }
+    // }
+
+    //
+
+    listing.moderation = 'pending'
+    await listing.save()
+
+    return listing
+}

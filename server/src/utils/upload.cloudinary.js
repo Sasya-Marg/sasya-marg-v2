@@ -38,7 +38,7 @@ export const deleteUploadedFile = async (publicId) => {
         await cloudinary.uploader.destroy(publicId, { resource_type: "image" })
         return true
     } catch (error) {
-        console.log("Cloudinary deletion Error....")
+        console.log("Cloudinary deletion Error...." , error)
         throw new ApiError(500, "Image destroy Failed")
     }
 

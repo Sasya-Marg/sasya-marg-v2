@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const QUANTITY_UNITS = ["kg", "quintal", "ton"]
 export const PRICE_UNITS = ["per_kg", "per_quintal", "per_ton"]
 export const QUALITY_GRADES = ["A", "B", "C", "organic"]
-export const LISTING_STATUS = ["Open", "Booked", "Harvested", "cancelled"]
+export const LISTING_STATUS = ["open", "booked", "harvested", "cancelled"]
 export const MODERATION_STATUS = ["pending", "approved", "rejected"]
 
 const objectId = z
@@ -61,4 +61,38 @@ export const getMyPreHarvestListingQuerySchema = z.object({
         status: z.enum(["open", "booked", "harvested", "cancelled"]).optional(),
         moderation: z.enum(["pending", "approved", "rejected"]).optional()
     })
+})
+
+
+export const getSinglePreHarvestListingSchema = z.object({
+    params: z.object({
+        listingId: objectId
+    })
+})
+
+
+export const updatePreHarvestListingSchema = z.object({
+    params: z.object({
+        listingId: objectId
+    }),
+
+    body: z.object({
+        title: z.string().min(2).max(120).optional(),
+        description: z.string().min(2).optional(),
+        qualityGrade: z.enum(QUALITY_GRADES).optional(),
+        minimumOrderQuantity: z.object({
+            value: z.number().positive().optional(),
+            unit: z.enum(QUANTITY_UNITS).optional()
+        }).optional(),
+        expectedPrice: z.object({
+            value: z.number().positive().optional(),
+            unit: z.enum(PRICE_UNITS).optional()
+        }).optional(),
+        expectedyeild: z.object({
+            value: z.number().positive().optional(),
+            unit: z.enum(QUANTITY_UNITS).optional()
+        }).optional(),
+        expectedHarvest: z.coerce.date().optional(),
+        removeImages: z.array(z.string()).optional()
+    }).optional()
 })

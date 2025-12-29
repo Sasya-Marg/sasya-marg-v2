@@ -74,3 +74,17 @@ export const updateBuyerAddress = asyncHandler(async (req, res) => {
 
     return res.status(200).json(new ApiResponse(200, buyer, "Address updated"))
 })
+
+
+export const logoutBuyer = asyncHandler(async (req, res) => {
+    return res
+        .clearCookie("token",
+            {
+                httpOnly: true,
+                sameSite: "strict",
+                secure: process.env.NODE_ENV === "production"
+            }
+        )
+        .status(200)
+        .json(new ApiResponse(200, null, "Logout Successfull"))
+})
