@@ -10,7 +10,8 @@ import {
     updateBuyerAddress,
     logoutBuyer,
     getPreHarvestedListings,
-    getProductListings
+    getProductListings,
+    buyerDashbord
 } from "../controllers/buyer.controller.js"
 
 import {
@@ -33,28 +34,28 @@ export const buyerRouter = Router()
 
 
 buyerRouter.post(
-    "/register",
+    "/auth/register",
     validate(registerBuyerSchema),
     registerBuyer
 )
 
 
 buyerRouter.post(
-    "/login/password",
+    "/auth/login/password",
     validate(loginBuyerWithPasswordSchema),
     loginBuyerWithPassword
 )
 
 
 buyerRouter.post(
-    "/login/otp",
+    "/auth/login/otp",
     validate(loginBuyerWithOtpSchema),
     loginBuyerWithOtp
 )
 
 
 buyerRouter.post(
-    "/forgot-password",
+    "/auth/forgot-password",
     validate(forgotBuyerPasswordSchema),
     forgotPassword
 )
@@ -68,7 +69,7 @@ buyerRouter.get("/me", currentUser)
 
 
 buyerRouter.post(
-    "/change-password",
+    "/auth/change-password",
     validate(changeBuyerPasswordSchema),
     changePassword
 )
@@ -81,6 +82,7 @@ buyerRouter.patch(
 )
 
 buyerRouter.post("/logout", logoutBuyer)
+buyerRouter.get("/dashboard", buyerDashbord)
 
 
 buyerRouter.get("/listing/pre-harvest", validate(getPreHarvestListingQuerySchema), getPreHarvestedListings)

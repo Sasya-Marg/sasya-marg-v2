@@ -60,7 +60,7 @@ app.use('/api/v2/admin/', adminRoutes)
 
 
 //Buyer Routes
-app.use('/api/v2/auth/buyer', buyerRouter)
+app.use('/api/v2/buyer', buyerRouter)
 app.use('/api/v2/buyer/wishlist', wishListRouter)
 
 

@@ -4,6 +4,7 @@ import { verifyOtpService } from "./otp.service.js"
 import { generateToken } from '../utils/generateToken.js'
 import { verifyPassword } from '../utils/verifyPassword.js'
 import { Farmer } from "../models/farmer.model.js"
+import { WishList } from '../models/wishList.model.js'
 
 export const registerBuyerService = async ({ fullname, phone, otp, password, email }) => {
     const existing = await Buyer.findOne({ phone })
@@ -164,4 +165,31 @@ export const updateBuyerAddressService = async ({ buyerId, address }) => {
 
 export const changeEmailAddressService = async ({ buyerId, email }) => {
     const buyer = await Buyer.findById(buyerId)
+}
+
+
+export const buyerDashboardSevice = async (buyerId) => {
+    const buyer = await Buyer.findById(buyerId)
+
+    if (!buyer) throw new ApiError(404, "Buyer not found")
+
+    const [wishList, wishlistCount] = await Promise.all([
+        WishList.find({ buyer: buyerId }).populate("item").sort({ createdAt: -1 }).limit(5),
+
+        WishList.countDocuments({ buyer: buyerId })
+    ])
+
+    return {
+        profile: {
+            fullname: buyer.fullname,
+            phone: buyer.phone,
+            email: buyer.email,
+            address: buyer.address || null,
+        },
+        stats: {
+            wishlistCount,
+            contactCount: 0, // contact module later
+        },
+        recentWishlist: wishList.filter(w => w.item !== null),
+    };
 }

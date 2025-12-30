@@ -1,6 +1,6 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
-import { loginBuyerUsingOtpService, loginBuyerUsingPasswordService, registerBuyerService, forgotBuyerPasswordService, changeBuyerPasswordService, currentUserService, updateBuyerAddressService } from '../services/buyer.service.js'
+import { loginBuyerUsingOtpService, loginBuyerUsingPasswordService, registerBuyerService, forgotBuyerPasswordService, changeBuyerPasswordService, currentUserService, updateBuyerAddressService, buyerDashboardSevice } from '../services/buyer.service.js'
 import { getPreHarvestListingService } from '../services/preHarvestListing.service.js'
 import { getProductListingService } from '../services/product.service.js'
 
@@ -89,7 +89,6 @@ export const logoutBuyer = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, null, "Logout Successfull"))
 })
 
-
 export const getPreHarvestedListings = asyncHandler(async (req, res) => {
 
     const { listings, pagination } = await getPreHarvestListingService(req.query)
@@ -102,4 +101,14 @@ export const getProductListings = asyncHandler(async (req, res) => {
     const { listings, pagination } = await getProductListingService(req.query)
 
     return res.status(200).json(new ApiResponse(200, { listings, pagination }, "Listing Feteched Successfully"))
+})
+
+export const buyerDashbord = asyncHandler(async (req, res) => {
+    const buyerId = req.user._id
+
+    const dashboard = await buyerDashboardSevice(buyerId)
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, dashboard, "Buyer dashboard fetched"));
 })
