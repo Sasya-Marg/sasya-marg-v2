@@ -43,7 +43,7 @@ export const getPreHarvestListingQuerySchema = z.object({
         limit: z.coerce.number().int().positive().max(50).optional(),
 
         state: z.string().min(2).optional(),
-        city: z.string().min(2).optional(),
+        district: z.string().min(2).optional(),
 
         qualityGrade: z.enum(["A", "B", "C", "organic"]).optional(),
 

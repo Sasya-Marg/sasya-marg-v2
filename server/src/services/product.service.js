@@ -2,6 +2,7 @@ import { ApiError } from '../utils/apiError.js'
 import { Product } from '../models/product.model.js'
 import { FarmLand } from '../models/farmLand.model.js'
 import { uploadToCloudinary, deleteUploadedFile } from '../utils/upload.cloudinary.js'
+import { Location } from '../models/location.model.js'
 
 
 export const createProductListing = async ({ farmerId, payload, files }) => {
@@ -114,7 +115,6 @@ export const updateProductListing = async ({ farmerId, listingId, payload, files
 
 }
 
-
 export const deactivateProductListing = async ({ farmerId, listingId }) => {
     const product = await Product.findOne({ farmer: farmerId, _id: listingId })
 
@@ -125,4 +125,118 @@ export const deactivateProductListing = async ({ farmerId, listingId }) => {
 
     return product
 
+}
+
+export const getProductListingService = async (query) => {
+    const { page = 1, limit = 10, state, district, qualityGrade, minPrice, maxPrice, category, sort } = query
+
+    const filter = {
+        moderation: "approved",
+        isActive: true
+    }
+
+    if (state || district) {
+        const locationQuery = {}
+        if (state) locationQuery.state = state
+        if (district) locationQuery.district = district
+
+        const location = await Location.find(locationQuery).select("_id")
+
+        if (!location || location.length < 1) {
+            return {
+                listings: [],
+                pagination: {
+                    total: 0,
+                    page: Number(page),
+                    limit: Number(limit),
+                    totalPage: 0
+                }
+            }
+        }
+
+        const farmlands = await FarmLand.find({
+            location: { $in: location.map(l => l._id) },
+            isActive: true
+        }).select("_id")
+
+        if (!farmlands.length) {
+            return {
+                listings: [],
+                pagination: {
+                    total: 0,
+                    page: Number(page),
+                    limit: Number(limit),
+                    totalPage: 0
+                }
+            }
+        }
+
+        filter.farmland = { $in: farmlands.map(f => f._id) }
+
+    }
+
+    if (category) {
+        filter.category = category
+    }
+
+    if (qualityGrade) {
+        filter.qualityGrade = qualityGrade
+    }
+
+
+    if (minPrice || maxPrice) {
+        filter["price.value"] = {}
+
+        if (minPrice) filter["price.value"].$gte = Number(minPrice)
+        if (maxPrice) filter["price.value"].$lte = Number(maxPrice)
+    }
+
+    let sortOptions = { createdAt: -1 }
+
+    if (sort === "price_asc") {
+        sortOptions = { "price.value": 1 }
+    }
+
+    if (sort === "price_desc") {
+        sortOptions = { "price.value": -1 }
+    }
+
+    const skip = (Number(page) - 1) * Number(limit)
+
+    const [products, total] = await Promise.all([
+        Product.find(filter).populate({
+            path: "farmland",
+            select: "name size location",
+            populate: {
+                path: "location",
+                select: "state district locality"
+            }
+        }).sort(sortOptions)
+            .skip(skip)
+            .limit(limit),
+
+        Product.countDocuments(filter)
+    ])
+
+    if (!products || products.length < 1) {
+        return {
+            listings: [],
+            pagination: {
+                total: 0,
+                page: Number(page),
+                limit: Number(limit),
+                totalPage: 0
+            }
+        }
+    }
+
+    return {
+        listings,
+        pagination: {
+            total,
+            page: Number(page),
+            limit: Number(limit),
+            totalPages: Math.ceil(total / limit)
+        }
+    }
 }

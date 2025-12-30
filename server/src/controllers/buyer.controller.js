@@ -1,6 +1,8 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
 import { loginBuyerUsingOtpService, loginBuyerUsingPasswordService, registerBuyerService, forgotBuyerPasswordService, changeBuyerPasswordService, currentUserService, updateBuyerAddressService } from '../services/buyer.service.js'
+import { getPreHarvestListingService } from '../services/preHarvestListing.service.js'
+import { getProductListingService } from '../services/product.service.js'
 
 
 
@@ -64,7 +66,6 @@ export const currentUser = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, buyer, "User Fetched successfully"))
 })
 
-
 export const updateBuyerAddress = asyncHandler(async (req, res) => {
 
     const address = req.body.address
@@ -74,7 +75,6 @@ export const updateBuyerAddress = asyncHandler(async (req, res) => {
 
     return res.status(200).json(new ApiResponse(200, buyer, "Address updated"))
 })
-
 
 export const logoutBuyer = asyncHandler(async (req, res) => {
     return res
@@ -87,4 +87,19 @@ export const logoutBuyer = asyncHandler(async (req, res) => {
         )
         .status(200)
         .json(new ApiResponse(200, null, "Logout Successfull"))
+})
+
+
+export const getPreHarvestedListings = asyncHandler(async (req, res) => {
+
+    const { listings, pagination } = await getPreHarvestListingService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { listings, pagination }, "Listing Feteched Successfully"))
+})
+
+export const getProductListings = asyncHandler(async (req, res) => {
+
+    const { listings, pagination } = await getProductListingService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { listings, pagination }, "Listing Feteched Successfully"))
 })

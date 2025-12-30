@@ -35,13 +35,12 @@ export const createPreHarvestListingService = async ({ farmerId, payload, files 
     return listing
 }
 
-
 export const getPreHarvestListingService = async (query) => {
     const {
         page = 1,
         limit = 10,
         state,
-        city,
+        district,
         qualityGrade,
         minPrice,
         maxPrice,
@@ -55,11 +54,11 @@ export const getPreHarvestListingService = async (query) => {
     }
 
 
-    if (state || city) {
+    if (state || district) {
         const locationQuery = {}
 
         if (state) locationQuery.state = state
-        if (city) locationQuery.city = city
+        if (district) locationQuery.district = district
 
         const locations = await Location.find(locationQuery).select("_id")
 
@@ -102,7 +101,7 @@ export const getPreHarvestListingService = async (query) => {
     if (minPrice || maxPrice) {
         filter["expectedPrice.value"] = {}
         if (minPrice) filter["expectedPrice.value"].$gte = Number(minPrice)
-        if (maxPrice) filter["expectedPrice.value"].$gte = Number(maxPrice)
+        if (maxPrice) filter["expectedPrice.value"].$lte = Number(maxPrice)
     }
 
     let sortOption = { createdAt: -1 }
@@ -120,7 +119,7 @@ export const getPreHarvestListingService = async (query) => {
     const [listings, total] = await Promise.all([
         PreHarvestListing.find(filter).populate({
             path: "farmland",
-            select: "name , size , location",
+            select: "name size location",
             populate: {
                 path: 'location',
                 select: "city state district "
@@ -189,8 +188,6 @@ export const getMyPreHarvestListingService = async (farmerId, query) => {
     }
 }
 
-
-
 export const getSinglePreharvestListingService = async (farmerId, role, listingId) => {
     const listing = await PreHarvestListing.findById(listingId).populate({
         path: "farmer",
@@ -227,7 +224,6 @@ export const getSinglePreharvestListingService = async (farmerId, role, listingI
 
     return listing
 }
-
 
 export const updatePreHarvestListingService = async (listingId, farmerId, payload, files = null) => {
     const listing = await PreHarvestListing.findById(listingId)

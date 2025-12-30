@@ -19,8 +19,8 @@ farmerRoutes.post("/logout", authLayer, logoutFarmer)
 
 farmerRoutes.post("/me", authLayer, currentUser)
 
-farmerRoutes.put("/change/password", changePasswordLimiter, validate(changePasswordSchema),authLayer, changePassword)
+farmerRoutes.put("/change/password", changePasswordLimiter, authLayer, validate(changePasswordSchema), changePassword)
 
 farmerRoutes.put("/change/contact-visibility", changePasswordLimiter, authLayer, toggleIsContactVisible)
 
-farmerRoutes.put("/change/farmer-data", validate(changeFarmerDataSchema), authLayer, changeFarmerData)
+farmerRoutes.put("/change/farmer-data", authLayer, validate(changeFarmerDataSchema), changeFarmerData)

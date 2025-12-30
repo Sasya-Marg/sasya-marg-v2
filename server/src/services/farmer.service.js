@@ -129,6 +129,9 @@ export const changeFarmerDataService = async ({ fullname, email, _id }) => {
         { fullname, email },
         { new: true }
     )
+
+    if (!farmer) throw new ApiError(404, "Farmer not found")
+
     return farmer
 
 }

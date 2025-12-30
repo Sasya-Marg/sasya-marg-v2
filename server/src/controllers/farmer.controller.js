@@ -24,7 +24,7 @@ export const loginFarmerUsingOtp = asyncHandler(async (req, res) => {
     res
         .cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", maxAge: 100 * 60 * 60 * 24 * 7 })
         .status(200)
-        .json(new ApiResponse(201, farmer, "Login successfully"))
+        .json(new ApiResponse(200, farmer, "Login successfully"))
 
 
 })

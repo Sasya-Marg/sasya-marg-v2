@@ -8,7 +8,9 @@ import {
     changePassword,
     currentUser,
     updateBuyerAddress,
-    logoutBuyer
+    logoutBuyer,
+    getPreHarvestedListings,
+    getProductListings
 } from "../controllers/buyer.controller.js"
 
 import {
@@ -23,6 +25,8 @@ import {
 import { validate } from "../middleware/validate.middleware.js"
 import { authLayer } from "../middleware/auth.middleware.js"
 import { authorize } from "../middleware/role.middleware.js"
+import { getPreHarvestListingQuerySchema } from "../validator/preHarvestListing.validator.js"
+import { getProductListingSchema } from "../validator/product.validator.js"
 
 export const buyerRouter = Router()
 
@@ -77,3 +81,7 @@ buyerRouter.patch(
 )
 
 buyerRouter.post("/logout", logoutBuyer)
+
+
+buyerRouter.get("/listing/pre-harvest", validate(getPreHarvestListingQuerySchema), getPreHarvestedListings)
+buyerRouter.get("/listing", validate(getProductListingSchema), getProductListings)

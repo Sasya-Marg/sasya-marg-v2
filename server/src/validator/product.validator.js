@@ -62,3 +62,20 @@ export const toggleProductSchema = z.object({
         listingId: objectId
     })
 })
+
+export const getProductListingSchema = z.object({
+    query: z.object({
+        page: z.coerce.number().int().positive().optional(),
+        limit: z.coerce.number().int().positive().max(50).optional(),
+
+        state: z.string().min(2).optional(),
+        district: z.string().min(2).optional(),
+        category: z.enum(["vegetable", "fruit", "grain"]).optional(),
+        qualityGrade: z.enum(["A", "B", "C", "organic"]).optional(),
+
+        minPrice: z.coerce.number().positive().optional(),
+        maxPrice: z.coerce.number().positive().optional(),
+
+        sort: z.enum(["price_asc", "price_desc", "newest"]).optional()
+    })
+})

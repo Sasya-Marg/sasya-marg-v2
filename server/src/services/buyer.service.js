@@ -30,7 +30,7 @@ export const registerBuyerService = async ({ fullname, phone, otp, password, ema
         fullname,
         phone,
         password,
-        email: email || ""
+        email: email ? email.toLowerCase() : undefined
     })
 
     const token = generateToken({ _id: buyer._id, role: "buyer" })
@@ -134,7 +134,7 @@ export const changeBuyerPasswordService = async ({ oldPassword, newPassword, _id
 }
 
 export const currentUserService = async ({ buyerId }) => {
-    return await Buyer.findById(buyerId)
+    return await Buyer.findById(buyerId).select('-password')
 }
 
 export const updateBuyerAddressService = async ({ buyerId, address }) => {
@@ -160,4 +160,8 @@ export const updateBuyerAddressService = async ({ buyerId, address }) => {
 
     return buyer
 
+}
+
+export const changeEmailAddressService = async ({ buyerId, email }) => {
+    const buyer = await Buyer.findById(buyerId)
 }
