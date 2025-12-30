@@ -15,6 +15,7 @@ import { buyerRouter } from './routes/buyer.routes.js';
 import { preHarvestListingRoute } from './routes/preHarvestListing.routes.js';
 import { adminRoutes } from './routes/admin.routes.js';
 import { queryRoutes } from './routes/query.routes.js';
+import { productRouter } from './routes/product.route.js';
 
 
 
@@ -39,6 +40,8 @@ app.post("/response-test", async (req, res) => {
 });
 
 
+
+//Farmer Routes
 app.use('/api/v2/auth/farmer', farmerRoutes)
 app.use('/api/v2/otp', otpRoutes)
 app.use('/api/v2/farmland', farmLandRoutes)
@@ -46,7 +49,7 @@ app.use('/api/v2/weather', weatherRoutes)
 app.use('/api/v2/previous-crop', previousCropRoutes)
 app.use('/api/v2/crop-suggestion', suggestionRoutes)
 app.use('/api/v2/suggestion/history', historyRoutes)
-app.use('/api/v2/auth/buyer', buyerRouter)
+app.use('/api/v2/product/', productRouter)
 app.use('/api/v2/product/pre-harvest', preHarvestListingRoute)
 app.use('/api/v2/query', queryRoutes)
 
@@ -54,6 +57,9 @@ app.use('/api/v2/query', queryRoutes)
 //Admin Routes
 app.use('/api/v2/admin/', adminRoutes)
 
+
+//Buyer Routes
+app.use('/api/v2/auth/buyer', buyerRouter)
 
 
 

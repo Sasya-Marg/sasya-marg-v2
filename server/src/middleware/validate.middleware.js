@@ -1,5 +1,5 @@
 import { ApiError } from '../utils/apiError.js'
-
+import { ZodError } from "zod"
 
 export const validate = (schema) => (req, res, next) => {
     try {
@@ -11,7 +11,11 @@ export const validate = (schema) => (req, res, next) => {
 
         next()
     } catch (error) {
-        console.log(error)
-        throw new ApiError(400, error?.errors[0]?.message || "Invalid data feilds");
+        console.log("Zod validation Error >>>", error)
+        if (error instanceof ZodError) {
+            const message = error.issues[0]?.message || "Invalid data fields"
+            return next(new ApiError(400, message))
+        }
+        next(error)
     }
 }
