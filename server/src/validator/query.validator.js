@@ -1,5 +1,10 @@
 import { z } from "zod"
 
+const objectId = z
+  .string()
+  .regex(/^[0-9a-fA-F]{24}$/, "Invalid ID format");
+
+
 export const createQuerySchema = z.object({
   body: z.object({
     fullname: z.string().min(3, "Full name is required"),
@@ -26,5 +31,38 @@ export const createQuerySchema = z.object({
     priority: z
       .enum(["low", "medium", "high", "urgent"])
       .optional()
+  })
+})
+
+
+export const viewMyQuerySchema = z.object({
+  query: z.object({
+    page: z.string().optional().refine((val) => !val || !isNaN(val), { message: "Page must be a number" }),
+    limit: z.string().optional().refine((val) => !val || !isNaN(val), { message: "Limit must be a number" }),
+    status: z.enum(["open", "in_progress", "resolved", "closed"]).optional()
+  })
+})
+
+
+export const viewSingleQuerySchema = z.object({
+  params: z.object({
+    queryId: objectId
+  })
+})
+
+export const updateQuerySchema = z.object({
+  params: z.object({
+    queryId: objectId
+  }),
+
+  body: z.object({
+    message: z.string().min(5).optional(),
+    subject: z.string().min(5).optional()
+  })
+})
+
+export const closeQuerySchema = z.object({
+  params: z.object({
+    queryId: objectId
   })
 })

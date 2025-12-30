@@ -59,6 +59,10 @@ const querySchema = new mongoose.Schema({
         trim: true
     },
 
+    repliedAt: {
+        type: Date,
+    },
+
     status: {
         type: String,
         enum: [
