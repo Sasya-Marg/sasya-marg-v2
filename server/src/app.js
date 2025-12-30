@@ -16,6 +16,7 @@ import { preHarvestListingRoute } from './routes/preHarvestListing.routes.js';
 import { adminRoutes } from './routes/admin.routes.js';
 import { queryRoutes } from './routes/query.routes.js';
 import { productRouter } from './routes/product.route.js';
+import { wishListRouter } from './routes/wishList.routes.js';
 
 
 
@@ -60,6 +61,7 @@ app.use('/api/v2/admin/', adminRoutes)
 
 //Buyer Routes
 app.use('/api/v2/auth/buyer', buyerRouter)
+app.use('/api/v2/buyer/wishlist', wishListRouter)
 
 
 
