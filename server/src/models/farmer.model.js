@@ -34,6 +34,22 @@ const farmerSchema = new mongoose.Schema({
     isActive: {   //check user block status
         type: Boolean,
         default: true
+    },
+    
+    blockedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Admin",
+        default: null
+    },
+
+    blockedAt: {
+        type: Date,
+        default: null
+    },
+
+    blockReason: {
+        type: String,
+        default: null
     }
 
 }, { timestamps: true })

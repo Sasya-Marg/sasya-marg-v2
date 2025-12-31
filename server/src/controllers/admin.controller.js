@@ -1,4 +1,4 @@
-import { bootStrapSuperAdminService, createAdminInviteService, loginAdminService, loginSuperAdminService, registerAdminWithInviteTokenService } from '../services/admin.service.js'
+import { blockFarmerService, bootStrapSuperAdminService, createAdminInviteService, getAllFarmerService, getAllPreHarvestedListingService, getAllProductListingService, getAllQueryService, loginAdminService, loginSuperAdminService, ModeratePreHarvestedListingService, ModerateProductListingService, registerAdminWithInviteTokenService, updateQueryService } from '../services/admin.service.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
 
@@ -77,4 +77,94 @@ export const logoutAdmin = asyncHandler(async (req, res) => {
         })
         .status(200)
         .json(new ApiResponse(200, null, "Logout Successfull"))
+})
+
+//ADMIN MODERATION CONTROLLERS
+
+export const getAllPreHarvestedListing = asyncHandler(async (req, res) => {
+    const { listings, pagination } = await getAllPreHarvestedListingService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { listings, pagination }, "Listing fetch successfully"))
+})
+
+export const getAllProductListing = asyncHandler(async (req, res) => {
+    const { listings, pagination } = await getAllProductListingService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { listings, pagination }, "Listing fetch successfully"))
+})
+
+export const moderatePreHarvestListing = asyncHandler(async (req, res) => {
+    const { listingId } = req.params
+    const adminId = req.user._id
+
+    const { action, reason } = req.body
+
+    const listing = await ModeratePreHarvestedListingService({ listingId, adminId, action, reason })
+
+    return res.status(200).json(new ApiResponse(200, listing, "moderation changed successfully"))
+})
+
+export const moderateProductListing = asyncHandler(async (req, res) => {
+    const { listingId } = req.params
+    const adminId = req.user._id
+
+    const { action, reason } = req.body
+
+    const listing = await ModerateProductListingService({ listingId, adminId, action, reason })
+
+    return res.status(200).json(new ApiResponse(200, listing, "moderation changed successfully"))
+})
+
+export const getAllQuery = asyncHandler(async (req, res) => {
+    const { queries, pagination } = await getAllQueryService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { queries, pagination }, "Query fetched"))
+})
+
+export const replyToQuery = asyncHandler(async (req, res) => {
+    const query = await updateQueryService({
+        reply: req.body.reply,
+        adminId: req.user._id,
+        queryId: req.params.queryId
+    })
+
+    return res.status(200).json(new ApiResponse(200, query, "Reply sent"))
+})
+
+export const changeQueryStatus = asyncHandler(async (req, res) => {
+    const query = await updateQueryService({
+        status: req.body.status,
+        adminId: req.user._id,
+        queryId: req.params.queryId
+    })
+
+    return res.status(200).json(new ApiResponse(200, query, "Query status updated"))
+})
+
+export const changeQueryPriority = asyncHandler(async (req, res) => {
+    const query = await updateQueryService({
+        priority: req.body.priority,
+        adminId: req.user._id,
+        queryId: req.params.queryId
+    })
+
+    return res.status(200).json(new ApiResponse(200, query, "Query status updated"))
+})
+
+export const getAllFarmer = asyncHandler(async (req, res) => {
+    const { farmers, pagination } = await getAllFarmerService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { farmers, pagination }, "All Farmer fetched"))
+})
+
+export const blockFarmer = asyncHandler(async (req, res) => {
+    const farmer = await blockFarmerService({ adminId: req.user._id, farmerId: req.params.farmerId, reason: req.body.reason })
+
+    return res.status(200).json(new ApiResponse(200, farmer, "farmer blocked"))
+})
+
+export const unBlockFarmer = asyncHandler(async (req, res) => {
+    const farmer = await blockFarmerService({ farmerId: req.params.farmerId, })
+
+    return res.status(200).json(new ApiResponse(200, farmer, "farmer unBlocked"))
 })

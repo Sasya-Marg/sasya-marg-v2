@@ -1,5 +1,11 @@
 import { z } from 'zod'
 
+
+const objectId = z
+  .string()
+  .regex(/^[0-9a-fA-F]{24}$/, "Invalid ID format");
+
+
 export const bootstrapSuperAdminSchema = z.object({
   body: z.object({
     fullname: z.string().trim().min(2),
@@ -56,5 +62,73 @@ export const registerAdminSchema = z.object({
     email: z.string().email(),
     phone: z.string().length(10).regex(/^[6-9]\d{9}$/),
     password: z.string().min(8)
+  })
+})
+
+
+//ADMIN MODERATION SCHEMA
+
+export const getAllListingSchema = z.object({
+  query: z.object({
+    page: z.number().positive().optional(),
+    limit: z.number().positive().optional(),
+    action: z.enum(["pending", "approved", "rejected"]).optional()
+  })
+})
+
+export const moderateListingSchema = z.object({
+  params: z.object({
+    listingId: objectId
+  }),
+  body: z.object({
+    reason: z.string().min(3).optional(),
+    action: z.enum(["pending", "approved", "rejected"])
+  })
+})
+
+export const getAllQuerySchema = z.object({
+  query: z.object({
+    page: z.number().positive().optional(),
+    limit: z.number().positive().optional(),
+    inquiery: z.enum(["crop", "product", "weather", "pricing", "technical", "other"]).optional(),
+    status: z.enum(["open", "in_progress", "resolved", "closed"]).optional(),
+    priority: z.enum(["low", "medium", "high", "urgent"]).optional()
+  })
+})
+
+export const updateQuerySchema = z.object({
+  params: z.object({
+    queryId: objectId
+  }),
+  body: z.object({
+    reply: z.string().min(5).optional(),
+    status: z.enum(["open", "in_progress", "resolved", "closed"]).optional(),
+    priority: z.enum(["low", "medium", "high", "urgent"]).optional()
+  })
+})
+
+export const getAllFarmerSchema = z.object({
+  query: z.object({
+    page: z.number().positive().optional(),
+    limit: z.number().positive().optional(),
+    isVarified: z.boolean().optional(),
+    isActive: z.boolean().optional(),
+  })
+})
+
+export const blockFarmerSchema = z.object({
+  params: z.object({
+    farmerId: objectId
+  }),
+  body: z.object({
+    reason: z.string().min(3)
+  })
+
+
+})
+
+export const unBlockFarmerSchema = z.object({
+  params: z.object({
+    farmerId: objectId
   })
 })

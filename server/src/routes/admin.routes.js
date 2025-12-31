@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { validate } from "../middleware/validate.middleware.js"
-import { adminLoginSchema, bootstrapSuperAdminSchema, registerAdminSchema } from "../validator/admin.validator.js"
-import { bootstrapSuperAdmin, bootStrapSuperAdminLogin, bootstrapSuperAdminLogout, createAdminInvite, loginAdmin, logoutAdmin, registerAdminWithInviteToken } from "../controllers/admin.controller.js"
+import { adminLoginSchema, blockFarmerSchema, bootstrapSuperAdminSchema, getAllFarmerSchema, getAllListingSchema, getAllQuerySchema, moderateListingSchema, registerAdminSchema, unBlockFarmerSchema, updateQuerySchema } from "../validator/admin.validator.js"
+import { blockFarmer, bootstrapSuperAdmin, bootStrapSuperAdminLogin, bootstrapSuperAdminLogout, changeQueryPriority, changeQueryStatus, createAdminInvite, getAllFarmer, getAllPreHarvestedListing, getAllProductListing, getAllQuery, loginAdmin, logoutAdmin, moderatePreHarvestListing, moderateProductListing, registerAdminWithInviteToken, replyToQuery, unBlockFarmer } from "../controllers/admin.controller.js"
 import { requireAdmin, requireSuperAdmin } from "../middleware/adminRole.middleware.js"
 import { authLayer } from "../middleware/auth.middleware.js"
 
@@ -20,3 +20,26 @@ adminRoutes.post('/super-admin/logout', authLayer, requireSuperAdmin, bootstrapS
 adminRoutes.post("/register", validate(registerAdminSchema), registerAdminWithInviteToken)
 adminRoutes.post("/login", validate(adminLoginSchema), loginAdmin)
 adminRoutes.post("/logout", authLayer, requireAdmin, logoutAdmin)
+
+//ADMIN MODERATION ROUTES
+adminRoutes.get("/listings/pre-harvested", authLayer, requireAdmin, validate(getAllListingSchema), getAllPreHarvestedListing)
+
+adminRoutes.get("/listings/harvested", authLayer, requireAdmin, validate(getAllListingSchema), getAllProductListing)
+
+adminRoutes.patch("/listings/pre-harvested/:listingId/moderate", authLayer, requireAdmin, validate(moderateListingSchema), moderatePreHarvestListing)
+
+adminRoutes.patch("/listings/harvested/:listingId/moderate", authLayer, requireAdmin, validate(moderateListingSchema), moderateProductListing)
+
+adminRoutes.get("/queries", authLayer, requireAdmin, validate(getAllQuerySchema), getAllQuery)
+
+adminRoutes.patch("/queries/:queryId/status", authLayer, requireAdmin, validate(updateQuerySchema), changeQueryStatus)
+
+adminRoutes.patch("/queries/:queryId/priority", authLayer, requireAdmin, validate(updateQuerySchema), changeQueryPriority)
+
+adminRoutes.patch("/queries/:queryId/reply", authLayer, requireAdmin, validate(updateQuerySchema), replyToQuery)
+
+adminRoutes.get("/farmer", authLayer, requireAdmin, validate(getAllFarmerSchema), getAllFarmer)
+
+adminRoutes.patch("/farmer/:farmerId/block", authLayer, requireAdmin, validate(blockFarmerSchema), blockFarmer)
+
+adminRoutes.patch("/farmer/:farmerId/unblock", authLayer, requireAdmin, validate(unBlockFarmerSchema), unBlockFarmer)

@@ -63,6 +63,11 @@ const querySchema = new mongoose.Schema({
         type: Date,
     },
 
+    repliedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Admin"
+    },
+
     status: {
         type: String,
         enum: [
