@@ -43,7 +43,7 @@ app.post("/response-test", async (req, res) => {
 
 
 //Farmer Routes
-app.use('/api/v2/auth/farmer', farmerRoutes)
+app.use('/api/v2/farmer', farmerRoutes)
 app.use('/api/v2/otp', otpRoutes)
 app.use('/api/v2/farmland', farmLandRoutes)
 app.use('/api/v2/weather', weatherRoutes)

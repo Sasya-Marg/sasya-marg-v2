@@ -1,6 +1,6 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
-import { changeFarmerDataService, changePasswordService, currentUserService, forgotPasswordService, loginFarmerUsingOtpService, loginFarmerUsingPasswordService, registerFarmerService, toggleContactInfoService } from '../services/farmer.service.js'
+import { changeFarmerDataService, changePasswordService, currentUserService, farmerDashboardService, forgotPasswordService, loginFarmerUsingOtpService, loginFarmerUsingPasswordService, registerFarmerService, toggleContactInfoService } from '../services/farmer.service.js'
 
 
 
@@ -90,4 +90,20 @@ export const currentUser = asyncHandler(async (req, res) => {
     const { farmer } = await currentUserService({ req })
 
     return res.status(200).json(new ApiResponse(200, farmer, "user fetched!"))
+})
+
+export const farmerDashboard = asyncHandler(async (req, res) => {
+    const farmerId = req.user._id
+
+    const data = await farmerDashboardService(farmerId)
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                data,
+                "Farmer snapshot fetched successfully"
+            )
+        )
 })

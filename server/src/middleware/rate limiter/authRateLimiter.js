@@ -14,6 +14,6 @@ export const changePasswordLimiter = createLimiter({
 
 export const loginFarmerLimiter = createLimiter({
     windowMs: 1000 * 60 * 5,
-    max: 3,
+    max: 10,
     message: "Too many login attempts, Try later"
 })

@@ -1,9 +1,14 @@
 import { Farmer } from '../models/farmer.model.js'
+import mongoose from "mongoose"
 import { ApiError } from '../utils/apiError.js'
 import { verifyOtpService } from './otp.service.js'
 import { generateToken } from '../utils/generateToken.js'
 import { verifyPassword } from '../utils/verifyPassword.js'
 import { Buyer } from '../models/buyer.model.js'
+import { FarmLand } from '../models/farmLand.model.js'
+import { Product } from "../models/product.model.js"
+import { PreHarvestListing } from '../models/preHarvetedListing.model.js'
+import { PredictHistory } from "../models/predictHistory.model.js"
 
 export const registerFarmerService = async ({ fullname, phone, otp, password }) => {
     const existing = await Farmer.findOne({ phone })
@@ -134,4 +139,130 @@ export const changeFarmerDataService = async ({ fullname, email, _id }) => {
 
     return farmer
 
+}
+
+export const farmerDashboardService = async (farmerId) => {
+    const farmerObjectId = new mongoose.Types.ObjectId(farmerId)
+
+    const farmer = await Farmer.findById(farmerId)
+        .select("fullname phone email address")
+
+    if (!farmer) throw new ApiError(404, "Farmer not found")
+
+    const [
+        farmlandContext,
+        productCount,
+        predictionCount,
+        recentListings,
+        recentPredictions
+    ] = await Promise.all([
+
+        FarmLand.aggregate([
+            { $match: { owner: farmerObjectId } },
+
+            {
+                $lookup: {
+                    from: "locations",
+                    localField: "location",
+                    foreignField: "_id",
+                    as: "location"
+                }
+            },
+            { $unwind: "$location" },
+
+            {
+                $lookup: {
+                    from: "weathers",
+                    localField: "location._id",
+                    foreignField: "location",
+                    as: "weather"
+                }
+            },
+            {
+                $addFields: {
+                    weather: {
+                        $arrayElemAt: [
+                            {
+                                $slice: [
+                                    {
+                                        $sortArray: {
+                                            input: "$weather",
+                                            sortBy: { createdAt: -1 }
+                                        }
+                                    },
+                                    1
+                                ]
+                            },
+                            0
+                        ]
+                    }
+                }
+            },
+
+            {
+                $unwind: {
+                    path: "$weather",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+
+            {
+                $project: {
+                    name: 1,
+                    size: 1,
+                    soilType: 1,
+                    location: {
+                        name: 1,
+                        district: 1,
+                        state: 1,
+                        latitude: 1,
+                        longitude: 1
+                    },
+                    weather: {
+                        temperature: 1,
+                        humidity: 1,
+                        rainfall: 1,
+                        condition: 1,
+                        fetchedAt: 1
+                    }
+                }
+            }
+        ]),
+
+        Product.countDocuments({ farmer: farmerId }),
+
+        PredictHistory.countDocuments({ farmer: farmerId }),
+
+        PreHarvestListing.find({ farmer: farmerId })
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .select("crop expectedHarvest status createdAt"),
+
+        PredictHistory.find({ farmer: farmerId })
+            .sort({ createdAt: -1 })
+            .limit(1)
+            .populate({
+                path: "result.cropId",
+                select: "name"
+            })
+    ])
+
+    return {
+        profile: farmer,
+
+        stats: {
+            farmlandCount: farmlandContext.length,
+            productCount,
+            preHarvestCount: recentListings.length,
+            predictionCount,
+            contactCount: 0 // future
+        },
+
+        farmlands: farmlandContext,
+
+        recent: {
+            listings: recentListings,
+            predictions: recentPredictions
+        }
+    }
 }
