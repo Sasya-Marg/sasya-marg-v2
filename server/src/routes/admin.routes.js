@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { validate } from "../middleware/validate.middleware.js"
-import { adminLoginSchema, blockFarmerSchema, bootstrapSuperAdminSchema, getAllFarmerSchema, getAllListingSchema, getAllQuerySchema, moderateListingSchema, registerAdminSchema, unBlockFarmerSchema, updateQuerySchema } from "../validator/admin.validator.js"
-import { blockFarmer, bootstrapSuperAdmin, bootStrapSuperAdminLogin, bootstrapSuperAdminLogout, changeQueryPriority, changeQueryStatus, createAdminInvite, getAllFarmer, getAllPreHarvestedListing, getAllProductListing, getAllQuery, loginAdmin, logoutAdmin, moderatePreHarvestListing, moderateProductListing, registerAdminWithInviteToken, replyToQuery, unBlockFarmer } from "../controllers/admin.controller.js"
+import { adminLoginSchema, blockBuyerSchema, blockFarmerSchema, bootstrapSuperAdminSchema, getAllBuyerSchema, getAllFarmerSchema, getAllListingSchema, getAllQuerySchema, moderateListingSchema, registerAdminSchema, unBlockBuyerSchema, unBlockFarmerSchema, updateQuerySchema } from "../validator/admin.validator.js"
+import { blockBuyer, blockFarmer, bootstrapSuperAdmin, bootStrapSuperAdminLogin, bootstrapSuperAdminLogout, changeQueryPriority, changeQueryStatus, createAdminInvite, getAdminDashboard, getAllBuyer, getAllFarmer, getAllPreHarvestedListing, getAllProductListing, getAllQuery, loginAdmin, logoutAdmin, moderatePreHarvestListing, moderateProductListing, registerAdminWithInviteToken, replyToQuery, unBlockBuyer, unBlockFarmer } from "../controllers/admin.controller.js"
 import { requireAdmin, requireSuperAdmin } from "../middleware/adminRole.middleware.js"
 import { authLayer } from "../middleware/auth.middleware.js"
 
@@ -43,3 +43,11 @@ adminRoutes.get("/farmer", authLayer, requireAdmin, validate(getAllFarmerSchema)
 adminRoutes.patch("/farmer/:farmerId/block", authLayer, requireAdmin, validate(blockFarmerSchema), blockFarmer)
 
 adminRoutes.patch("/farmer/:farmerId/unblock", authLayer, requireAdmin, validate(unBlockFarmerSchema), unBlockFarmer)
+
+adminRoutes.get("/buyer", authLayer, requireAdmin, validate(getAllBuyerSchema), getAllBuyer)
+
+adminRoutes.patch("/buyer/:buyerId/block", authLayer, requireAdmin, validate(blockBuyerSchema), blockBuyer)
+
+adminRoutes.patch("/buyer/:buyerId/unblock", authLayer, requireAdmin, validate(unBlockBuyerSchema), unBlockBuyer)
+
+adminRoutes.get("/dashboard", authLayer, requireAdmin, getAdminDashboard)

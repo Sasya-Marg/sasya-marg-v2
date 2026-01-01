@@ -1,4 +1,4 @@
-import { blockFarmerService, bootStrapSuperAdminService, createAdminInviteService, getAllFarmerService, getAllPreHarvestedListingService, getAllProductListingService, getAllQueryService, loginAdminService, loginSuperAdminService, ModeratePreHarvestedListingService, ModerateProductListingService, registerAdminWithInviteTokenService, updateQueryService } from '../services/admin.service.js'
+import { adminDashboardService, blockBuyerService, blockFarmerService, bootStrapSuperAdminService, createAdminInviteService, getAllBuyerService, getAllFarmerService, getAllPreHarvestedListingService, getAllProductListingService, getAllQueryService, loginAdminService, loginSuperAdminService, ModeratePreHarvestedListingService, ModerateProductListingService, registerAdminWithInviteTokenService, unblockBuyerService, updateQueryService } from '../services/admin.service.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
 
@@ -167,4 +167,32 @@ export const unBlockFarmer = asyncHandler(async (req, res) => {
     const farmer = await blockFarmerService({ farmerId: req.params.farmerId, })
 
     return res.status(200).json(new ApiResponse(200, farmer, "farmer unBlocked"))
+})
+
+export const getAllBuyer = asyncHandler(async (req, res) => {
+    const { buyers, pagination } = await getAllBuyerService(req.query)
+
+    return res.status(200).json(new ApiResponse(200, { buyers, pagination }, "All Buyers fetched"))
+})
+
+export const blockBuyer = asyncHandler(async (req, res) => {
+    const buyer = await blockBuyerService({ adminId: req.user._id, buyerId: req.params.buyerId, reason: req.body.reason })
+
+    return res.status(200).json(new ApiResponse(200, buyer, "Buyer blocked"))
+})
+
+export const unBlockBuyer = asyncHandler(async (req, res) => {
+    const buyer = await unblockBuyerService({ buyerId: req.params.buyerId, })
+
+    return res.status(200).json(new ApiResponse(200, buyer, "Buyer unBlocked"))
+})
+
+
+export const getAdminDashboard = asyncHandler(async (req, res) => {
+
+    const dashboard = await adminDashboardService()
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, dashboard, "Admin dashboard fetched successfully"))
 })

@@ -132,3 +132,28 @@ export const unBlockFarmerSchema = z.object({
     farmerId: objectId
   })
 })
+
+export const getAllBuyerSchema = z.object({
+  query: z.object({
+    page: z.number().positive().optional(),
+    limit: z.number().positive().optional(),
+    isBlocked: z.boolean().optional(),
+  })
+})
+
+export const blockBuyerSchema = z.object({
+  params: z.object({
+    buyerId: objectId
+  }),
+  body: z.object({
+    reason: z.string().min(3)
+  })
+
+
+})
+
+export const unBlockBuyerSchema = z.object({
+  params: z.object({
+    buyerId: objectId
+  })
+})

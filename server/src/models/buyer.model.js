@@ -69,6 +69,22 @@ const buyerSchema = new mongoose.Schema(
         isBlocked: {
             type: Boolean,
             default: false
+        },
+        
+        blockedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
+            default: null
+        },
+
+        blockedAt: {
+            type: Date,
+            default: null
+        },
+
+        blockReason: {
+            type: String,
+            default: null
         }
     },
     { timestamps: true }

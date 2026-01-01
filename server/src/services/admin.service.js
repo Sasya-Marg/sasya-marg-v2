@@ -479,3 +479,170 @@ export const unblockFarmerService = async ({ farmerId }) => {
     await farmer.save()
     return farmer
 }
+
+export const getAllBuyerService = async (query) => {
+    const { page = 1, limit = 10, isBlocked } = query
+
+    const filter = {}
+
+    if (isBlocked) {
+        filter.isBlocked = isBlocked
+    }
+
+    const skip = (Number(page) - 1) * Number(limit)
+
+    const [buyers, total] = await Promise.all([
+        Buyer.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+
+        Buyer.countDocuments(filter)
+    ])
+
+    return {
+        buyers,
+        pagination: {
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit)
+        }
+    }
+}
+
+export const blockBuyerService = async ({ adminId, buyerId, reason }) => {
+    const buyer = await Buyer.findById(buyerId)
+
+    if (!buyer) throw new ApiError(404, "Buyer not found")
+
+    buyer.isBlocked = true
+    buyer.blockedBy = adminId
+    buyer.blockedAt = new Date()
+    buyer.blockReason = reason || "Policy violation"
+
+    await buyer.save()
+    return buyer
+}
+
+export const unblockBuyerService = async ({ buyerId }) => {
+    const buyer = await Buyer.findById(buyerId)
+    if (!buyer) throw new ApiError(404, "Buyer not found")
+
+    buyer.isBlocked = false
+    buyer.blockedBy = null
+    buyer.blockedAt = null
+    buyer.blockReason = null
+
+    await buyer.save()
+    return buyer
+}
+
+export const adminDashboardService = async () => {
+
+    const [
+        totalFarmers,
+        activeFarmers,
+        blockedFarmers,
+
+        totalBuyers,
+        activeBuyers,
+        blockedBuyers,
+
+        totalProducts,
+        pendingProducts,
+        approvedProducts,
+        rejectedProducts,
+
+        totalListings,
+        pendingListings,
+        approvedListings,
+        rejectedListings,
+
+        totalQueries,
+        openQueries,
+        resolvedQueries,
+
+        recentListings,
+        recentQueries
+    ] = await Promise.all([
+
+
+        Farmer.countDocuments(),
+        Farmer.countDocuments({ isActive: false }),
+        Farmer.countDocuments({ isActive: true }),
+
+
+        Buyer.countDocuments(),
+        Buyer.countDocuments({ isBlocked: false }),
+        Buyer.countDocuments({ isBlocked: true }),
+
+
+        Product.countDocuments(),
+        Product.countDocuments({ moderation: "pending" }),
+        Product.countDocuments({ moderation: "approved" }),
+        Product.countDocuments({ moderation: "rejected" }),
+
+
+        PreHarvestListing.countDocuments(),
+        PreHarvestListing.countDocuments({ moderation: "pending" }),
+        PreHarvestListing.countDocuments({ moderation: "approved" }),
+        PreHarvestListing.countDocuments({ moderation: "rejected" }),
+
+
+        Query.countDocuments(),
+        Query.countDocuments({ status: "open" }),
+        Query.countDocuments({ status: "resolved" }),
+
+
+        PreHarvestListing.find()
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .select("title moderation createdAt"),
+
+        Query.find()
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .select("subject status createdAt")
+    ])
+
+    return {
+        stats: {
+            users: {
+                farmers: {
+                    total: totalFarmers,
+                    active: activeFarmers,
+                    blocked: blockedFarmers
+                },
+                buyers: {
+                    total: totalBuyers,
+                    active: activeBuyers,
+                    blocked: blockedBuyers
+                }
+            },
+
+            listings: {
+                preHarvest: {
+                    total: totalListings,
+                    pending: pendingListings,
+                    approved: approvedListings,
+                    rejected: rejectedListings
+                },
+                products: {
+                    total: totalProducts,
+                    pending: pendingProducts,
+                    approved: approvedProducts,
+                    rejected: rejectedProducts
+                }
+            },
+
+            queries: {
+                total: totalQueries,
+                open: openQueries,
+                resolved: resolvedQueries
+            }
+        },
+
+        recent: {
+            listings: recentListings,
+            queries: recentQueries
+        }
+    }
+}
