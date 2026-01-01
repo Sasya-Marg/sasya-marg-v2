@@ -17,6 +17,7 @@ import { adminRoutes } from './routes/admin.routes.js';
 import { queryRoutes } from './routes/query.routes.js';
 import { productRouter } from './routes/product.route.js';
 import { wishListRouter } from './routes/wishList.routes.js';
+import { schemeRouter } from './routes/governmentScheme.routes.js';
 
 
 
@@ -63,7 +64,8 @@ app.use('/api/v2/admin/', adminRoutes)
 app.use('/api/v2/buyer', buyerRouter)
 app.use('/api/v2/buyer/wishlist', wishListRouter)
 
-
+//scheme routes
+app.use("/api/v2", schemeRouter)
 
 
 

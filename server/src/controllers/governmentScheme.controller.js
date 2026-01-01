@@ -1,0 +1,76 @@
+import { asyncHandler } from "../utils/asyncHandler.js"
+import { ApiResponse } from "../utils/apiResponse.js"
+import { getSchemesForFarmerService } from "../services/governmentSheme.service.js"
+
+import {
+    createSchemeService,
+    getAllSchemesAdminService,
+    updateSchemeService,
+    toggleSchemeService
+} from "../services/governmentSheme.service.js"
+
+
+
+export const createScheme = asyncHandler(async (req, res) => {
+
+    const scheme = await createSchemeService(req.body)
+
+    return res
+        .status(201)
+        .json(new ApiResponse(201, scheme, "Government scheme created successfully"))
+})
+
+
+
+export const getAllSchemesAdmin = asyncHandler(async (req, res) => {
+
+    const data = await getAllSchemesAdminService(req.query)
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, data, "Schemes fetched successfully"))
+})
+
+
+
+export const updateScheme = asyncHandler(async (req, res) => {
+
+    const { id } = req.params
+
+    const scheme = await updateSchemeService(id, req.body)
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, scheme, "Scheme updated successfully"))
+})
+
+
+
+export const toggleScheme = asyncHandler(async (req, res) => {
+
+    const { id } = req.params
+
+    const scheme = await toggleSchemeService(id)
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, scheme, "Scheme status updated successfully"))
+})
+
+
+
+
+export const getSchemesForFarmer = asyncHandler(async (req, res) => {
+
+    const farmerId = req.user._id
+    const { farmLandId } = req.query
+
+    const schemes = await getSchemesForFarmerService({
+        farmerId,
+        farmLandId
+    })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, schemes, "Eligible schemes fetched successfully"))
+})
