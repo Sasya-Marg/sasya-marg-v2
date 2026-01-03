@@ -1,68 +1,182 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =========================================================
+   SASYAMARG THEME – LIGHT MODE
+   ========================================================= */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Base surfaces */
+  --background: #FAFAF9; /* Pale Cream */
+  --foreground: #364219; /* Deep Moss */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --card: #FFFFFF;
+  --card-foreground: #364219;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --popover: #FFFFFF;
+  --popover-foreground: #364219;
+
+  /* Brand – Primary (Olive) */
+  --primary: #5C6F2B; /* Your Olive */
+  --primary-foreground: #FAFAF9;
+
+  /* Secondary – Soft neutral (derived) */
+  --secondary: #EEF1E8; /* olive-tinted neutral */
+  --secondary-foreground: #364219;
+
+  /* Muted */
+  --muted: #F1F3ED;
+  --muted-foreground: #6B7750; /* lighter moss */
+
+  /* Accent – CTA (Sun Yellow) */
+  --accent: #EAB308;
+  --accent-foreground: #364219;
+
+  /* Destructive (earthy red, not aggressive) */
+  --destructive: #C2410C;
+  --destructive-foreground: #FFF7ED;
+
+  /* Borders & inputs */
+  --border: #D6DBC8;
+  --input: #D6DBC8;
+  --ring: #5C6F2B;
+
+  /* Charts (Agri + AI balanced palette) */
+  --chart-1: #5C6F2B; /* Olive */
+  --chart-2: #0EA5E9; /* Sky Teal (AI) */
+  --chart-3: #364219; /* Deep Moss */
+  --chart-4: #EAB308; /* Sun Yellow */
+  --chart-5: #94A97C; /* soft olive */
+
+  /* Radius */
+  --radius: 0.625rem;
+
+  /* Sidebar */
+  --sidebar: #F3F5EE;
+  --sidebar-foreground: #364219;
+  --sidebar-primary: #5C6F2B;
+  --sidebar-primary-foreground: #FAFAF9;
+  --sidebar-accent: #EAB308;
+  --sidebar-accent-foreground: #364219;
+  --sidebar-border: #D6DBC8;
+  --sidebar-ring: #5C6F2B;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* =========================================================
+   SASYAMARG THEME – DARK MODE
+   ========================================================= */
+
+.dark {
+  /* Base surfaces */
+  --background: #1F2612; /* deep forest */
+  --foreground: #FAFAF9;
+
+  --card: #232A15;
+  --card-foreground: #FAFAF9;
+
+  --popover: #232A15;
+  --popover-foreground: #FAFAF9;
+
+  /* Brand – Primary */
+  --primary: #A6B97A; /* softened olive */
+  --primary-foreground: #1F2612;
+
+  /* Secondary */
+  --secondary: #2B331A;
+  --secondary-foreground: #FAFAF9;
+
+  /* Muted */
+  --muted: #2B331A;
+  --muted-foreground: #C8D1B0;
+
+  /* Accent – CTA */
+  --accent: #FACC15; /* softer yellow for dark */
+  --accent-foreground: #1F2612;
+
+  /* Destructive */
+  --destructive: #DC2626;
+  --destructive-foreground: #FFF7ED;
+
+  /* Borders & inputs */
+  --border: #3A4324;
+  --input: #3A4324;
+  --ring: #A6B97A;
+
+  /* Charts */
+  --chart-1: #A6B97A;
+  --chart-2: #38BDF8;
+  --chart-3: #FAFAF9;
+  --chart-4: #FACC15;
+  --chart-5: #6B7750;
+
+  /* Sidebar */
+  --sidebar: #232A15;
+  --sidebar-foreground: #FAFAF9;
+  --sidebar-primary: #A6B97A;
+  --sidebar-primary-foreground: #1F2612;
+  --sidebar-accent: #FACC15;
+  --sidebar-accent-foreground: #1F2612;
+  --sidebar-border: #3A4324;
+  --sidebar-ring: #A6B97A;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+/* =========================================================
+   TAILWIND THEME MAPPING (DO NOT CHANGE)
+   ========================================================= */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+/* =========================================================
+   BASE LAYER
+   ========================================================= */
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
