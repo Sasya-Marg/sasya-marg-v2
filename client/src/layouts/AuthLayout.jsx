@@ -1,9 +1,14 @@
 import { Outlet } from "react-router-dom";
+import { Undo2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted">
-      <div className="w-full max-w-md p-6 bg-background rounded-xl shadow">
+    <div className="w-screen p-10 rounded-xl container mx-auto">
+      <Link to={"/"} className="flex gap-2 text-accent">
+        <Undo2 /> Back to home
+      </Link>
+      <div className="">
         <Outlet />
       </div>
     </div>

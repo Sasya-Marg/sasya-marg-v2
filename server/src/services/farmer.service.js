@@ -24,6 +24,7 @@ export const registerFarmerService = async ({ fullname, phone, otp, password }) 
         phone,
         password,
         isVarified: true,
+        role : "farmer"
     })
 
     const token = generateToken({ _id: farmer._id, role: "farmer" })
@@ -46,17 +47,23 @@ export const loginFarmerUsingOtpService = async ({ phone, otp }) => {
 }
 
 export const loginFarmerUsingPasswordService = async ({ phone, password }) => {
-    const farmer = await Farmer.findOne({ phone }).select("+password")
+    const farmerDoc = await Farmer.findOne({ phone }).select("+password")
 
-    if (!farmer) throw new ApiError(404, "Farmer is not registered yet")
+    if (!farmerDoc) throw new ApiError(404, "Farmer is not registered yet")
 
-    const isVarified = await verifyPassword(password, farmer.password)
+    const isVarified = await verifyPassword(password, farmerDoc.password)
 
     if (!isVarified) throw new ApiError(401, "Invalid credentials")
 
-    const token = generateToken({ _id: farmer._id, role: "farmer" })
+    const token = generateToken({ _id: farmerDoc._id, role: "farmer" })
 
-    delete farmer.password
+    const farmer = {
+        fullname : farmerDoc.fullname,
+        email : farmerDoc.email,
+        role : farmerDoc.role,
+        phone : farmerDoc.phone
+
+    }
 
     return { farmer, token }
 }

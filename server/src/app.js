@@ -18,6 +18,7 @@ import { queryRoutes } from './routes/query.routes.js';
 import { productRouter } from './routes/product.route.js';
 import { wishListRouter } from './routes/wishList.routes.js';
 import { schemeRouter } from './routes/governmentScheme.routes.js';
+import { authRouter } from './routes/auth.routes.js';
 
 
 
@@ -41,6 +42,8 @@ app.post("/response-test", async (req, res) => {
     res.status(200).json(new ApiResponse(200, null));
 });
 
+//common
+app.use("/api/v2/auth" , authRouter)
 
 
 //Farmer Routes

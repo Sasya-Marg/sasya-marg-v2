@@ -3,65 +3,71 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  /* This overrides the default 'font-sans' utility */
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 /* =========================================================
    SASYAMARG THEME – LIGHT MODE
    ========================================================= */
 
 :root {
   /* Base surfaces */
-  --background: #FAFAF9; /* Pale Cream */
+  --background: #fafaf9; /* Pale Cream */
   --foreground: #364219; /* Deep Moss */
 
-  --card: #FFFFFF;
+  --card: #ffffff;
   --card-foreground: #364219;
 
-  --popover: #FFFFFF;
+  --popover: #ffffff;
   --popover-foreground: #364219;
 
   /* Brand – Primary (Olive) */
-  --primary: #5C6F2B; /* Your Olive */
-  --primary-foreground: #FAFAF9;
+  --primary: #5c6f2b; /* Your Olive */
+  --primary-foreground: #fafaf9;
 
   /* Secondary – Soft neutral (derived) */
-  --secondary: #EEF1E8; /* olive-tinted neutral */
+  --secondary: #eef1e8; /* olive-tinted neutral */
   --secondary-foreground: #364219;
 
   /* Muted */
-  --muted: #F1F3ED;
-  --muted-foreground: #6B7750; /* lighter moss */
+  --muted: #f1f3ed;
+  --muted-foreground: #6b7750; /* lighter moss */
 
   /* Accent – CTA (Sun Yellow) */
-  --accent: #EAB308;
+  --accent: #eab308;
   --accent-foreground: #364219;
 
   /* Destructive (earthy red, not aggressive) */
-  --destructive: #C2410C;
-  --destructive-foreground: #FFF7ED;
+  --destructive: #c2410c;
+  --destructive-foreground: #fff7ed;
 
   /* Borders & inputs */
-  --border: #D6DBC8;
-  --input: #D6DBC8;
-  --ring: #5C6F2B;
+  --border: #d6dbc8;
+  --input: #d6dbc8;
+  --ring: #5c6f2b;
 
   /* Charts (Agri + AI balanced palette) */
-  --chart-1: #5C6F2B; /* Olive */
-  --chart-2: #0EA5E9; /* Sky Teal (AI) */
+  --chart-1: #5c6f2b; /* Olive */
+  --chart-2: #0ea5e9; /* Sky Teal (AI) */
   --chart-3: #364219; /* Deep Moss */
-  --chart-4: #EAB308; /* Sun Yellow */
-  --chart-5: #94A97C; /* soft olive */
+  --chart-4: #eab308; /* Sun Yellow */
+  --chart-5: #94a97c; /* soft olive */
 
   /* Radius */
   --radius: 0.625rem;
 
   /* Sidebar */
-  --sidebar: #F3F5EE;
+  --sidebar: #f3f5ee;
   --sidebar-foreground: #364219;
-  --sidebar-primary: #5C6F2B;
-  --sidebar-primary-foreground: #FAFAF9;
-  --sidebar-accent: #EAB308;
+  --sidebar-primary: #5c6f2b;
+  --sidebar-primary-foreground: #fafaf9;
+  --sidebar-accent: #eab308;
   --sidebar-accent-foreground: #364219;
-  --sidebar-border: #D6DBC8;
-  --sidebar-ring: #5C6F2B;
+  --sidebar-border: #d6dbc8;
+  --sidebar-ring: #5c6f2b;
 }
 
 /* =========================================================
@@ -70,56 +76,56 @@
 
 .dark {
   /* Base surfaces */
-  --background: #1F2612; /* deep forest */
-  --foreground: #FAFAF9;
+  --background: #1f2612; /* deep forest */
+  --foreground: #fafaf9;
 
-  --card: #232A15;
-  --card-foreground: #FAFAF9;
+  --card: #232a15;
+  --card-foreground: #fafaf9;
 
-  --popover: #232A15;
-  --popover-foreground: #FAFAF9;
+  --popover: #232a15;
+  --popover-foreground: #fafaf9;
 
   /* Brand – Primary */
-  --primary: #A6B97A; /* softened olive */
-  --primary-foreground: #1F2612;
+  --primary: #a6b97a; /* softened olive */
+  --primary-foreground: #1f2612;
 
   /* Secondary */
-  --secondary: #2B331A;
-  --secondary-foreground: #FAFAF9;
+  --secondary: #2b331a;
+  --secondary-foreground: #fafaf9;
 
   /* Muted */
-  --muted: #2B331A;
-  --muted-foreground: #C8D1B0;
+  --muted: #2b331a;
+  --muted-foreground: #c8d1b0;
 
   /* Accent – CTA */
-  --accent: #FACC15; /* softer yellow for dark */
-  --accent-foreground: #1F2612;
+  --accent: #facc15; /* softer yellow for dark */
+  --accent-foreground: #1f2612;
 
   /* Destructive */
-  --destructive: #DC2626;
-  --destructive-foreground: #FFF7ED;
+  --destructive: #dc2626;
+  --destructive-foreground: #fff7ed;
 
   /* Borders & inputs */
-  --border: #3A4324;
-  --input: #3A4324;
-  --ring: #A6B97A;
+  --border: #3a4324;
+  --input: #3a4324;
+  --ring: #a6b97a;
 
   /* Charts */
-  --chart-1: #A6B97A;
-  --chart-2: #38BDF8;
-  --chart-3: #FAFAF9;
-  --chart-4: #FACC15;
-  --chart-5: #6B7750;
+  --chart-1: #a6b97a;
+  --chart-2: #38bdf8;
+  --chart-3: #fafaf9;
+  --chart-4: #facc15;
+  --chart-5: #6b7750;
 
   /* Sidebar */
-  --sidebar: #232A15;
-  --sidebar-foreground: #FAFAF9;
-  --sidebar-primary: #A6B97A;
-  --sidebar-primary-foreground: #1F2612;
-  --sidebar-accent: #FACC15;
-  --sidebar-accent-foreground: #1F2612;
-  --sidebar-border: #3A4324;
-  --sidebar-ring: #A6B97A;
+  --sidebar: #232a15;
+  --sidebar-foreground: #fafaf9;
+  --sidebar-primary: #a6b97a;
+  --sidebar-primary-foreground: #1f2612;
+  --sidebar-accent: #facc15;
+  --sidebar-accent-foreground: #1f2612;
+  --sidebar-border: #3a4324;
+  --sidebar-ring: #a6b97a;
 }
 
 /* =========================================================

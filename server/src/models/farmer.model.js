@@ -35,6 +35,13 @@ const farmerSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+
+    role: {
+        type: String,
+        enum: ["farmer"],
+        immutable: true,
+        default: "farmer"
+    },
     
     blockedBy: {
         type: mongoose.Schema.Types.ObjectId,

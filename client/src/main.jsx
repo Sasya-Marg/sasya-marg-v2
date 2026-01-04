@@ -1,11 +1,11 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { router } from "@/app/router";
-import Providers from "@/app/providers";
+import router from "./app/routes/AppRoutes";
+import AuthProvider from "./app/auth/AuthProvider";
 import { RouterProvider } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
-  <Providers>
+  <AuthProvider>
     <RouterProvider router={router} />
-  </Providers>
+  </AuthProvider>
 );
