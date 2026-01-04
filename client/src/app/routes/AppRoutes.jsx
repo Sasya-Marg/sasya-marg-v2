@@ -6,9 +6,12 @@ import AuthLayout from "@/layouts/AuthLayout";
 import DashboardLayout from "@/layouts/DashBoardLayout";
 
 import Home from "@/pages/home/Home";
+import Services from "@/pages/services/Services";
 import DataUsage from "@/pages/legal/DataUsage";
 import TermsOfService from "@/pages/legal/TermsOfService";
 import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
+import ContactPage from "@/pages/contact/Contact";
+import AboutPage from "@/pages/about/About";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -16,8 +19,9 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "about", element: <div>About</div> },
-      { path: "features", element: <div>Features</div> },
+      { path: "services", element: <Services /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "contact", element: <ContactPage /> },
     ],
   },
 
