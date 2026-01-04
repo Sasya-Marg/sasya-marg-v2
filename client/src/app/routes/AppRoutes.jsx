@@ -5,15 +5,35 @@ import MainLayout from "@/layouts/MainLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import DashboardLayout from "@/layouts/DashBoardLayout";
 
+import Home from "@/pages/home/Home";
+import DataUsage from "@/pages/legal/DataUsage";
+import TermsOfService from "@/pages/legal/TermsOfService";
+import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
+
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
   {
     element: <MainLayout />,
     children: [
-      { index: true, element: <div>Home</div> },
+      { index: true, element: <Home /> },
       { path: "about", element: <div>About</div> },
       { path: "features", element: <div>Features</div> },
     ],
+  },
+
+  //legal routes
+
+  {
+    path: "/privacy-policy",
+    element: <PrivacyPolicy />,
+  },
+  {
+    path: "/terms-of-service",
+    element: <TermsOfService />,
+  },
+  {
+    path: "/data-usage",
+    element: <DataUsage />,
   },
 
   // 🔐 AUTH (GUEST ONLY)

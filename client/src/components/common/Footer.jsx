@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  Sprout,
-  Send,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-} from "lucide-react";
 import Logo from "./Logo";
 
 const Footer = () => {
@@ -59,7 +51,7 @@ const Footer = () => {
               <FooterLink href="/scheme-guide" label="Scheme Guide" />
               <FooterLink
                 href="/admin/join"
-                label="Become an Admin / Work for Us"
+                label="Work for Us"
               />
             </ul>
           </div>
@@ -83,9 +75,9 @@ const Footer = () => {
               Legal
             </h3>
             <ul className="mt-4 space-y-3">
-              <FooterLink href="/privacy" label="Privacy Policy" />
-              <FooterLink href="/terms" label="Terms of Service" />
-              <FooterLink href="/data-policy" label="Data Usage" />
+              <FooterLink href="/privacy-policy" label="Privacy Policy" />
+              <FooterLink href="/terms-of-service" label="Terms of Service" />
+              <FooterLink href="/data-usage" label="Data Usage" />
             </ul>
           </div>
         </div>

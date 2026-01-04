@@ -186,3 +186,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  *::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
