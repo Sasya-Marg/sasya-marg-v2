@@ -22,6 +22,10 @@ export const useAuthStore = create((set) => ({
       isAuthenticated: false,
     }),
 
+  startLoading: () => {
+    set({ loading: true })
+  },
+
   stopLoading: () =>
     set({ loading: false }),
 }));

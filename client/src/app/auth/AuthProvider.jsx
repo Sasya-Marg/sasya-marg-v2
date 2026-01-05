@@ -5,13 +5,20 @@ import { useAuthStore } from "@/store/useAuthStore";
 const AuthProvider = ({ children }) => {
   const setUser = useAuthStore((s) => s.setUser);
   const clearUser = useAuthStore((s) => s.clearUser);
+  const startLoading = useAuthStore((s) => s.startLoading);
 
   useEffect(() => {
-    
+    startLoading();
+
     api
       .get("/auth/me", { withCredentials: true })
-      .then((res) => setUser(res.data.data))
-      .catch(() => clearUser());
+      .then((res) => {
+        const payload = res.data.data;
+        setUser(payload);
+      })
+      .catch(() => {
+        clearUser();
+      });
   }, []);
 
   return children;

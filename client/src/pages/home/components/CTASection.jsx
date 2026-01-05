@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sprout, ShoppingBag, ArrowRight, TrendingUp, Wheat } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CtaSection = () => {
   return (
@@ -38,13 +39,13 @@ const CtaSection = () => {
               </p>
               
               <div className="mt-8">
-                <a 
-                  href="/farmer/register" 
+                <Link 
+                  to="/farmer/signup" 
                   className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:gap-4 gap-2"
                 >
                   Start Selling Crop
                   <ArrowRight className="h-4 w-4 transition-transform duration-300" />
-                </a>
+                </Link>
                </div>
             </div>
           </div>
@@ -66,13 +67,13 @@ const CtaSection = () => {
               </p>
               
               <div className="mt-8">
-                <a 
-                  href="/buyer/register" 
+                <Link
+                  to="/buyer/signup" 
                   className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-md transition-all duration-300 hover:bg-accent/90 hover:shadow-lg hover:gap-4 gap-2"
                 >
                   Start Sourcing
                   <ArrowRight className="h-4 w-4 transition-transform duration-300" />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

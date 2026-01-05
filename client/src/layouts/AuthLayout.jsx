@@ -4,11 +4,8 @@ import { Link } from "react-router-dom";
 
 const AuthLayout = () => {
   return (
-    <div className="w-screen p-10 rounded-xl container mx-auto">
-      <Link to={"/"} className="flex gap-2 text-accent">
-        <Undo2 /> Back to home
-      </Link>
-      <div className="">
+    <div className="w-screen">
+      <div>
         <Outlet />
       </div>
     </div>

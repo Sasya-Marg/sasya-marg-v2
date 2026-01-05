@@ -21,7 +21,8 @@ const farmerSchema = new mongoose.Schema({
         type: String,
         trim: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        sparse: true
     },
     isContactVisible: {
         type: Boolean,
@@ -42,7 +43,7 @@ const farmerSchema = new mongoose.Schema({
         immutable: true,
         default: "farmer"
     },
-    
+
     blockedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin",

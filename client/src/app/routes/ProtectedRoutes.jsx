@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuthStore";
 
 const ProtectedRoute = ({ children, role, allowGuest }) => {
-  const { loading, isAuthenticated, role: userRole } = useAuthStore();
+  const { loading, isAuthenticated, role: userRole, } = useAuthStore();
 
   if (loading) return null;
 
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children, role, allowGuest }) => {
 
   // 🔐 protected routes
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (role && role !== userRole) {

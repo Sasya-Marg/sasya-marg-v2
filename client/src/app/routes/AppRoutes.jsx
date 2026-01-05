@@ -12,11 +12,19 @@ import TermsOfService from "@/pages/legal/TermsOfService";
 import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
 import ContactPage from "@/pages/contact/Contact";
 import AboutPage from "@/pages/about/About";
+import UnauthorizedPage from "@/pages/unauthorize/UnAuthorize";
+import NotFoundPage from "@/pages/404/404Page";
+import FarmerSignup from "@/pages/signup/Signup";
+import FarmerLogin from "@/pages/Login/Login";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
   {
-    element: <MainLayout />,
+    element: (
+      <ProtectedRoute allowGuest={true}>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Home /> },
       { path: "services", element: <Services /> },
@@ -48,9 +56,9 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { path: "login", element: <div>Login</div> },
-      { path: "signup", element: <div>Signup</div> },
-      { path: "/forgot-password", element: <div>Forgot Password</div> },
+      { path: "farmer/login", element: <FarmerLogin /> },
+      { path: "farmer/signup", element: <FarmerSignup /> },
+      { path: "farmer/forgot-password", element: <div>Forgot Password</div> },
     ],
   },
 
@@ -63,23 +71,35 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "get-suggestion", element: <div>Get AI Suggestion</div> },
-      { path: "add-farm", element: <div>Add FarmLand</div> },
+      { path: "get-suggestion/:id", element: <div>Suggestion History</div> },
+      { path: "mandi", element: <div>Mandi for Listing</div> },
+      { path: "Schemes", element: <div>Scheme for farmer</div> },
+      { path: "contact", element: <div>Contact for farmer</div> },
+      { path: "farmland", element: <div>Farmland crud</div> },
+      { path: "profile", element: <div>Farmer Profile</div> },
+    ],
+  },
 
-      {
-        path: "dashboard",
-        element: <DashboardLayout />,
-        children: [
-          { index: true, element: <div>Farmer Dashboard</div> },
-          { path: "listings", element: <div>All Listings</div> },
-        ],
-      },
+  //Dashboard
+  {
+    path: "farmer/dashboard",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { index: true, element: <div>Farmer Dashboard</div> },
+      { path: "listings", element: <div>All Listings</div> },
     ],
   },
 
   {
-    path: "/unauthorized",
     element: <MainLayout />,
-    children: [{ index: true, element: <div>Unauthorized</div> }],
+    children: [
+      { path: "/unauthorized", element: <UnauthorizedPage /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
   },
 ]);
 

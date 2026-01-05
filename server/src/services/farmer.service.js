@@ -4,18 +4,20 @@ import { ApiError } from '../utils/apiError.js'
 import { verifyOtpService } from './otp.service.js'
 import { generateToken } from '../utils/generateToken.js'
 import { verifyPassword } from '../utils/verifyPassword.js'
-import { Buyer } from '../models/buyer.model.js'
 import { FarmLand } from '../models/farmLand.model.js'
 import { Product } from "../models/product.model.js"
 import { PreHarvestListing } from '../models/preHarvetedListing.model.js'
 import { PredictHistory } from "../models/predictHistory.model.js"
+import { Admin } from '../models/admin.model.js'
+import { Buyer } from '../models/buyer.model.js'
 
 export const registerFarmerService = async ({ fullname, phone, otp, password }) => {
-    const existing = await Farmer.findOne({ phone })
-    if (existing) throw new ApiError(409, "Farmer already registered")
-
-    const isBuyer = await Buyer.findOne({ phone })
-    if (isBuyer) throw new ApiError(409, "Number si already in use for buyer")
+    const [farmerExist, AdminExist, buyerExist] = await Promise.all([
+        Farmer.findOne({ phone }),
+        Admin.findOne({ phone }),
+        Buyer.findOne({ phone }),
+    ])
+    if (farmerExist || AdminExist || buyerExist) throw new ApiError(409, "Phone Number is already in use ")
 
     await verifyOtpService({ phone, otp, purpose: "register" })
 
@@ -24,7 +26,7 @@ export const registerFarmerService = async ({ fullname, phone, otp, password }) 
         phone,
         password,
         isVarified: true,
-        role : "farmer"
+        role: "farmer"
     })
 
     const token = generateToken({ _id: farmer._id, role: "farmer" })
@@ -33,13 +35,21 @@ export const registerFarmerService = async ({ fullname, phone, otp, password }) 
 }
 
 export const loginFarmerUsingOtpService = async ({ phone, otp }) => {
-    const farmer = await Farmer.findOne({ phone })
+    const farmerDoc = await Farmer.findOne({ phone })
 
-    if (!farmer) throw new ApiError(404, "Farmer is not registered yet")
+    if (!farmerDoc) throw new ApiError(404, "Farmer is not registered yet")
 
     await verifyOtpService({ otp, purpose: "login", phone })
 
-    const token = generateToken({ _id: farmer._id, role: "farmer" })
+    const token = generateToken({ _id: farmerDoc._id, role: "farmer" })
+
+    const farmer = {
+        fullname: farmerDoc.fullname,
+        email: farmerDoc.email,
+        role: farmerDoc.role,
+        phone: farmerDoc.phone
+
+    }
 
     return { farmer, token }
 
@@ -58,10 +68,10 @@ export const loginFarmerUsingPasswordService = async ({ phone, password }) => {
     const token = generateToken({ _id: farmerDoc._id, role: "farmer" })
 
     const farmer = {
-        fullname : farmerDoc.fullname,
-        email : farmerDoc.email,
-        role : farmerDoc.role,
-        phone : farmerDoc.phone
+        fullname: farmerDoc.fullname,
+        email: farmerDoc.email,
+        role: farmerDoc.role,
+        phone: farmerDoc.phone
 
     }
 

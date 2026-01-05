@@ -1,7 +1,11 @@
+import Logo from "./Logo";
+
 const Sidebar = () => {
   return (
     <aside className="w-64 bg-background border-r p-4">
-      <h2 className="font-semibold mb-4">Dashboard</h2>
+      <div className="font-semibold mb-4 flex gap-2 items-center">
+        <Logo className={"w-8 h-8"} /> <span>SasyaMarg</span>
+      </div>
       <nav className="space-y-2 text-sm">
         <div className="cursor-pointer">Overview</div>
         <div className="cursor-pointer">Listings</div>
