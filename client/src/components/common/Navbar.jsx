@@ -122,7 +122,7 @@ const Navbar = () => {
                           user.email
                         ) : (
                           <Link
-                            to={`/${role}/profile`}
+                            to={`/${role}/`}
                             className="border-b border-dotted text-accent"
                           >
                             Add Email
@@ -132,7 +132,7 @@ const Navbar = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <Link to={`/${role}/profile`}>
+                  <Link to={`/${role}/`}>
                     <DropdownMenuItem>
                       <User className="mr-2 h-4 w-4" />
                       <span>Profile</span>

@@ -88,8 +88,9 @@ export const forgotPasswordService = async ({ phone, otp, newPassword }) => {
 
     farmer.password = newPassword
     await farmer.save()
-    delete farmer?.password
-    return { farmer }
+    const farmerObj = farmer.toJSON()
+    delete farmerObj?.password
+    return { farmer: farmerObj }
 }
 
 export const changePasswordService = async ({ oldPassword, newPassword, _id }) => {

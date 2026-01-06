@@ -16,6 +16,7 @@ import UnauthorizedPage from "@/pages/unauthorize/UnAuthorize";
 import NotFoundPage from "@/pages/404/404Page";
 import FarmerSignup from "@/pages/signup/Signup";
 import FarmerLogin from "@/pages/Login/Login";
+import ForgotPassword from "@/pages/forgot-password/ForgotPassword";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
     children: [
       { path: "farmer/login", element: <FarmerLogin /> },
       { path: "farmer/signup", element: <FarmerSignup /> },
-      { path: "farmer/forgot-password", element: <div>Forgot Password</div> },
+      { path: "farmer/forgot-password", element: <ForgotPassword /> },
     ],
   },
 
@@ -70,13 +71,13 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      { index: true, element: <div>Farmer Profile</div> },
       { path: "get-suggestion", element: <div>Get AI Suggestion</div> },
       { path: "get-suggestion/:id", element: <div>Suggestion History</div> },
       { path: "mandi", element: <div>Mandi for Listing</div> },
       { path: "Schemes", element: <div>Scheme for farmer</div> },
       { path: "contact", element: <div>Contact for farmer</div> },
       { path: "farmland", element: <div>Farmland crud</div> },
-      { path: "profile", element: <div>Farmer Profile</div> },
     ],
   },
 

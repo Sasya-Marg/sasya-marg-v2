@@ -24,3 +24,8 @@ export const loginFarmerWithPasword = async ({ phone, password }) => {
     const { data } = await api.post("/farmer/auth/login/password", { phone, password })
     return data
 }
+
+export const forgotPassword = async (payload) => {
+    const { data } = await api.put("/farmer/auth/forgot-password", payload)
+    return data
+}

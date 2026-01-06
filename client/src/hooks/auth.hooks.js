@@ -1,4 +1,4 @@
-import { loginFarmerWithOtp, loginFarmerWithPasword, logoutFarmer, registerFarmer, sendOtp } from "@/api/auth.api";
+import { forgotPassword, loginFarmerWithOtp, loginFarmerWithPasword, logoutFarmer, registerFarmer, sendOtp } from "@/api/auth.api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -43,6 +43,9 @@ export const useLogoutFarmer = () => {
             clearUser()
             toast.success("Logout successfully")
             navigate(`/`)
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Failed to Logout");
         }
     })
 }
@@ -57,6 +60,9 @@ export const useFarmerLoginWithOtp = () => {
             setUser(data.data)
             toast.success("Login successfully")
             navigate(`/farmer/dashboard`)
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Failed to Login");
         }
     })
 }
@@ -71,6 +77,23 @@ export const useFarmerLoginWithPassword = () => {
             setUser(data.data)
             toast.success("Login successfully")
             navigate(`/farmer/dashboard`)
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Failed to Login");
+        }
+    })
+}
+
+export const useFarmerForgotPassword = () => {
+    const navigate = useNavigate()
+    return useMutation({
+        mutationFn: forgotPassword,
+        onSuccess: (data) => {
+            console.log("Password changed...", data)
+            navigate(`/${data.data.role}/login`)
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Failed to change password");
         }
     })
 }

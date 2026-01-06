@@ -211,7 +211,7 @@ const LoginForm = () => {
         {mode === "password" && (
           <div className="text-right">
             <Link
-              to="/forgot-password"
+              to="/farmer/forgot-password"
               className="text-xs font-medium text-primary hover:underline"
             >
               Forgot password?

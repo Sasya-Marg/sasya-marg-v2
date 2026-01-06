@@ -28,7 +28,7 @@ export const sendOtpService = async ({ phone, purpose }) => {
     otp,
     purpose,
     phone,
-    expiresAt: new Date(Date.now() + 5 * 60 * 100)
+    expiresAt: new Date(Date.now() + 5 * 60 * 1000)
   })
   if (!otpDoc) throw new ApiError(500, "Error while sending otp")
 
@@ -45,20 +45,33 @@ export const sendOtpService = async ({ phone, purpose }) => {
 
 
 export const verifyOtpService = async ({ phone, purpose, otp }) => {
-  const otpDoc = await Otp.findOne({ phone, purpose });
+  const otpDoc = await Otp.findOne({
+    phone,
+    purpose,
+    isUsed: false,
+    isBlocked: false,
+  });
 
   if (!otpDoc) {
-    throw new ApiError(400, "OTP not found");
+    throw new ApiError(
+      400,
+      "OTP expired or already used. Please request a new one."
+    );
   }
 
   if (otpDoc.expiresAt < Date.now()) {
-    await Otp.deleteOne({ _id: otpDoc._id });
-    throw new ApiError(400, "OTP expired");
+    otpDoc.isBlocked = true;
+    await otpDoc.save();
+    throw new ApiError(400, "OTP expired. Please request a new one.");
   }
 
   if (otpDoc.attempts >= otpDoc.maxAttempts) {
-    await Otp.deleteOne({ _id: otpDoc._id });
-    throw new ApiError(429, "OTP attempts exceeded");
+    otpDoc.isBlocked = true;
+    await otpDoc.save();
+    throw new ApiError(
+      429,
+      "OTP attempts exceeded. Please request a new one."
+    );
   }
 
   const isValid = await bcrypt.compare(otp, otpDoc.otp);
@@ -69,6 +82,10 @@ export const verifyOtpService = async ({ phone, purpose, otp }) => {
     throw new ApiError(400, "Invalid OTP");
   }
 
-  await Otp.deleteOne({ _id: otpDoc._id });
+
+  otpDoc.isUsed = true;
+  await otpDoc.save();
+
   return true;
 };
+

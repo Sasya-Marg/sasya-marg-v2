@@ -49,7 +49,7 @@ const DashboardHeader = () => {
                       user.email
                     ) : (
                       <Link
-                        to={`/${role}/profile`}
+                        to={`/${role}/`}
                         className="border-b border-dotted text-accent"
                       >
                         Add Email
