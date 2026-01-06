@@ -17,6 +17,7 @@ import NotFoundPage from "@/pages/404/404Page";
 import FarmerSignup from "@/pages/signup/Signup";
 import FarmerLogin from "@/pages/Login/Login";
 import ForgotPassword from "@/pages/forgot-password/ForgotPassword";
+import Profile from "@/pages/profile/Profile";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { index: true, element: <div>Farmer Profile</div> },
+      { index: true, element: <Profile /> },
       { path: "get-suggestion", element: <div>Get AI Suggestion</div> },
       { path: "get-suggestion/:id", element: <div>Suggestion History</div> },
       { path: "mandi", element: <div>Mandi for Listing</div> },
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
   {
     path: "farmer/dashboard",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute role="farmer">
         <DashboardLayout />
       </ProtectedRoute>
     ),

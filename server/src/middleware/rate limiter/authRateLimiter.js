@@ -9,11 +9,17 @@ export const sendOtpLimit = createLimiter({
 export const changePasswordLimiter = createLimiter({
     windowMs: 15 * 60 * 1000,
     max: 5,
-     message: "Too many attempts, Try later"
+    message: "Too many attempts, Try later"
 })
 
 export const loginFarmerLimiter = createLimiter({
     windowMs: 1000 * 60 * 5,
     max: 10,
     message: "Too many login attempts, Try later"
+})
+
+export const changeDataLimiter = createLimiter({
+    windowMs: 1000 * 60 * 10,
+    max: 10,
+    message: "To many attempts try again later"
 })

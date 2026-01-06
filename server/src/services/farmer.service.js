@@ -147,17 +147,28 @@ export const toggleContactInfoService = async ({ _id }) => {
 }
 
 export const changeFarmerDataService = async ({ fullname, email, _id }) => {
+    const existEmailFarmer = await Farmer.findOne({
+        email,
+        _id: { $ne: _id }
+    })
+
+    if (existEmailFarmer) {
+        throw new ApiError(409, "Email is already in use")
+    }
+
     const farmer = await Farmer.findByIdAndUpdate(
         _id,
         { fullname, email },
         { new: true }
     )
 
-    if (!farmer) throw new ApiError(404, "Farmer not found")
+    if (!farmer) {
+        throw new ApiError(404, "Farmer not found")
+    }
 
     return farmer
-
 }
+
 
 export const farmerDashboardService = async (farmerId) => {
     const farmerObjectId = new mongoose.Types.ObjectId(farmerId)
