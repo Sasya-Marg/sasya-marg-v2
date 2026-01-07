@@ -33,7 +33,7 @@ const DashboardHeader = () => {
               <Button variant="ghost" className="relative h-9 w-9 rounded-full">
                 <Avatar className="h-9 w-9 border-2 border-primary">
                   <AvatarFallback className={"text-lg font-bold"}>
-                    {user.fullname.charAt(0)}
+                    {user.fullname.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
               </Button>

@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { Menu, User, LogOut, LayoutDashboard, Loader2 } from "lucide-react";
 import { useAuthStore } from "@/store/useAuthStore";
-
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useLogoutFarmer } from "@/hooks/auth.hooks";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const { user, isAuthenticated, role } = useAuthStore();
@@ -62,6 +62,7 @@ const Navbar = () => {
               </span>
             </Link>
           </div>
+
           {isAuthenticated ? (
             <div className="hidden md:flex md:items-center md:gap-6">
               {farmerLinks.map((link) => (
@@ -95,104 +96,103 @@ const Navbar = () => {
               ))}
             </div>
           )}
-          {/* --- Right Actions (Auth/Profile) --- */}
+
           <div className="hidden md:flex md:items-center md:gap-4">
             {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-9 w-9 rounded-full"
-                  >
-                    <Avatar className="h-9 w-9 border-2 border-primary">
-                      <AvatarFallback className={"text-lg font-bold"}>
-                        {user.fullname.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">
-                        {user.fullname}
-                      </p>
-                      <p className="text-xs leading-none text-foreground">
-                        {user.email ? (
-                          user.email
+              <>
+                <ThemeToggle />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative h-9 w-9 rounded-full"
+                    >
+                      <Avatar className="h-9 w-9 border-2 border-primary">
+                        <AvatarFallback className="text-lg font-bold">
+                          {user.fullname.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          {user.fullname}
+                        </p>
+                        <p className="text-xs leading-none text-foreground">
+                          {user.email ? (
+                            user.email
+                          ) : (
+                            <Link
+                              to={`/${role}/`}
+                              className="border-b border-dotted text-accent"
+                            >
+                              Add Email
+                            </Link>
+                          )}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <Link to={`/${role}/`}>
+                      <DropdownMenuItem>
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to={`/${role}/dashboard`}>
+                      <DropdownMenuItem>
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        <span>Dashboard</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-red-600 focus:text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <button onClick={handleLogout}>
+                        {isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
-                          <Link
-                            to={`/${role}/`}
-                            className="border-b border-dotted text-accent"
-                          >
-                            Add Email
-                          </Link>
+                          "Log out"
                         )}
-                      </p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <Link to={`/${role}/`}>
-                    <DropdownMenuItem>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
+                      </button>
                     </DropdownMenuItem>
-                  </Link>
-
-                  <Link to={`/${role}/dashboard`}>
-                    <DropdownMenuItem>
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
-                      <span>Dashboard</span>
-                    </DropdownMenuItem>
-                  </Link>
-
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-red-600 focus:text-red-600">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <button onClick={handleLogout}>
-                      {isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        "Log out"
-                      )}
-                    </button>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
             ) : (
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 <Button variant="ghost" asChild>
                   <Link to="/farmer/login">Log in</Link>
                 </Button>
                 <Button asChild>
                   <Link to="/farmer/signup">Get Started</Link>
                 </Button>
+                <ThemeToggle />
               </div>
             )}
           </div>
 
-          {/* --- Mobile Menu Trigger --- */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button variant="ghost" size="icon">
                   <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-75 sm:w-100">
                 <SheetHeader>
-                  <SheetTitle className="text-left flex items-center gap-2">
-                    <div className="flex items-center gap-2">
-                      <Link to="/" className="flex items-center gap-2">
-                        <Logo className={"w-8 md:w-11"} />
-                        <span className="md:text-2xl text-lg font-bold tracking-tight text-foreground">
-                          Sasya<span className="text-primary">Marg</span>
-                        </span>
-                      </Link>
-                    </div>
+                  <SheetTitle className="text-left flex items-center justify-between">
+                    <Link to="/" className="flex items-center gap-2">
+                      <Logo className={"w-8 md:w-11"} />
+                      <span className="text-lg font-bold tracking-tight text-foreground">
+                        Sasya<span className="text-primary">Marg</span>
+                      </span>
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
+
                 {isAuthenticated ? (
                   <div className="flex flex-col gap-4 p-4">
                     {farmerLinks.map((link) => (
@@ -200,7 +200,7 @@ const Navbar = () => {
                         key={link.name}
                         to={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={`flex items-center gap-2 text-lg font-medium ${
+                        className={`text-lg font-medium ${
                           isActive(link.href)
                             ? "text-primary"
                             : "text-muted-foreground"
@@ -209,33 +209,6 @@ const Navbar = () => {
                         {link.name}
                       </Link>
                     ))}
-                    <div className="my-2 border-t" />
-                    {isAuthenticated ? (
-                      <div className="flex flex-col gap-2">
-                        <Button variant="outline" className="justify-start">
-                          <User className="mr-2 h-4 w-4" /> Profile
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="justify-start text-red-600"
-                        >
-                          <LogOut className="mr-2 h-4 w-4" /> Logout
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col gap-2">
-                        <Button asChild onClick={() => setIsOpen(false)}>
-                          <Link to="/login">Log in</Link>
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          asChild
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <Link to="/signup">Sign up</Link>
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-4 p-4">
@@ -244,7 +217,7 @@ const Navbar = () => {
                         key={link.name}
                         to={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={`flex items-center gap-2 text-lg font-medium ${
+                        className={`text-lg font-medium ${
                           isActive(link.href)
                             ? "text-primary"
                             : "text-muted-foreground"
@@ -253,35 +226,12 @@ const Navbar = () => {
                         {link.name}
                       </Link>
                     ))}
-                    <div className="my-2 border-t" />
-                    {isAuthenticated ? (
-                      <div className="flex flex-col gap-2">
-                        <Button variant="outline" className="justify-start">
-                          <User className="mr-2 h-4 w-4" /> Profile
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="justify-start text-red-600"
-                        >
-                          <LogOut className="mr-2 h-4 w-4" /> Logout
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col gap-2">
-                        <Button asChild onClick={() => setIsOpen(false)}>
-                          <Link to="/login">Log in</Link>
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          asChild
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <Link to="/signup">Sign up</Link>
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 )}
+
+                <div className="mt-6 px-4">
+                  <ThemeToggle />
+                </div>
               </SheetContent>
             </Sheet>
           </div>

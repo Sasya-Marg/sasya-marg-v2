@@ -3,6 +3,7 @@ import { Location } from "../models/location.model.js";
 import { resolveLocation } from "./location.service.js";
 import { Farmer } from '../models/farmer.model.js'
 import { ApiError } from "../utils/apiError.js";
+import { getWeatherService } from "./weather.service.js";
 
 
 
@@ -68,8 +69,28 @@ export const updateFarmLandService = async ({ farmerId, farmLandId, payload }) =
 
 }
 
+export const getFarmlandFromId = async ({ farmlandId, farmerId }) => {
+    const farmlandDoc = await FarmLand.findOne({ _id: farmlandId, owner: farmerId }).populate("location")
+
+    if (!farmlandDoc) throw new ApiError(404, "farmland not found")
+
+    if (!farmlandDoc.location) throw new ApiError(404, "No location found for farmland")
+
+    const weather = await getWeatherService(farmlandDoc.location._id)
+
+    const farmland = farmlandDoc.toJSON()
+    farmland.weather = weather
+
+    return farmland
+
+
+}
+
 export const getAllFarmsService = async ({ farmerId }) => {
-    return await FarmLand.find({ owner: farmerId })
+    return await FarmLand.find({ owner: farmerId }).populate({
+        path: "location",
+        select: "locality district state"
+    })
 }
 
 export const toggleFarmLandActiveStatusService = async ({ farmerId, farmLandId }) => {

@@ -168,6 +168,10 @@ const Profile = () => {
             </p>
             <p className="text-xs text-muted-foreground">
               Allow buyers to see your contact details
+              <br />
+              <span className="font-bold">
+                *This will help buyers to reach out to you
+              </span>
             </p>
           </div>
           <Switch

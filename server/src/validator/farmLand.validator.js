@@ -64,3 +64,10 @@ export const toggleFarmLandStatus = z.object({
         farmLandId: objectId
     }),
 })
+
+export const getSingleFarmlandSchema = z.object({
+    params: z.object({
+        farmlandId: objectId
+    }),
+})
+

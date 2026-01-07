@@ -1,6 +1,6 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from "../utils/apiResponse.js";
-import { createFarmLandService, getAllFarmsService, toggleFarmLandActiveStatusService, updateFarmLandService } from '../services/farmLand.service.js';
+import { createFarmLandService, getAllFarmsService, getFarmlandFromId, toggleFarmLandActiveStatusService, updateFarmLandService } from '../services/farmLand.service.js';
 
 export const createFarmLand = asyncHandler(async (req, res) => {
     const farmerId = req.user._id
@@ -29,4 +29,12 @@ export const toggleFarmLandActiveStatus = asyncHandler(async (req, res) => {
     const farmland = await toggleFarmLandActiveStatusService({ farmLandId, farmerId: req.user._id })
 
     return res.status(200).json(new ApiResponse(200, farmland, "Active status is changes for farmland"))
+})
+
+export const getSingleFarmland = asyncHandler(async (req, res) => {
+    const farmerId = req.user._id
+    const { farmlandId } = req.params
+    const farmland = await getFarmlandFromId({ farmerId, farmlandId })
+
+    return res.status(200).json(new ApiResponse(200, farmland, "farmland fetched successfully"))
 })

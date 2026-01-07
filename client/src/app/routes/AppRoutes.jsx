@@ -18,6 +18,8 @@ import FarmerSignup from "@/pages/signup/Signup";
 import FarmerLogin from "@/pages/Login/Login";
 import ForgotPassword from "@/pages/forgot-password/ForgotPassword";
 import Profile from "@/pages/profile/Profile";
+import Farmlands from "@/pages/farmland/Farmlands";
+import SingleFarmland from "@/pages/farmland/SingleFarmland";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -78,7 +80,9 @@ const router = createBrowserRouter([
       { path: "mandi", element: <div>Mandi for Listing</div> },
       { path: "Schemes", element: <div>Scheme for farmer</div> },
       { path: "contact", element: <div>Contact for farmer</div> },
-      { path: "farmland", element: <div>Farmland crud</div> },
+      { path: "farmland", element: <Farmlands /> },
+      { path: "farmland/:farmlandId", element: <SingleFarmland /> },
+      { path: "farmland/add", element: "Add farmland" },
     ],
   },
 

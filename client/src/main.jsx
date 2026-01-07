@@ -8,12 +8,19 @@ import { queryClient } from "@/lib/queryClient";
 import { Toaster } from "sonner";
 import AppLoader from "@/components/common/AppLoader";
 import { useAuthStore } from "./store/useAuthStore";
+import { useEffect } from "react";
+import { useThemeStore } from "./store/useThemeStrore";
 
 export const RootShell = () => {
   const loading = useAuthStore((s) => s.loading);
   const user = useAuthStore((s) => s.user);
-
+  const { theme } = useThemeStore();
   console.log("AUTH STATE →", { loading, user });
+
+  useEffect(() => {
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
+  }, [theme]);
 
   return (
     <>
