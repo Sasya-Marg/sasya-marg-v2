@@ -40,7 +40,7 @@ const Navbar = () => {
     { name: "Schemes", href: "/farmer/schemes" },
     { name: "Farmlands", href: "/farmer/farmland" },
     { name: "Get Suggestion", href: "/farmer/get-suggestion" },
-    { name: "Contact Us", href: "/farmer/contact" },
+    { name: "Support", href: "/farmer/support" },
   ];
 
   const isActive = (path) => location.pathname === path;

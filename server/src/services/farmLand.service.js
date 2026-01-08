@@ -4,6 +4,7 @@ import { resolveLocation } from "./location.service.js";
 import { Farmer } from '../models/farmer.model.js'
 import { ApiError } from "../utils/apiError.js";
 import { getWeatherService } from "./weather.service.js";
+import { PreviousCrop } from '../models/previousCrop.model.js'
 
 
 
@@ -71,6 +72,7 @@ export const updateFarmLandService = async ({ farmerId, farmLandId, payload }) =
 
 export const getFarmlandFromId = async ({ farmlandId, farmerId }) => {
     const farmlandDoc = await FarmLand.findOne({ _id: farmlandId, owner: farmerId }).populate("location")
+    const previousCrop = await PreviousCrop.findOne({ farmLand: farmlandId })
 
     if (!farmlandDoc) throw new ApiError(404, "farmland not found")
 
@@ -80,6 +82,14 @@ export const getFarmlandFromId = async ({ farmlandId, farmerId }) => {
 
     const farmland = farmlandDoc.toJSON()
     farmland.weather = weather
+    if (previousCrop) {
+        farmland.previousCrop = {
+            name: previousCrop.name,
+            season: previousCrop.season,
+            year: previousCrop.year,
+        } || null
+    }
+
 
     return farmland
 

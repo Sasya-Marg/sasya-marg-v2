@@ -26,7 +26,6 @@ export const viewMyQuerySevice = async (farmerId, query = {}) => {
 
     const [queries, total] = await Promise.all([
         Query.find(filter)
-            .select("inquiry subject message status createdAt")
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(Number(limit))

@@ -37,8 +37,8 @@ export const createQuerySchema = z.object({
 
 export const viewMyQuerySchema = z.object({
   query: z.object({
-    page: z.string().optional().refine((val) => !val || !isNaN(val), { message: "Page must be a number" }),
-    limit: z.string().optional().refine((val) => !val || !isNaN(val), { message: "Limit must be a number" }),
+    page: z.string().optional(),
+    limit: z.string().optional(),
     status: z.enum(["open", "in_progress", "resolved", "closed"]).optional()
   })
 })
