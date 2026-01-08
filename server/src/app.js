@@ -24,10 +24,24 @@ import { authRouter } from './routes/auth.routes.js';
 
 export const app = express()
 
-app.use(cors({
-    credentials: true,
-    origin: process.env.ORIGIN
-}))
+const allowedOrigins = process.env.ORIGIN
+    ? process.env.ORIGIN.split(",")
+    : [];
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            if (!origin) return callback(null, true);
+
+            if (allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
+    })
+);
 
 app.use(urlencoded({ extended: true }))
 app.use(json())
@@ -43,7 +57,7 @@ app.post("/response-test", async (req, res) => {
 });
 
 //common
-app.use("/api/v2/auth" , authRouter)
+app.use("/api/v2/auth", authRouter)
 
 
 //Farmer Routes
