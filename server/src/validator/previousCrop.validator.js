@@ -14,7 +14,7 @@ export const addPreviousCrop = z.object({
 
     body: z.object({
         name: z.string().min(2).trim(),
-        year: z.string().optional(),
+        year: z.number().optional(),
         season: z.enum(["summer", "winter", "monsoon", "post-monsoon"])
     })
 })

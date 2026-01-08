@@ -1,0 +1,48 @@
+import React from 'react'
+import { ArrowLeft, Edit2, MapPin } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { useNavigate } from 'react-router-dom'
+
+const FarmlandHeader = ({ farmland }) => { // Accept prop
+  const navigate = useNavigate()
+  if (!farmland) return null
+
+  return (
+    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="space-y-1">
+        <div className="flex items-center gap-3">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => navigate(-1)} 
+            className="-ml-2 text-muted-foreground hover:text-primary hover:bg-secondary"
+          >
+            <ArrowLeft className="h-6 w-6" />
+          </Button>
+          
+          <h1 className="text-3xl font-bold capitalize tracking-tight text-foreground">
+            {farmland.name}
+          </h1>
+          
+          <Badge className="bg-primary text-primary-foreground hover:bg-primary/90">
+            {farmland.isActive ? "Active" : "Inactive"}
+          </Badge>
+        </div>
+        
+        <div className="ml-10 flex items-center gap-2 text-muted-foreground">
+          <MapPin className="h-4 w-4 text-primary" />
+          <span>
+            {farmland.location.locality}, {farmland.location.state}
+          </span>
+        </div>
+      </div>
+
+      <Button variant="outline" className="border-primary text-primary hover:bg-secondary">
+        <Edit2 className="mr-2 h-4 w-4" /> Edit Details
+      </Button>
+    </div>
+  )
+}
+
+export default FarmlandHeader

@@ -26,24 +26,29 @@ const Farmlands = () => {
 
   if (!farmlands || farmlands.length < 1) {
     return (
-      <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 bg-linear-to-br from-[#F7FBEF] via-[#F1F7E8] to-[#FFF4D6]">
-        <Card className="w-full max-w-md bg-white/80 backdrop-blur border-[#E4ECD6] shadow-xl rounded-2xl">
-          <CardHeader className="flex flex-col items-center text-center gap-4">
-            <div className="flex items-center justify-center h-16 w-16 rounded-full bg-[#EAF1DB] text-[#5C6F2B]">
-              <Sprout className="h-8 w-8" />
+      <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 ">
+        <Card className="relative w-lg overflow-hidden rounded-2xl border bg-card text-card-foreground shadow-lg">
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-secondary/70 via-transparent to-accent/20" />
+
+          <CardHeader className="relative flex flex-col items-center gap-4 px-6 pt-8 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary ring-1 ring-primary/30 shadow-sm">
+              <Sprout className="h-8 w-8 text-primary" />
             </div>
-            <CardTitle className="text-2xl text-[#364219]">
-              No Farmland Added Yet
+
+            <CardTitle className="text-xl font-semibold tracking-tight text-foreground">
+              No Farmland Added
             </CardTitle>
-            <CardDescription className="text-[#5F6F3A]">
-              Add your farmland details to unlock accurate crop predictions,
-              weather insights, and better market visibility.
+
+            <CardDescription className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+              Add your farmland to unlock smarter crop guidance, weather
+              insights, and better market visibility.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex justify-center">
+
+          <CardContent className="relative flex justify-center px-6 pb-8">
             <Button
-              onClick={() => navigate("/farmer/farmlands/add")}
-              className="gap-2 rounded-xl bg-[#5C6F2B] px-6 py-3 text-white hover:bg-[#4E5F24]"
+              onClick={() => navigate("/farmer/farmland/add")}
+              className="rounded-xl bg-primary px-6 py-2.5 text-primary-foreground shadow-md transition hover:bg-primary/90 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-ring"
             >
               Add Farmland
             </Button>
@@ -57,10 +62,7 @@ const Farmlands = () => {
     <div>
       <div className="grid place-items-center grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 bg-background">
         {farmlands.map((farm) => (
-          <FarmlandCard
-            farmland={farm}
-            key={farm._id}
-          />
+          <FarmlandCard farmland={farm} key={farm._id} />
         ))}
 
         <AddFarmlandCard />

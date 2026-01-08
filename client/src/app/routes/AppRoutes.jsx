@@ -20,6 +20,7 @@ import ForgotPassword from "@/pages/forgot-password/ForgotPassword";
 import Profile from "@/pages/profile/Profile";
 import Farmlands from "@/pages/farmland/Farmlands";
 import SingleFarmland from "@/pages/farmland/SingleFarmland";
+import AddFarmlandPage from "@/pages/farmland/AddFarmland";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
       { path: "contact", element: <div>Contact for farmer</div> },
       { path: "farmland", element: <Farmlands /> },
       { path: "farmland/:farmlandId", element: <SingleFarmland /> },
-      { path: "farmland/add", element: "Add farmland" },
+      { path: "farmland/add", element: <AddFarmlandPage /> },
     ],
   },
 

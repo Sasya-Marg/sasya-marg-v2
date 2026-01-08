@@ -24,3 +24,14 @@ export const fetchSingleFarmland = async (farmlandId) => {
     const { data } = await api.get(`/farmland/${farmlandId}`)
     return data
 }
+
+export const createFarmland = async (payload) => {
+    const { data } = await api.post("/farmland/create", payload)
+    return data
+}
+
+export const addPreviousCrop = async ({farmlandId, payload}) => {
+    const farmLandId = farmlandId
+    const { data } = await api.post(`/previous-crop/${farmLandId}`, payload)
+    return data
+}

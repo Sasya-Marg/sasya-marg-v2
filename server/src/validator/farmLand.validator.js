@@ -27,14 +27,14 @@ export const createFarmLandSchema = z.object({
 
         soilType: z.string(),
 
-        farmingType: z.enum(["organic", "conventional"]),
+        farmingType: z.enum(["organic", "conventional"]).optional(),
 
         water: z.object({
             type: z.string(),
             source: z.string()
         }),
 
-        budget: z.number().optional()
+        budget: z.coerce.number().optional()
     })
 })
 

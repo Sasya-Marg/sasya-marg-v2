@@ -1,4 +1,4 @@
-import { changeIsContactVisisble, fetchFarmlands, fetchSingleFarmland, getFarmerDetails, updateFarmerData } from "@/api/farmer.api"
+import { addPreviousCrop, changeIsContactVisisble, createFarmland, fetchFarmlands, fetchSingleFarmland, getFarmerDetails, updateFarmerData } from "@/api/farmer.api"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 
@@ -24,7 +24,7 @@ export const useUpdateFarmerData = () => {
 
 export const useFetchFarmlands = () => {
     return useQuery({
-        queryKey: ["farmland"],
+        queryKey: ["farmlands"],
         queryFn: fetchFarmlands
     })
 }
@@ -34,5 +34,17 @@ export const useFetchSingleFarmland = (farmlandId) => {
         queryKey: ["farmland", farmlandId],
         queryFn: () => fetchSingleFarmland(farmlandId),
         enabled: !!farmlandId,
+    })
+}
+
+export const useCreateFarmland = () => {
+    return useMutation({
+        mutationFn: createFarmland,
+    })
+}
+
+export const useAddPreviousCrop = () => {
+    return useMutation({
+        mutationFn: ({ farmlandId, payload }) => addPreviousCrop({farmlandId, payload})
     })
 }
