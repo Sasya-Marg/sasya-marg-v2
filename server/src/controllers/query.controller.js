@@ -1,6 +1,6 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiResponse } from '../utils/apiResponse.js'
-import { createQueryService, updateQueryService, viewMyQuerySevice, viewSingleQueryService } from '../services/query.service.js'
+import { closeQueryService, createQueryService, updateQueryService, viewMyQuerySevice, viewSingleQueryService } from '../services/query.service.js'
 
 
 

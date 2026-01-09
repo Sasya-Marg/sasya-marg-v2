@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Sheet,
@@ -6,7 +6,6 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,26 +18,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  MessageCirclePlus,
   Sprout,
   Cloud,
   Wrench,
   IndianRupee,
   Loader2,
   CheckCircle2,
-  PackageSearch ,
-  MessageSquareMore
+  PackageSearch,
+  MessageSquareMore,
 } from "lucide-react";
 import { toast } from "sonner";
-import { usePostQuery } from "@/hooks/query.hooks";
+import { usePostQuery, useUpdateQuery } from "@/hooks/query.hooks";
 import { useAuthStore } from "@/store/useAuthStore";
 
-const CreateQuerySheet = () => {
-  const [open, setOpen] = useState(false);
+const CreateQuerySheet = ({ isOpen, onClose, editData = null }) => {
   const { user } = useAuthStore.getState();
+  const updateMutation = useUpdateQuery();
+  const { mutate, isPending: isCreatePending } = usePostQuery();
 
-
-  const { mutate, isPending } = usePostQuery();
+  const isEditMode = !!editData;
+  const isPending = isCreatePending || updateMutation.isPending;
 
   const {
     register,
@@ -59,86 +58,102 @@ const CreateQuerySheet = () => {
 
   const watchedInquiry = watch("inquiry");
 
-  const onSubmit = (data) => {
-    const payload = {
-      ...data,
-      fullname: user?.fullname || "You",
-      email: user?.email || "N/A",
-      phone: user?.phone || "N/A",
-    };
+  useEffect(() => {
+    if (isOpen) {
+      if (editData) {
+        setValue("subject", editData.subject);
+        setValue("message", editData.message);
+        setValue("inquiry", editData.inquiry);
+        setValue("priority", editData.priority);
+      } else {
+        reset({
+          inquiry: "crop",
+          priority: "medium",
+          subject: "",
+          message: "",
+        });
+      }
+    }
+  }, [isOpen, editData, setValue, reset]);
 
-    mutate(payload, {
-      onSuccess: () => {
-        toast.success("Query posted ! wait for reply");
-        setOpen(false);
-        reset();
-      },
-      onError: (err) => {
-        toast.error(err.response?.data?.message || "Failed to send OTP");
-      },
-    });
+  const onSubmit = (data) => {
+    if (isEditMode) {
+      const payload = {
+        queryId: editData._id,
+        payload: {
+          subject: data.subject,
+          message: data.message,
+        },
+      };
+
+      updateMutation.mutate(payload, {
+        onSuccess: () => {
+          toast.success("Query updated successfully");
+          onClose();
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || "Failed to update query");
+        },
+      });
+    } else {
+      const payload = {
+        ...data,
+        fullname: user?.fullname || "Farmer",
+        email: user?.email || "N/A",
+        phone: user?.phone || "N/A",
+      };
+
+      mutate(payload, {
+        onSuccess: () => {
+          toast.success("Query posted! Wait for reply");
+          reset();
+          onClose();
+        },
+        onError: (err) => {
+          toast.error(err.response?.data?.message || "Failed to post query");
+        },
+      });
+    }
   };
 
   const inquiryTypes = [
     { id: "crop", label: "Crop Issue", icon: Sprout, color: "text-chart-1" },
     { id: "weather", label: "Weather", icon: Cloud, color: "text-chart-2" },
     { id: "product", label: "Product", icon: PackageSearch, color: "text-accent" },
-    {
-      id: "pricing",
-      label: "Mandi Price",
-      icon: IndianRupee,
-      color: "text-chart-3",
-    },
-    {
-      id: "technical",
-      label: "App Help",
-      icon: Wrench,
-      color: "text-chart-4",
-    },
-    {
-      id: "other",
-      label: "Other Issue",
-      icon: MessageSquareMore,
-      color: "text-chart-5",
-    },
+    { id: "pricing", label: "Mandi Price", icon: IndianRupee, color: "text-chart-3" },
+    { id: "technical", label: "App Help", icon: Wrench, color: "text-chart-4" },
+    { id: "other", label: "Other Issue", icon: MessageSquareMore, color: "text-chart-5" },
   ];
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg gap-2">
-          <MessageCirclePlus className="h-4 w-4" />
-          <span className="hidden sm:inline">Ask Question</span>
-          <span className="sm:hidden">Ask</span>
-        </Button>
-      </SheetTrigger>
-
+    <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
         side="bottom"
         className="h-[90vh] rounded-t-xl sm:h-full sm:max-w-md sm:rounded-none sm:side-right overflow-y-auto"
       >
         <SheetHeader className="mb-6 text-left">
           <SheetTitle className="text-2xl font-bold text-foreground">
-            Raise a Ticket
+            {isEditMode ? "Update Query" : "Ask Query"}
           </SheetTitle>
           <SheetDescription>
-            Describe your issue clearly. Our experts will get back to you
-            shortly.
+            {isEditMode
+              ? "You can update the Subject and Message while the query is Open."
+              : "Describe your issue clearly. Our experts will get back to you shortly."}
           </SheetDescription>
         </SheetHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pb-8 p-4">
-          {/* Custom Inquiry Selection */}
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-foreground">
-              Inquiry Type
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {inquiryTypes.map((type) => (
-                <div
-                  key={type.id}
-                  onClick={() => setValue("inquiry", type.id)}
-                  className={`
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pb-8 p-1">
+          {!isEditMode && (
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-foreground">
+                Inquiry Type
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {inquiryTypes.map((type) => (
+                  <div
+                    key={type.id}
+                    onClick={() => setValue("inquiry", type.id)}
+                    className={`
                         cursor-pointer flex flex-col items-center justify-center rounded-lg border p-4 transition-all
                         ${
                           watchedInquiry === type.id
@@ -146,32 +161,32 @@ const CreateQuerySheet = () => {
                             : "border-border bg-card hover:bg-secondary/50"
                         }
                     `}
-                >
-                  <type.icon
-                    className={`mb-2 h-6 w-6 ${
-                      watchedInquiry === type.id ? "text-primary" : type.color
-                    }`}
-                  />
-                  <span
-                    className={`text-xs font-semibold ${
-                      watchedInquiry === type.id
-                        ? "text-foreground"
-                        : "text-muted-foreground"
-                    }`}
                   >
-                    {type.label}
-                  </span>
-                  {watchedInquiry === type.id && (
-                    <div className="absolute top-2 right-2">
-                      <CheckCircle2 className="h-3 w-3 text-primary" />
-                    </div>
-                  )}
-                </div>
-              ))}
+                    <type.icon
+                      className={`mb-2 h-6 w-6 ${
+                        watchedInquiry === type.id ? "text-primary" : type.color
+                      }`}
+                    />
+                    <span
+                      className={`text-xs font-semibold ${
+                        watchedInquiry === type.id
+                          ? "text-foreground"
+                          : "text-muted-foreground"
+                      }`}
+                    >
+                      {type.label}
+                    </span>
+                    {watchedInquiry === type.id && (
+                      <div className="absolute top-2 right-2">
+                        <CheckCircle2 className="h-3 w-3 text-primary" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-    
           <div className="space-y-1.5">
             <label className="text-sm font-medium text-foreground">
               Subject
@@ -190,7 +205,6 @@ const CreateQuerySheet = () => {
             )}
           </div>
 
-      
           <div className="space-y-1.5">
             <label className="text-sm font-medium text-foreground">
               Message
@@ -211,32 +225,37 @@ const CreateQuerySheet = () => {
             )}
           </div>
 
-         
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-foreground">
-              Priority
-            </label>
-            <Controller
-              name="priority"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger className="bg-background">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="low">Low - General Inquiry</SelectItem>
-                    <SelectItem value="medium">Medium - Need Help</SelectItem>
-                    <SelectItem value="high">High - As soon as Possible</SelectItem>
-                    <SelectItem value="urgent">Urgent - Urgent Issue</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </div>
+          {!isEditMode && (
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-foreground">
+                Priority
+              </label>
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger className="bg-background">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="low">Low - General Inquiry</SelectItem>
+                      <SelectItem value="medium">Medium - Need Help</SelectItem>
+                      <SelectItem value="high">
+                        High - As soon as Possible
+                      </SelectItem>
+                      <SelectItem value="urgent">
+                        Urgent - Urgent Issue
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+          )}
 
           <Button
             type="submit"
@@ -245,6 +264,8 @@ const CreateQuerySheet = () => {
           >
             {isPending ? (
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            ) : isEditMode ? (
+              "Update Ticket"
             ) : (
               "Submit Ticket"
             )}

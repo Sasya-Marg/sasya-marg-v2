@@ -100,7 +100,7 @@ export const getAllFarmsService = async ({ farmerId }) => {
     return await FarmLand.find({ owner: farmerId }).populate({
         path: "location",
         select: "locality district state"
-    })
+    }).sort({ createdAt: -1 })
 }
 
 export const toggleFarmLandActiveStatusService = async ({ farmerId, farmLandId }) => {

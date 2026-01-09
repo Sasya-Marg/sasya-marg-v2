@@ -5,7 +5,8 @@ const QueryFilterTabs = ({ activeTab, onTabChange }) => {
   const tabs = [
     { id: 'all', label: 'All Queries' },
     { id: 'open', label: 'Pending' },
-    { id: 'resolved', label: 'Resolved' }
+    { id: 'resolved', label: 'Resolved' },
+    { id: 'closed', label: 'Closed' }
   ]
 
   return (

@@ -1,4 +1,4 @@
-import { fetchQueries, postQuery } from "@/api/query.api"
+import { closeQuery, fetchQueries, postQuery, updateQuery } from "@/api/query.api"
 import { queryClient } from "@/lib/queryClient"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
@@ -17,6 +17,23 @@ export const usePostQuery = () => {
         mutationFn: postQuery,
         onSuccess: () => {
             queryClient.invalidateQueries(['queries'])
+        }
+    })
+}
+
+export const useUpdateQuery = ()=>{
+    return useMutation({
+        mutationFn : updateQuery,
+        onSuccess: ()=>{
+            queryClient.invalidateQueries(["queries"])
+        }
+    })
+}
+export const useCloseQuery = ()=>{
+    return useMutation({
+        mutationFn : closeQuery,
+        onSuccess: ()=>{
+            queryClient.invalidateQueries(["queries"])
         }
     })
 }
