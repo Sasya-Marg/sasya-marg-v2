@@ -30,8 +30,13 @@ export const createFarmland = async (payload) => {
     return data
 }
 
-export const addPreviousCrop = async ({farmlandId, payload}) => {
+export const addPreviousCrop = async ({ farmlandId, payload }) => {
     const farmLandId = farmlandId
     const { data } = await api.post(`/previous-crop/${farmLandId}`, payload)
+    return data
+}
+
+export const updateFarmland = async ({ farmlandId, payload }) => {
+    const {data}= await api.patch(`/farmland/${farmlandId}`, payload)
     return data
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Loader2, AlertCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,12 +8,15 @@ import FarmlandHeader from "./components/FarmlandHeader";
 import WeatherCurrentCard from "./components/WeatherCurrentCard";
 import ForecastList from "./components/ForecastList";
 import FarmlandStatsGrid from "./components/FarmlandStatGrid";
+import EditFarmlandSheet from "./components/EditFarmlandSheet";
 
 const FarmlandDetailsPage = () => {
   const { farmlandId } = useParams();
   const navigate = useNavigate();
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
-  const { data, isLoading, isError, error } = useFetchSingleFarmland(farmlandId);
+  const { data, isLoading, isError, error } =
+    useFetchSingleFarmland(farmlandId);
 
   if (isLoading) {
     return (
@@ -41,12 +44,11 @@ const FarmlandDetailsPage = () => {
     );
   }
 
-  
   const farmland = data?.data;
 
   return (
     <div className="min-h-screen space-y-8 bg-background p-4 md:p-8 md:container md:mx-auto">
-      <FarmlandHeader farmland={farmland} />
+      <FarmlandHeader farmland={farmland} onEdit={() => setIsEditOpen(true)} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="col-span-1 lg:col-span-1">
@@ -58,6 +60,12 @@ const FarmlandDetailsPage = () => {
       </div>
 
       <FarmlandStatsGrid data={farmland} />
+
+      <EditFarmlandSheet
+        onClose={() => setIsEditOpen(false)}
+        farmland={farmland}
+        isOpen={isEditOpen}
+      />
     </div>
   );
 };
