@@ -16,7 +16,7 @@ export const uploadToCloudinary = async (localFilePath) => {
     try {
         const upload = await cloudinary.uploader.upload(
             localFilePath,
-            { resource_type: 'image' }
+            { resource_type: 'image', folder: `sasyamarg/listings`, }
         )
 
         const absolutePath = path.resolve(localFilePath)
@@ -38,7 +38,7 @@ export const deleteUploadedFile = async (publicId) => {
         await cloudinary.uploader.destroy(publicId, { resource_type: "image" })
         return true
     } catch (error) {
-        console.log("Cloudinary deletion Error...." , error)
+        console.log("Cloudinary deletion Error....", error)
         throw new ApiError(500, "Image destroy Failed")
     }
 

@@ -9,6 +9,11 @@ const cropSchema = new mongoose.Schema({
         unique: true
     },
 
+    img: {
+        url: String,
+        publicId: String
+    },
+
     suitableSoilType: {
         type: [String],
         enum: [

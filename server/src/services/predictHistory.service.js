@@ -10,7 +10,10 @@ export const getPredictedCropHistoryService = async ({ farmerId, farmLandId }) =
         filter.farmLand = farmLandId
     }
 
-    const history = await PredictHistory.find(filter).sort({ createdAt: -1 }).lean()
+    const history = await PredictHistory.find(filter).populate({
+        path: "result.cropId",
+        select: "name"
+    }).sort({ createdAt: -1 }).lean()
 
     if (!history || history.length === 0) throw new ApiError(404, "No Hisory found")
 

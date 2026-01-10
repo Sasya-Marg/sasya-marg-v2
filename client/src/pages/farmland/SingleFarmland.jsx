@@ -46,6 +46,8 @@ const FarmlandDetailsPage = () => {
 
   const farmland = data?.data;
 
+  console.log(farmland, "Farmland data ");
+
   return (
     <div className="min-h-screen space-y-8 bg-background p-4 md:p-8 md:container md:mx-auto">
       <FarmlandHeader farmland={farmland} onEdit={() => setIsEditOpen(true)} />

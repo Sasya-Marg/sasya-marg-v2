@@ -1,4 +1,4 @@
-import { addPreviousCrop, changeIsContactVisisble, createFarmland, fetchFarmlands, fetchSingleFarmland, getCropSuggestion, getFarmerDetails, toggleFarmActiveStatus, updateFarmerData, updateFarmland } from "@/api/farmer.api"
+import { addPreviousCrop, changeIsContactVisisble, createFarmland, fetchFarmlands, fetchSingleFarmland, getCropSuggestion, getFarmerDetails, getSuggestionHisory, toggleFarmActiveStatus, updateFarmerData, updateFarmland } from "@/api/farmer.api"
 import { queryClient } from "@/lib/queryClient"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -78,8 +78,19 @@ export const useToggleFarmActiveSataus = () => {
 export const useGetCropSUggestion = () => {
     return useMutation({
         mutationFn: getCropSuggestion,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["suggestion-history"])
+        },
         onError: (error) => {
             toast.error(error.response?.data?.message || "Failed to update farmland");
         }
+    })
+}
+
+
+export const useGetSuggestionHisory = () => {
+    return useQuery({
+        queryKey: ["suggestion-history"],
+        queryFn: getSuggestionHisory
     })
 }

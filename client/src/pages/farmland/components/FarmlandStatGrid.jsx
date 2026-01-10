@@ -2,7 +2,7 @@ import React from "react";
 import { Ruler, Layers, Droplets, IndianRupee, Sprout } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
-const StatCard = ({ icon: Icon, colorVar, label, value, subValue }) => (
+const StatCard = ({ icon: Icon, colorVar, label, value = "N/A", subValue }) => (
   <Card className="group relative overflow-hidden border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg">
     <div
       className="absolute -bottom-6 -right-6 opacity-[0.5] transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110"
@@ -31,7 +31,7 @@ const StatCard = ({ icon: Icon, colorVar, label, value, subValue }) => (
         </p>
         {subValue && (
           <p className="mt-0.5 text-xs font-medium capitalize text-muted-foreground/80">
-            {subValue}
+            {subValue || "N/A"}
           </p>
         )}
       </div>
@@ -93,6 +93,16 @@ const FarmlandStatsGrid = ({ data }) => {
           label="Est. Budget"
           value={formatCurrency(data.budget)}
         />
+
+        {data?.lastPredictCrop?.cropId?.name && (
+          <StatCard
+            icon={Sprout}
+            colorVar="--accent"
+            label="Last crop Suggestion"
+            value={data?.lastPredictCrop?.cropId?.name}
+            subValue={`Score: ${data?.lastPredictCrop?.score}`}
+          />
+        )}
       </div>
     </div>
   );

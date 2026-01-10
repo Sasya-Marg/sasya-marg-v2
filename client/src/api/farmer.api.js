@@ -46,7 +46,12 @@ export const toggleFarmActiveStatus = async (farmlandId) => {
     return data
 }
 
-export const getCropSuggestion = async (farmlandId)=>{
-    const {data} = await api.get(`/crop-suggestion/${farmlandId}`)
+export const getCropSuggestion = async (farmlandId) => {
+    const { data } = await api.get(`/crop-suggestion/${farmlandId}`)
+    return data
+}
+
+export const getSuggestionHisory = async () => {
+    const { data } = await api.get("/suggestion/history/")
     return data
 }

@@ -5,6 +5,7 @@ import { Farmer } from '../models/farmer.model.js'
 import { ApiError } from "../utils/apiError.js";
 import { getWeatherService } from "./weather.service.js";
 import { PreviousCrop } from '../models/previousCrop.model.js'
+import { PredictHistory } from "../models/predictHistory.model.js";
 
 
 
@@ -73,6 +74,10 @@ export const updateFarmLandService = async ({ farmerId, farmLandId, payload }) =
 export const getFarmlandFromId = async ({ farmlandId, farmerId }) => {
     const farmlandDoc = await FarmLand.findOne({ _id: farmlandId, owner: farmerId }).populate("location")
     const previousCrop = await PreviousCrop.findOne({ farmLand: farmlandId })
+    const predictedCrop = await PredictHistory.find({ farmLand: farmlandId, farmer: farmerId }).populate({
+        path: "result.cropId",
+        select: "name"
+    }).sort({ createdAt: -1 }).limit(1)
 
     if (!farmlandDoc) throw new ApiError(404, "farmland not found")
 
@@ -88,6 +93,10 @@ export const getFarmlandFromId = async ({ farmlandId, farmerId }) => {
             season: previousCrop.season,
             year: previousCrop.year,
         } || null
+    }
+
+    if (predictedCrop.length) {
+        farmland.lastPredictCrop = predictedCrop[0].result[0] || "N/A"
     }
 
 

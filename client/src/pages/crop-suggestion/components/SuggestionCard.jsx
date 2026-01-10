@@ -160,9 +160,6 @@ const SuggestionResults = ({ data, onReset }) => {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 h-11 text-base shadow-lg shadow-primary/10">
-                Save {topPick.crop} to Plan
-              </Button>
               <Button
                 variant="outline"
                 onClick={onReset}
