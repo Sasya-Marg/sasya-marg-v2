@@ -22,6 +22,7 @@ import Farmlands from "@/pages/farmland/Farmlands";
 import SingleFarmland from "@/pages/farmland/SingleFarmland";
 import AddFarmlandPage from "@/pages/farmland/AddFarmland";
 import SupportPage from "@/pages/support/SupportPage";
+import CropSuggestionPage from "@/pages/crop-suggestion/CropSuggestionPage";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Profile /> },
-      { path: "get-suggestion", element: <div>Get AI Suggestion</div> },
+      { path: "get-suggestion", element: <CropSuggestionPage /> },
       { path: "get-suggestion/:id", element: <div>Suggestion History</div> },
       { path: "mandi", element: <div>Mandi for Listing</div> },
       { path: "Schemes", element: <div>Scheme for farmer</div> },

@@ -4,16 +4,46 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 const FarmlandCard = ({ farmland }) => {
   const navigate = useNavigate();
 
+  const isActive = farmland.isActive;
+
   return (
-    <Card className="group relative w-full max-w-sm overflow-hidden border-0 bg-card text-card-foreground shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <Card
+      className={cn(
+        "group relative w-full max-w-sm overflow-hidden rounded-xl border transition-all duration-300 shadow-lg",
+        isActive
+          ? "bg-card text-card-foreground hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+          : "bg-card/60 text-muted-foreground grayscale-[0.4] blur-[0.3px] cursor-not-allowed shadow-sm"
+      )}
+    >
+      {!isActive && (
+        <div className="absolute left-4 top-4">
+          <Badge className="bg-muted text-muted-foreground border ">
+            Inactive
+          </Badge>
+        </div>
+      )}
       <div className="absolute top-0 h-32 w-full bg-linear-to-br from-primary to-primary/80">
         <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-accent opacity-20 blur-xl"></div>
+        {!isActive && (
+          <div className="absolute right-4 top-4">
+            <Badge className="bg-muted text-muted-foreground border ">
+              Inactive
+            </Badge>
+          </div>
+        )}
         <div className="absolute left-4 top-4">
-          <Badge className="bg-accent text-accent-foreground hover:bg-accent/90 border-none px-3 py-1 shadow-sm">
+          <Badge
+            className={cn(
+              isActive
+                ? "bg-accent text-accent-foreground hover:bg-accent/90 border-none px-3 py-1 shadow-sm"
+                : "bg-secondary text-primary"
+            )}
+          >
             {farmland.farmingType}
           </Badge>
         </div>
@@ -63,8 +93,7 @@ const FarmlandCard = ({ farmland }) => {
       <CardFooter className="border-t border-border bg-muted/30 px-6 py-3">
         <Button
           onClick={() => navigate(`/farmer/farmland/${farmland._id}`)}
-          variant="secondary"
-          className="w-full justify-between p-0 text-primary hover:bg-transparent hover:text-primary/80 font-medium"
+          className="w-full justify-between p-0 hover:bg-primary/80 font-medium"
         >
           View Farmland
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />

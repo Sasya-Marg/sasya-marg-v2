@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Sheet,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -16,12 +17,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2, Sprout, Ruler, IndianRupee } from "lucide-react";
-import { useUpdateFarmland } from "@/hooks/farmer.hooks";
+import { Loader2, Sprout, Ruler, IndianRupee, Power } from "lucide-react";
+import {
+  useToggleFarmActiveSataus,
+  useUpdateFarmland,
+} from "@/hooks/farmer.hooks";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 const EditFarmlandSheet = ({ isOpen, onClose, farmland }) => {
   const updateMutation = useUpdateFarmland();
+  const toggleMutation = useToggleFarmActiveSataus();
+  const [isActive, setIsActive] = useState(farmland.isActive);
   const isPending = updateMutation.isPending;
+
+  const isToggling = toggleMutation.isPending;
 
   const {
     register,
@@ -70,6 +80,22 @@ const EditFarmlandSheet = ({ isOpen, onClose, farmland }) => {
     );
   };
 
+  const handleStatusChange = () => {
+    setIsActive((prev) => !prev);
+    toggleMutation.mutate(farmland._id, {
+      onError: (err) => {
+        setIsActive((prev) => !prev);
+        toast.error(err.response?.data?.message || "Failed to change password");
+      },
+      onSuccess: (res) => {
+        if (res?.data?.isActive !== undefined) {
+          setIsActive(res.data.isActive);
+          toast.success(res.message);
+        }
+      },
+    });
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
@@ -85,6 +111,34 @@ const EditFarmlandSheet = ({ isOpen, onClose, farmland }) => {
             Update the key details of your land. Location cannot be changed.
           </SheetDescription>
         </SheetHeader>
+
+        <div className="flex items-center justify-between rounded-lg border border-border bg-card p-4 shadow-sm">
+          <div className="space-y-0.5">
+            <Label className="text-base font-medium text-foreground flex items-center gap-2">
+              <Power
+                className={`h-4 w-4 ${
+                  isActive ? "text-primary" : "text-muted-foreground"
+                }`}
+              />
+              Farmland Status
+            </Label>
+            <p className="text-xs text-muted-foreground">
+              {isActive ? "Active & Visible" : "Inactive (Hidden)"}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {isToggling && (
+              <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+            )}
+            <Switch
+              checked={isActive}
+              onCheckedChange={handleStatusChange}
+              disabled={isToggling}
+              className="data-[state=checked]:bg-primary"
+            />
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pb-8">
           <div className="space-y-1.5">

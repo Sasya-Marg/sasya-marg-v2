@@ -37,6 +37,16 @@ export const addPreviousCrop = async ({ farmlandId, payload }) => {
 }
 
 export const updateFarmland = async ({ farmlandId, payload }) => {
-    const {data}= await api.patch(`/farmland/${farmlandId}`, payload)
+    const { data } = await api.patch(`/farmland/${farmlandId}`, payload)
+    return data
+}
+
+export const toggleFarmActiveStatus = async (farmlandId) => {
+    const { data } = await api.patch(`/farmland/active-status/${farmlandId}`)
+    return data
+}
+
+export const getCropSuggestion = async (farmlandId)=>{
+    const {data} = await api.get(`/crop-suggestion/${farmlandId}`)
     return data
 }
