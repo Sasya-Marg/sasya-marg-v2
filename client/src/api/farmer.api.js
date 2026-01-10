@@ -55,3 +55,8 @@ export const getSuggestionHisory = async () => {
     const { data } = await api.get("/suggestion/history/")
     return data
 }
+
+export const getSingleSuggestion = async (id) => {
+    const { data } = await api.get(`/suggestion/history/${id}`)
+    return data
+}

@@ -5,8 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // Import ScrollBar
 import { useGetSuggestionHisory } from "@/hooks/farmer.hooks";
+import { useNavigate } from "react-router-dom";
 
 const SuggestionHistory = () => {
+  const navigate = useNavigate();
   const { data, isLoading } = useGetSuggestionHisory();
   const history = data?.data || [];
 
@@ -25,7 +27,11 @@ const SuggestionHistory = () => {
       <ScrollArea className="w-full whitespace-nowrap rounded-md border border-border/40 bg-background/50 p-4">
         <div className="flex w-max space-x-4 pb-4">
           {history.map((item) => (
-            <HistoryCard key={item._id} item={item} />
+            <HistoryCard
+              key={item._id}
+              item={item}
+              redirectTo={() => navigate(`/farmer/get-suggestion/${item._id}`)}
+            />
           ))}
         </div>
         <ScrollBar orientation="horizontal" />
@@ -34,7 +40,7 @@ const SuggestionHistory = () => {
   );
 };
 
-const HistoryCard = ({ item }) => {
+const HistoryCard = ({ item, redirectTo }) => {
   const topResult = item.result?.[0] || {};
 
   const farmName = item.farmLandSnapshot?.name || "Unknown Land";
@@ -81,6 +87,7 @@ const HistoryCard = ({ item }) => {
         <Button
           variant="ghost"
           className="w-full mt-4 h-8 text-xs text-primary hover:text-primary hover:bg-primary/5"
+          onClick={redirectTo}
         >
           View Details <ArrowUpRight className="ml-1 h-3 w-3" />
         </Button>

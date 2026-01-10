@@ -169,7 +169,7 @@ const QueryCard = ({ query, onEdit }) => {
                   </div>
                 </div>
               ) : (
-                <div className="ml-11 flex items-center gap-2 rounded-md border border-dashed border-accent bg-(--accent)/5 p-3 text-xs text-accent">
+                <div className="ml-11 flex items-center gap-2 rounded-md border border-dashed border-accent bg-accent/5 p-3 text-xs text-accent">
                   <Clock className="h-4 w-4" />
                   <span>
                     Our experts are reviewing your query. Expect a reply within
