@@ -16,11 +16,12 @@ export const uploadToCloudinary = async (localFilePath) => {
     try {
         const upload = await cloudinary.uploader.upload(
             localFilePath,
-            { resource_type: 'image', folder: `sasyamarg/listings`, }
+            { resource_type: 'image', }
         )
-
+        
         const absolutePath = path.resolve(localFilePath)
         await fs.unlink(absolutePath)
+        console.log("Url of clodinary ::", upload)
         return { url: upload.secure_url, publicId: upload.public_id }
 
     } catch (error) {

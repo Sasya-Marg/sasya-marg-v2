@@ -28,9 +28,23 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ["vegetable", "fruit", "grain"],
-        index: true,
-        required: true
+        enum: [
+            "vegetable",
+            "fruit",
+            "grain",
+            "pulse",
+            "oilseed",
+            "spice",
+            "other",
+        ],
+        default: "other",
+        index: true
+    },
+
+    productType: {
+        type: String,
+        enum: ["harvested"],
+        default: "harvested",
     },
 
     price: {

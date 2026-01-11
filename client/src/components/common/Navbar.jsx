@@ -36,7 +36,7 @@ const Navbar = () => {
   ];
 
   const farmerLinks = [
-    { name: "Mandi", href: "/farmer/Mandi" },
+    { name: "Mandi", href: "/farmer/mandi" },
     { name: "Schemes", href: "/farmer/schemes" },
     { name: "Farmlands", href: "/farmer/farmland" },
     { name: "Get Suggestion", href: "/farmer/get-suggestion" },

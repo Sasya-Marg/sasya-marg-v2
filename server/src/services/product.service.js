@@ -16,6 +16,8 @@ export const createProductListing = async ({ farmerId, payload, files }) => {
 
     let images = []
 
+    console.log("Files in create product listing service:::", files)
+
     if (files?.length) {
         for (const file of files) {
             const { url, publicId } = await uploadToCloudinary(file.path)
@@ -39,7 +41,7 @@ export const createProductListing = async ({ farmerId, payload, files }) => {
 
 export const myProductListings = async ({ farmerId, query }) => {
 
-    const { page = 1, limit = 10, moderation, isActive } = query
+    const { page = 1, limit = 10, moderation, isActive, search } = query
 
     const filter = { farmer: farmerId }
 
@@ -49,6 +51,10 @@ export const myProductListings = async ({ farmerId, query }) => {
 
     if (isActive !== undefined) {
         filter.isActive = isActive === "true"
+    }
+
+    if (search !== undefined) {
+        filter.title = { $regex: search, $options: "i" }
     }
 
     const skip = (Number(page - 1)) * limit
