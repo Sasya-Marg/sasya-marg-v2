@@ -85,8 +85,45 @@ export const myProductListings = async ({ farmerId, query }) => {
     }
 }
 
+export const getProductByIdService = async ({ listingId, farmerId }) => {
+    const product = await Product.findOne({ _id: listingId, farmer: farmerId }).populate({
+        path: "farmland",
+        select: "name size location",
+        populate: {
+            path: "location",
+            select: "locality district state"
+        }
+    })
+
+    if (!product) throw new ApiError(404, "Product not found")
+
+    return product
+}
+
+export const updateStockService = async ({ listingId, farmerId, stock }) => {
+    const product = await Product.findOne({ _id: listingId, farmer: farmerId })
+
+    if (!product) throw new ApiError(404, "Product not found")
+
+    product.stock = stock
+    await product.save({ new: true })
+
+    return product
+}
+
+export const updatePriceService = async ({ listingId, farmerId, price }) => {
+    
+    const product = await Product.findOne({ _id: listingId, farmer: farmerId })
+
+    if (!product) throw new ApiError(404, "Product not found")
+
+    product.price = price
+    await product.save({ new: true })
+
+    return product
+}
+
 export const updateProductListing = async ({ farmerId, listingId, payload, files = null }) => {
-    console.log("liating id ::", listingId)
 
     const product = await Product.findOne({ _id: listingId, farmer: farmerId })
 

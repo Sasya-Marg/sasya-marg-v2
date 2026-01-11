@@ -5,7 +5,10 @@ import {
     createProductListing,
     myProductListings,
     updateProductListing,
-    deactivateProductListing
+    deactivateProductListing,
+    getProductByIdService,
+    updatePriceService,
+    updateStockService
 } from "../services/product.service.js"
 
 export const createProduct = asyncHandler(async (req, res) => {
@@ -40,6 +43,48 @@ export const getMyProducts = asyncHandler(async (req, res) => {
         .status(200)
         .json(new ApiResponse(200, result, "Products fetched successfully"))
 })
+
+export const getProductById = asyncHandler(async (req, res) => {
+    const farmerId = req.user._id
+    const { listingId } = req.params
+
+    const result = await getProductByIdService({
+        farmerId,
+        listingId
+    })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, result, "Products fetched successfully"))
+})
+
+export const updatePrice = asyncHandler(async (req, res) => {
+    const farmerId = req.user._id
+    const { listingId } = req.params
+    const { price } = req.body
+
+    const product = await updatePriceService({ farmerId, listingId, price })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, product, "Products Price changed successfully"))
+
+})
+
+
+export const updateStock = asyncHandler(async (req, res) => {
+    const farmerId = req.user._id
+    const { listingId } = req.params
+    const { stock } = req.body
+
+    const product = await updateStockService({ farmerId, listingId, stock })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, product, "Products Price changed successfully"))
+})
+
+
 
 export const updateProduct = asyncHandler(async (req, res) => {
     const farmerId = req.user._id

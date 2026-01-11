@@ -57,9 +57,43 @@ export const myProductListingQuerySchema = z.object({
     })
 })
 
+export const getProductByIdSchema = z.object({
+    params: z.object({
+        listingId: objectId
+    })
+})
+
 export const toggleProductSchema = z.object({
     params: z.object({
         listingId: objectId
+    })
+})
+
+export const updateStockSchema = z.object({
+    params: z.object({
+        listingId: objectId
+    }),
+
+    body: z.object({
+        stock: z.object({
+            value: z.number().positive(),
+            unit: stockUnitEnum
+        })
+    })
+
+
+})
+
+export const updatePriceSchema = z.object({
+    params: z.object({
+        listingId: objectId
+    }),
+
+    body: z.object({
+        price: z.object({
+            value: z.number().positive(),
+            unit: priceUnitEnum
+        })
     })
 })
 

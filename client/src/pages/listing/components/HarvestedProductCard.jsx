@@ -14,17 +14,11 @@ import { format } from "date-fns";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 const HarvestedProductCard = ({ product }) => {
+  const navigate = useNavigate();
   const {
     title,
     category,
@@ -153,9 +147,10 @@ const HarvestedProductCard = ({ product }) => {
       <CardFooter className="p-4 pt-0 flex gap-2">
         <Button
           className="flex-1 border-primary/20 hover:bg-primary/90 hover:text-primary-foreground"
+          onClick={() => navigate(`harvested-product/${product._id}`)}
         >
           <Edit className="mr-2 h-4 w-4" />
-          Edit
+          View
         </Button>
       </CardFooter>
     </Card>

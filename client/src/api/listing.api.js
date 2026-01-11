@@ -20,3 +20,24 @@ export const createPreHarvestListing = async (payload) => {
     const { data } = await api.post("/product/pre-harvest/", payload)
     return data
 }
+
+export const getHarvestedProduct = async (id) => {
+    const { data } = await api.get(`/product/${id}`)
+    return data
+}
+
+export const updatePrice = async ({ productId, payload }) => {
+    const { data } = await api.patch(`/product/update-price/${productId}`, payload)
+    return data
+}
+
+export const updateStock = async ({ productId, payload }) => {
+    const { data } = await api.patch(`/product/update-stock/${productId}`, payload)
+    return data
+}
+
+
+export const updateProduct = async ({ productId, payload }) => {
+    const { data } = await api.patch(`/product/${productId}`, payload)
+    return data
+}

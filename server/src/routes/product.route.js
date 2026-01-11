@@ -4,14 +4,20 @@ import {
     createProduct,
     getMyProducts,
     updateProduct,
-    toggleProductStatus
+    toggleProductStatus,
+    getProductById,
+    updatePrice,
+    updateStock
 } from "../controllers/product.controller.js"
 
 import {
     createProductSchema,
     updateProductSchema,
     myProductListingQuerySchema,
-    toggleProductSchema
+    toggleProductSchema,
+    getProductByIdSchema,
+    updatePriceSchema,
+    updateStockSchema
 } from "../validator/product.validator.js"
 
 import { validate } from "../middleware/validate.middleware.js"
@@ -38,12 +44,36 @@ productRouter.get(
     getMyProducts
 )
 
+productRouter.get(
+    "/:listingId",
+    authLayer,
+    authorize("farmer"),
+    validate(getProductByIdSchema),
+    getProductById
+)
+
 productRouter.patch(
     "/:listingId",
     authLayer,
     authorize("farmer"),
     validate(updateProductSchema),
     updateProduct
+)
+
+productRouter.patch(
+    "/update-price/:listingId",
+    authLayer,
+    authorize("farmer"),
+    validate(updatePriceSchema),
+    updatePrice
+)
+
+productRouter.patch(
+    "/update-stock/:listingId",
+    authLayer,
+    authorize("farmer"),
+    validate(updateStockSchema),
+    updateStock
 )
 
 productRouter.patch(

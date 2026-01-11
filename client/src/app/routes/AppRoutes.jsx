@@ -26,6 +26,8 @@ import CropSuggestionPage from "@/pages/crop-suggestion/CropSuggestionPage";
 import ShowSuggestionPage from "@/pages/crop-suggestion/ShowSuggestionPage";
 import GovernmentSchemesPage from "@/pages/scheme/SchemePage";
 import ListingPage from "@/pages/listing/ListingPage";
+import SinglePreHarvestProductPage from "@/pages/listing/SinglePreHarvestProductPage";
+import ProductViewPage from "@/pages/listing/SingleLProductPage";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -84,6 +86,11 @@ const router = createBrowserRouter([
       { path: "get-suggestion", element: <CropSuggestionPage /> },
       { path: "get-suggestion/:id", element: <ShowSuggestionPage /> },
       { path: "mandi", element: <ListingPage /> },
+      { path: "mandi/harvested-product/:id", element: <ProductViewPage /> },
+      {
+        path: "mandi/pre-harvested-product/:id",
+        element: <SinglePreHarvestProductPage />,
+      },
       { path: "Schemes", element: <GovernmentSchemesPage /> },
       { path: "support", element: <SupportPage /> },
       { path: "farmland", element: <Farmlands /> },
