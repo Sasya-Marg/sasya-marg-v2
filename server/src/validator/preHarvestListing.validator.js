@@ -19,15 +19,15 @@ export const createPreHarvestListingSchema = z.object({
             sowingDate: z.coerce.date(),
             expectedHarvest: z.coerce.date(),
             expectedyeild: z.object({
-                value: z.number().positive(),
+                value: z.coerce.number().positive(),
                 unit: z.enum(QUANTITY_UNITS)
             }).optional(),
             expectedPrice: z.object({
-                value: z.number().positive(),
+                value: z.coerce.number().positive(),
                 unit: z.enum(PRICE_UNITS)
             }).optional(),
             minimumOrderQuantity: z.object({
-                value: z.number().positive(),
+                value: z.coerce.number().positive(),
                 unit: z.enum(QUANTITY_UNITS)
             }).optional(),
             qualityGrade: z.enum(QUALITY_GRADES).optional(),

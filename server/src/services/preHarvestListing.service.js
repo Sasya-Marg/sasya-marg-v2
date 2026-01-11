@@ -28,7 +28,7 @@ export const createPreHarvestListingService = async ({ farmerId, payload, files 
         farmer: farmerId,
         ...payload,
         images,
-        status: "Open",
+        status: "open",
         moderation: "pending"
     })
 
@@ -146,7 +146,7 @@ export const getPreHarvestListingService = async (query) => {
 }
 
 export const getMyPreHarvestListingService = async (farmerId, query) => {
-    const { page = 1, limit = 10, status, moderation } = query
+    const { page = 1, limit = 10, status, moderation, search } = query
 
     const filter = {
         farmer: farmerId
@@ -158,6 +158,10 @@ export const getMyPreHarvestListingService = async (farmerId, query) => {
 
     if (moderation) {
         filter.moderation = moderation
+    }
+
+    if (search !== undefined) {
+        filter.title = { $regex: search, $options: "i" }
     }
 
     const skip = (Number(page) - 1) * limit

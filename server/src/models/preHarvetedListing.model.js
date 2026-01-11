@@ -26,6 +26,12 @@ const preHarvestListingSchema = new mongoose.Schema(
             required: true
         },
 
+        productType: {
+            type: String,
+            enum: ["pre-harvest"],
+            default: "pre-harvest",
+        },
+
         expectedyeild: {
             value: {
                 type: Number,
@@ -37,6 +43,21 @@ const preHarvestListingSchema = new mongoose.Schema(
                 enum: ["kg", "quintal", "ton"],
 
             }
+        },
+
+        category: {
+            type: String,
+            enum: [
+                "vegetable",
+                "fruit",
+                "grain",
+                "pulse",
+                "oilseed",
+                "spice",
+                "other",
+            ],
+            default: "other",
+            index: true
         },
 
         expectedPrice: {
