@@ -39,7 +39,7 @@ export const getSinglePreharvestListing = asyncHandler(async (req, res) => {
 export const updatePreHarvestListing = asyncHandler(async (req, res) => {
     const { listingId } = req.params
     const farmerId = req.user._id
-    const { payload } = req.body
+    const payload = req.body
 
     const listing = await updatePreHarvestListingService(listingId, farmerId, payload)
 

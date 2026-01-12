@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import AppLoader from "@/components/common/AppLoader";
 
 const MyPreHarvestedListings = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +20,7 @@ const MyPreHarvestedListings = () => {
 
   const [filters, setFilters] = useState({
     page: 1,
-    limit: 10,
+    limit: 3,
     moderation: undefined,
     status: undefined,
   });
@@ -55,17 +56,21 @@ const MyPreHarvestedListings = () => {
     setSearchTerm("");
     setFilters({
       page: 1,
-      limit: 10,
+      limit: 3,
       moderation: undefined,
       status: undefined,
     });
   };
 
+  if (isLoading) {
+    return <AppLoader />;
+  }
+
   const responseData = preHarvestData?.data || {};
-  const listingItems = responseData.docs || responseData.listings || [];
-  const totalPages = responseData.totalPages || 0;
-  const hasNextPage = responseData.hasNextPage;
-  const hasPrevPage = responseData.hasPrevPage;
+  const listingItems = responseData.listings || [];
+  const totalPages = responseData.pagination?.totalPages || 0;
+  const hasNextPage = filters.page <= totalPages;
+  const hasPrevPage = filters.page > 1;
 
   return (
     <div className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">

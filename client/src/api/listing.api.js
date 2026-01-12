@@ -41,3 +41,13 @@ export const updateProduct = async ({ productId, payload }) => {
     const { data } = await api.patch(`/product/${productId}`, payload)
     return data
 }
+
+export const getPreHarvestedProductById = async (id) => {
+    const {data} = await api.get(`/product/pre-harvest/${id}`)
+    return data
+}
+
+export const updatePreHarestProduct = async({productId, payload})=>{
+    const {data} = await api.patch(`/product/pre-harvest/${productId}`, payload)
+    return data
+}

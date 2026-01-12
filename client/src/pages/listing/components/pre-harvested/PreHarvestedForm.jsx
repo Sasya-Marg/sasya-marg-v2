@@ -22,7 +22,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useFetchFarmlands } from "@/hooks/farmer.hooks";
-import ImageUploadPreview from "./ImageUploadPreview";
+import ImageUploadPreview from "../ImageUploadPreview";
 import { useCreatePreHarvestListing } from "@/hooks/listing.hooks";
 
 const PreHarvestForm = () => {
@@ -375,7 +375,12 @@ const PreHarvestForm = () => {
   );
 };
 
-const DatePicker = ({ name, control, placeholder, required = false }) => (
+export const DatePicker = ({
+  name,
+  control,
+  placeholder,
+  required = false,
+}) => (
   <Controller
     name={name}
     control={control}
@@ -398,7 +403,11 @@ const DatePicker = ({ name, control, placeholder, required = false }) => (
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
+        <PopoverContent
+          align="start"
+          side="bottom"
+          className="p-0 w-[--radix-popover-trigger-width] z-50"
+        >
           <Calendar
             mode="single"
             selected={field.value}

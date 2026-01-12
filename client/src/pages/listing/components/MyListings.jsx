@@ -1,8 +1,8 @@
 import React from "react";
 import { Sprout, Tractor } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MyHarvestedListings from "./MyHarvestedListings";
-import MyPreHarvestedListings from "./MyPreHarvestedListings";
+import MyHarvestedListings from "./harvested/MyHarvestedListings";
+import MyPreHarvestedListings from "./pre-harvested/MyPreHarvestedListings";
 
 const MyListings = () => {
   return (

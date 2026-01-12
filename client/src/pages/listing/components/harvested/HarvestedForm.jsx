@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFetchFarmlands } from "@/hooks/farmer.hooks";
-import ImageUploadPreview from "./ImageUploadPreview";
+import ImageUploadPreview from "../ImageUploadPreview";
 import { useCreateProductListing } from "@/hooks/listing.hooks";
 import { useNavigate } from "react-router-dom";
 

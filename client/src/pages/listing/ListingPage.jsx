@@ -1,8 +1,8 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sprout, Tractor, LayoutDashboard } from "lucide-react";
-import PreHarvestForm from "./components/PreHarvestedForm";
-import HarvestedForm from "./components/HarvestedForm";
+import PreHarvestForm from "./components/pre-harvested/PreHarvestedForm";
+import HarvestedForm from "./components/harvested/HarvestedForm";
 import MyListings from "./components/MyListings";
 import { Badge } from "@/components/ui/badge";
 

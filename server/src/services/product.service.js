@@ -106,18 +106,20 @@ export const updateStockService = async ({ listingId, farmerId, stock }) => {
     if (!product) throw new ApiError(404, "Product not found")
 
     product.stock = stock
+    product.moderation = "pending"
     await product.save({ new: true })
 
     return product
 }
 
 export const updatePriceService = async ({ listingId, farmerId, price }) => {
-    
+
     const product = await Product.findOne({ _id: listingId, farmer: farmerId })
 
     if (!product) throw new ApiError(404, "Product not found")
 
     product.price = price
+    product.moderation = "pending"
     await product.save({ new: true })
 
     return product
@@ -146,7 +148,7 @@ export const updateProductListing = async ({ farmerId, listingId, payload, files
 
     //Image updation later
 
-    const criticalFields = ["price", "category", "title"]
+    const criticalFields = ["price", "category", "title", "stock"]
 
     if (criticalFields.some(f => payload[f] !== undefined)) {
         product.moderation = "pending"

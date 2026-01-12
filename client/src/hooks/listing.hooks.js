@@ -1,4 +1,4 @@
-import { createPreHarvestListing, createProductListing, getHarvestedProduct, getMyListings, getMyPreHarvestListings, updatePrice, updateProduct, updateStock } from "@/api/listing.api"
+import { createPreHarvestListing, createProductListing, getHarvestedProduct, getMyListings, getMyPreHarvestListings, getPreHarvestedProductById, updatePreHarestProduct, updatePrice, updateProduct, updateStock } from "@/api/listing.api"
 import { queryClient } from "@/lib/queryClient"
 import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -56,7 +56,7 @@ export const useUpdatePrice = () => {
     return useMutation({
         mutationFn: updatePrice,
         onSuccess: (_, variables) => {
-            toast.success(`Price updated to ${variables.payload.price.value}!`)
+            toast.warning(`Price updated to ${variables.payload.price.value}! ,wait for Admin moderation`)
             queryClient.invalidateQueries(['product', variables._id])
         },
         onError: (error) => {
@@ -69,7 +69,7 @@ export const useUpdateStock = () => {
     return useMutation({
         mutationFn: updateStock,
         onSuccess: (_, variables) => {
-            toast.success(`Stock updated to ${variables.payload.stock.value}!`)
+            toast.warning(`Stock updated to ${variables.payload.stock.value}!, wait for Admin moderation`)
             queryClient.invalidateQueries(['product', variables.productId])
         },
         onError: (error) => {
@@ -89,4 +89,27 @@ export const useUpdateProduct = () => {
             toast.error(error.response?.data?.message || "Failed to update product");
         }
     })
+}
+
+
+export const useGetPreHarvestedProduct = (id) => {
+    return useQuery({
+        queryKey: ["pre-harvest-product", id],
+        queryFn: () => getPreHarvestedProductById(id)
+    })
+
+}
+
+export const useUpdatePrHarvestedProduct = () => {
+    return useMutation({
+        mutationFn: updatePreHarestProduct,
+        onSuccess: (_, variables) => {
+            queryClient.invalidateQueries(["pre-harvest-product", variables.productId])
+            toast.warning("Listing updated !, wait for admin moderation")
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Failed to update product");
+        }
+    })
+
 }

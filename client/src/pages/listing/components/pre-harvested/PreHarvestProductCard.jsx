@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const PreHarvestCardFarmer = ({ listing }) => {
   const {
@@ -35,6 +36,8 @@ const PreHarvestCardFarmer = ({ listing }) => {
     status,
     qualityGrade,
   } = listing;
+
+  const navigate = useNavigate();
 
   const mainImage =
     images?.[0]?.url ||
@@ -64,7 +67,14 @@ const PreHarvestCardFarmer = ({ listing }) => {
   };
 
   return (
-    <Card className="group overflow-hidden border border-border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full">
+    <Card
+      className={cn(
+        "group overflow-hidden border border-border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300",
+        status !== "cancelled"
+          ? "bg-card border-border hover:shadow-md hover:border-primary/20"
+          : "bg-muted/30 border-dashed border-muted-foreground/30 opacity-80 hover:opacity-100"
+      )}
+    >
       <div className="relative h-48 w-full overflow-hidden bg-muted">
         <img
           src={mainImage}
@@ -91,7 +101,7 @@ const PreHarvestCardFarmer = ({ listing }) => {
           </Badge>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4">
+        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/50 to-transparent p-4">
           <div className="flex justify-between items-end">
             <div className="text-white">
               <p className="text-[10px] opacity-80 uppercase tracking-wider font-semibold mb-1">
@@ -186,6 +196,7 @@ const PreHarvestCardFarmer = ({ listing }) => {
 
       <CardFooter className="p-4 pt-0 flex gap-2 mt-auto">
         <Button
+          onClick={() => navigate(`pre-harvested-product/${listing._id}`)}
           variant="outline"
           className="flex-1 border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
         >

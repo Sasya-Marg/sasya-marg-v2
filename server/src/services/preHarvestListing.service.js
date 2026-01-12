@@ -231,6 +231,7 @@ export const getSinglePreharvestListingService = async (farmerId, role, listingI
 
 export const updatePreHarvestListingService = async (listingId, farmerId, payload, files = null) => {
     const listing = await PreHarvestListing.findById(listingId)
+    console.log(payload)
 
     if (!listing) throw new ApiError(404, "Listing not found")
 
@@ -242,10 +243,11 @@ export const updatePreHarvestListingService = async (listingId, farmerId, payloa
         "title",
         "description",
         "expectedHarvest",
-        "expectedYield",
+        "expectedyeild",
         "expectedPrice",
         "qualityGrade",
         "minimumOrderQuantity",
+        "sowingDate"
     ]
 
 

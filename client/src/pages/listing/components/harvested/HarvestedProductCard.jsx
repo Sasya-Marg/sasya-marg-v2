@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 const HarvestedProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -42,12 +43,22 @@ const HarvestedProductCard = ({ product }) => {
   };
 
   return (
-    <Card className="group overflow-hidden border border-border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300">
+    <Card
+      className={cn(
+        "group overflow-hidden border border-border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300",
+        isActive
+          ? "bg-card border-border hover:shadow-md hover:border-primary/20"
+          : "bg-muted/30 border-dashed border-muted-foreground/30 opacity-80 hover:opacity-100"
+      )}
+    >
       <div className="relative h-48 w-full overflow-hidden bg-muted">
         <img
           src={mainImage}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className={cn(
+            "h-full w-full object-cover transition-transform duration-500 group-hover:scale-105",
+            !isActive && "grayscale-[0.8]"
+          )}
         />
 
         <div className="absolute top-3 right-3 flex flex-col gap-2">
@@ -150,7 +161,7 @@ const HarvestedProductCard = ({ product }) => {
           onClick={() => navigate(`harvested-product/${product._id}`)}
         >
           <Edit className="mr-2 h-4 w-4" />
-          View
+          Manage
         </Button>
       </CardFooter>
     </Card>

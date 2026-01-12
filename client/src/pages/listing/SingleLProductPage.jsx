@@ -23,9 +23,9 @@ import {
   useUpdateStock,
 } from "@/hooks/listing.hooks";
 import AppLoader from "@/components/common/AppLoader";
-import UpdateStockDialog from "./components/UpdateStockDialog";
-import UpdatePriceDialog from "./components/UpdatePriceDialog";
-import UpdateProductDialog from "./components/UpdateProductDialog";
+import UpdateStockDialog from "./components/harvested/UpdateStockDialog";
+import UpdatePriceDialog from "./components/harvested/UpdatePriceDialog";
+import UpdateProductDialog from "./components/harvested/UpdateProductDialog";
 
 const ProductViewPage = () => {
   const { id } = useParams();
@@ -73,7 +73,7 @@ const ProductViewPage = () => {
   return (
     <div className="min-h-screen bg-background pb-20 font-sans text-foreground">
       <div className="bg-card border-b border-border sticky top-0 z-10 px-4 py-3 md:px-8 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center md:gap-4">
           <Button
             variant="ghost"
             size="icon"
@@ -87,7 +87,7 @@ const ProductViewPage = () => {
               Product Details
             </h1>
             <span className="text-xs text-muted-foreground md:hidden">
-              Back to Listings
+              Back
             </span>
           </div>
         </div>
@@ -111,6 +111,7 @@ const ProductViewPage = () => {
             description={product.description}
             onUpdate={handleProductUpdate}
             productId={product._id}
+            isActive={product.isActive}
           />
         </div>
       </div>
@@ -217,13 +218,13 @@ const ProductViewPage = () => {
               </div>
 
               <CardContent className="p-6 space-y-6">
-                <div className="flex items-end justify-between bg-secondary/30 p-4 rounded-lg border border-border">
+                <div className="flex flex-col md:flex-row md:items-end items-start md:justify-between gap-2 bg-secondary/30 p-4 rounded-lg border border-border">
                   <div>
                     <p className="text-sm text-muted-foreground font-medium mb-1">
                       Selling Price
                     </p>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-bold text-primary">
+                      <span className="md:text-3xl text-2xl font-bold text-primary">
                         {product?.price?.value &&
                           formatPrice(product.price.value)}
                       </span>

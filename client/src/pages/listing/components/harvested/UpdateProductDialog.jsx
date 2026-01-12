@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Edit, Loader2, Package, Pencil } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
+import {
+  BookOpen,
+  Edit,
+  Loader2,
+  Package,
+  Pencil,
+  Power,
+  TextCursor,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -14,19 +22,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 
 // Added currentUnit prop
-const UpdateProductDialog = ({ title, description, productId, onUpdate }) => {
+const UpdateProductDialog = ({
+  title,
+  description,
+  isActive,
+  productId,
+  onUpdate,
+}) => {
   const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    control,
   } = useForm({
     defaultValues: {
       title: title || "",
       description: description || "",
+      isActive: Boolean(isActive),
     },
   });
 
@@ -36,7 +53,11 @@ const UpdateProductDialog = ({ title, description, productId, onUpdate }) => {
     await onUpdate(productId, payload);
 
     setOpen(false);
-    reset({ title: data.title, description: data.description });
+    reset({
+      title: data.title,
+      description: data.description,
+      isActive: data.isActive,
+    });
   };
 
   return (
@@ -51,7 +72,7 @@ const UpdateProductDialog = ({ title, description, productId, onUpdate }) => {
           Edit Product
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-180 bg-card border-border text-foreground">
+      <DialogContent className="bg-card border-border text-foreground">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-primary">
             <Package className="h-5 w-5" />
@@ -63,7 +84,7 @@ const UpdateProductDialog = ({ title, description, productId, onUpdate }) => {
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid grid-cols-2 items-center gap-4">
             <Label htmlFor="title" className="text-right text-foreground">
               Title
             </Label>
@@ -84,7 +105,7 @@ const UpdateProductDialog = ({ title, description, productId, onUpdate }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid grid-cols-2 items-center gap-4">
             <Label htmlFor="description" className="text-right text-foreground">
               Description
             </Label>
@@ -102,6 +123,26 @@ const UpdateProductDialog = ({ title, description, productId, onUpdate }) => {
                 </span>
               )}
             </div>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right text-foreground">
+              Product Status
+            </Label>
+            <p className="text-xs text-muted-foreground">
+              {isActive ? "Active & Visible" : "Inactive (Hidden)"}
+            </p>
+
+            <Controller
+              name="isActive"
+              control={control}
+              render={({ field }) => (
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              )}
+            />
           </div>
 
           <DialogFooter>
