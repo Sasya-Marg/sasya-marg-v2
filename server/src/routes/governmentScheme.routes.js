@@ -5,7 +5,9 @@ import {
   getAllSchemesAdmin,
   updateScheme,
   toggleScheme,
-  getSchemesForFarmer
+  getSchemesForFarmer,
+  getAllSchemesForFarmer,
+  getSingleScheme
 } from "../controllers/governmentScheme.controller.js"
 
 import { authLayer } from "../middleware/auth.middleware.js"
@@ -19,7 +21,9 @@ import {
   updateSchemeSchema,
   getAllSchemesAdminSchema,
   toggleSchemeSchema,
-  getSchemesForFarmerSchema
+  getSchemesForFarmerSchema,
+  getAllSchemeFarmerSchema,
+  getSingleSchemeValidator
 } from "../validator/governmentScheme.validator.js"
 
 
@@ -31,6 +35,13 @@ schemeRouter.post(
   "/admin/schemes",
   authLayer,
   requireAdmin,
+  validate(createSchemeSchema),
+  createScheme
+)
+
+schemeRouter.post(
+  "/farmer/schemes",
+  authLayer,
   validate(createSchemeSchema),
   createScheme
 )
@@ -69,5 +80,22 @@ schemeRouter.get(
   authorize("farmer"),
   validate(getSchemesForFarmerSchema),
   getSchemesForFarmer
+)
+
+schemeRouter.get(
+  "/farmer/schemes/all",
+  authLayer,
+  authorize("farmer"),
+  validate(getAllSchemeFarmerSchema),
+  getAllSchemesForFarmer
+)
+
+
+schemeRouter.get(
+  "/farmer/schemes/:schemeId",
+  authLayer,
+  authorize("farmer"),
+  validate(getSingleSchemeValidator),
+  getSingleScheme
 )
 

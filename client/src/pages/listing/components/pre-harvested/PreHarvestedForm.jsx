@@ -323,7 +323,7 @@ const PreHarvestForm = () => {
                   {["A", "B", "C", "organic"].map((grade) => (
                     <label
                       key={grade}
-                      className={`cursor-pointer px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
+                      className={`cursor-pointer md:px-4 px-2 py-2 rounded-md border text-sm font-medium transition-colors ${
                         field.value === grade
                           ? "bg-primary/10 border-border text-primary"
                           : "bg-background hover:bg-muted"
@@ -367,7 +367,7 @@ const PreHarvestForm = () => {
             ) : (
               <UploadCloud className="mr-2 h-4 w-4" />
             )}
-            Publish Pre-Harvest Listing
+            Publish Listing
           </Button>
         </form>
       </CardContent>

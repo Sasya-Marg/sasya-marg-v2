@@ -60,7 +60,6 @@ const SinglePreHarvestedProductPage = () => {
   }
 
   const product = getProduct.data?.data;
-  console.log("Product::", product);
   const currentImage = activeImage || product?.images?.[0]?.url;
 
   const handlePreHarvestedProductUpdate = (productId, payload) => {

@@ -58,7 +58,6 @@ const Profile = () => {
           );
         },
         onSuccess: (res) => {
-          console.log(res);
           if (res?.data?.contactVisibility !== undefined) {
             setContactVisible(res.data.contactVisibility);
             toast.success(res.message);
@@ -72,7 +71,6 @@ const Profile = () => {
     changeData(payload, {
       onSuccess: (res) => {
         const currentUser = useAuthStore.getState().user;
-        console.log("res", res);
         setUser({
           ...currentUser,
           email: res.data.email,

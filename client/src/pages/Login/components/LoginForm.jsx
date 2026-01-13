@@ -45,7 +45,6 @@ const LoginForm = () => {
   }
 
   function handleLoginFarmer(data) {
-    console.log(data);
     if (mode === "otp") {
       loginWithOtp({ phone: data.phone, otp: data.otp });
     } else if (mode === "password") {

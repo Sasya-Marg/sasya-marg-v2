@@ -89,3 +89,19 @@ export const getSchemesForFarmerSchema = z.object({
     farmLandId: z.string().length(24, "Invalid farmland id")
   })
 })
+
+
+export const getAllSchemeFarmerSchema = z.object({
+  query: z.object({
+    page: z.coerce.number().min(1).optional(),
+    limit: z.coerce.number().min(1).max(100).optional(),
+    state: z.string().optional(),
+    search: z.string().optional()
+  })
+})
+
+export const getSingleSchemeValidator = z.object({
+  params: z.object({
+    schemeId: z.string().length(24, "Invalid scheme id")
+  })
+})

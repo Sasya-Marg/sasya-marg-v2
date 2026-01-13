@@ -70,7 +70,7 @@ const MyHarvestedListings = () => {
   const responseData = productData?.data || {};
   const listingItems = responseData.products || [];
   const totalPages = responseData.pagination.totalPages || 0;
-  const hasNextPage = filters.page <= totalPages;
+  const hasNextPage = filters.page < totalPages;
   const hasPrevPage = filters.page > 1;
 
   return (
@@ -91,7 +91,7 @@ const MyHarvestedListings = () => {
             value={filters.moderation || "all"}
             onValueChange={(val) => handleFilterChange("moderation", val)}
           >
-            <SelectTrigger className="w-[150px] bg-muted/20 border-dashed">
+            <SelectTrigger className="w-37.5 bg-muted/20 border-dashed">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
@@ -106,7 +106,7 @@ const MyHarvestedListings = () => {
             value={filters.isActive || "all"}
             onValueChange={(val) => handleFilterChange("isActive", val)}
           >
-            <SelectTrigger className="w-[150px] bg-muted/20 border-dashed">
+            <SelectTrigger className="w-37.5 bg-muted/20 border-dashed">
               <SelectValue placeholder="Visibility" />
             </SelectTrigger>
             <SelectContent>
@@ -123,7 +123,7 @@ const MyHarvestedListings = () => {
           {[1, 2, 3].map((n) => (
             <div
               key={n}
-              className="h-[300px] w-full rounded-xl bg-muted/20 animate-pulse"
+              className="h-75 w-full rounded-xl bg-muted/20 animate-pulse"
             />
           ))}
         </div>

@@ -69,7 +69,7 @@ const MyPreHarvestedListings = () => {
   const responseData = preHarvestData?.data || {};
   const listingItems = responseData.listings || [];
   const totalPages = responseData.pagination?.totalPages || 0;
-  const hasNextPage = filters.page <= totalPages;
+  const hasNextPage = filters.page < totalPages;
   const hasPrevPage = filters.page > 1;
 
   return (
@@ -90,7 +90,7 @@ const MyPreHarvestedListings = () => {
             value={filters.moderation || "all"}
             onValueChange={(val) => handleFilterChange("moderation", val)}
           >
-            <SelectTrigger className="w-[150px] bg-muted/20 border-dashed">
+            <SelectTrigger className="w-37.5 bg-muted/20 border-dashed">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>

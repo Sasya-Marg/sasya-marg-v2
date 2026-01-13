@@ -89,7 +89,6 @@ export const useFarmerForgotPassword = () => {
     return useMutation({
         mutationFn: forgotPassword,
         onSuccess: (data) => {
-            console.log("Password changed...", data)
             navigate(`/${data.data.role}/login`)
         },
         onError: (error) => {

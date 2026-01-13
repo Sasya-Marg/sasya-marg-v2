@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 
 const HarvestedForm = () => {
   const createListing = useCreateProductListing();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -60,7 +59,6 @@ const HarvestedForm = () => {
         formData.append("images", imageItem.file);
       }
     });
-    console.log("FormData Created", formData);
     createListing.mutate(formData, {
       onSuccess: () => {
         reset();

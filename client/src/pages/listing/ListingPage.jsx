@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 const ListingPage = () => {
   return (
     <div className="min-h-screen w-full bg-background p-4 md:p-8 animate-in fade-in duration-500">
-      <div className="mx-auto max-w-5xl space-y-8">
+      <div className="mx-auto container space-y-8">
         
         {/* --- Header Section --- */}
         <div className="flex flex-col space-y-2">

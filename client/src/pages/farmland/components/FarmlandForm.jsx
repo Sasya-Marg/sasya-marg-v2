@@ -106,12 +106,9 @@ const FarmlandForm = ({ onSuccess }) => {
     if (payload.size.value) {
       payload.size.value = Number(payload.size.value);
     }
-    console.log(payload)
-    console.log(typeof payload.budget);
 
     mutate(payload, {
       onSuccess: (data) => {
-        console.log("data of response" , data);
         onSuccess(data.data._id);
       },
     });

@@ -28,6 +28,7 @@ import GovernmentSchemesPage from "@/pages/scheme/SchemePage";
 import ListingPage from "@/pages/listing/ListingPage";
 import SinglePreHarvestProductPage from "@/pages/listing/SinglePreHarvestProductPage";
 import ProductViewPage from "@/pages/listing/SingleLProductPage";
+import SchemeDetailPage from "@/pages/scheme/components/SchemeDetailPage";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -92,6 +93,7 @@ const router = createBrowserRouter([
         element: <SinglePreHarvestProductPage />,
       },
       { path: "Schemes", element: <GovernmentSchemesPage /> },
+      { path: "Schemes/:id", element: <SchemeDetailPage /> },
       { path: "support", element: <SupportPage /> },
       { path: "farmland", element: <Farmlands /> },
       { path: "farmland/:farmlandId", element: <SingleFarmland /> },

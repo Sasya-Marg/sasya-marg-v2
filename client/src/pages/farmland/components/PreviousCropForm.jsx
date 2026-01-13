@@ -26,7 +26,6 @@ const PreviousCropForm = ({ farmlandId, onComplete }) => {
 
   const watchedSeason = watch("season");
 
-  console.log("farmland id", farmlandId);
 
   const handleAddPreviouCrop = (payload) => {
     mutate(

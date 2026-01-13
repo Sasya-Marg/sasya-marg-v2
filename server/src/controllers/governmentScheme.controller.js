@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiResponse } from "../utils/apiResponse.js"
-import { getSchemesForFarmerService } from "../services/governmentSheme.service.js"
+import { getAllSchemesFarmerService, getSchemesForFarmerService, getSingleSchemeService } from "../services/governmentSheme.service.js"
 
 import {
     createSchemeService,
@@ -73,4 +73,22 @@ export const getSchemesForFarmer = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(new ApiResponse(200, schemes, "Eligible schemes fetched successfully"))
+})
+export const getAllSchemesForFarmer = asyncHandler(async (req, res) => {
+
+
+    const { schemes, pagination } = await getAllSchemesFarmerService(req.query)
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, { schemes, pagination }, "Eligible schemes fetched successfully"))
+})
+
+
+export const getSingleScheme = asyncHandler(async (req, res) => {
+    const { schemeId } = req.params
+
+    const scheme = await getSingleSchemeService({ schemeId })
+
+    return res.status(200).json(new ApiResponse(200, scheme, "Scheme fetched Successfully"))
 })

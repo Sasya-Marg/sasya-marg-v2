@@ -52,7 +52,6 @@ const QueryCard = ({ query, onEdit }) => {
     month: "short",
   });
 
-  console.log("Query obj in query Card comp", query);
   const canEdit = query.status === "open" && !query.adminReply;
   const canClose = query.status !== "closed" && query.status !== "resolved";
 
