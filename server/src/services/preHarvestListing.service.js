@@ -3,9 +3,13 @@ import { PreHarvestListing } from '../models/preHarvetedListing.model.js'
 import { FarmLand } from '../models/farmLand.model.js'
 import { uploadToCloudinary, deleteUploadedFile } from '../utils/upload.cloudinary.js'
 import { Location } from '../models/location.model.js'
+import { validatePreHarvestDates } from '../utils/validatePreHravestDates.js'
 
 
 export const createPreHarvestListingService = async ({ farmerId, payload, files }) => {
+
+    const { sowingDate, expectedHarvest } = payload
+
     const farmLand = await FarmLand.findOne({
         owner: farmerId,
         _id: payload.farmland,
@@ -13,6 +17,16 @@ export const createPreHarvestListingService = async ({ farmerId, payload, files 
     })
 
     if (!farmLand) throw new ApiError(403, "Invalid or Inactive farmland")
+
+    if (
+        expectedHarvest &&
+        new Date(expectedHarvest) <= new Date(sowingDate)
+    ) {
+        throw new ApiError(
+            400,
+            "Harvested date must be after sowing date"
+        );
+    }
 
     let images = []
 
@@ -24,11 +38,18 @@ export const createPreHarvestListingService = async ({ farmerId, payload, files 
         }
     }
 
+    let status = "open";
+
+    if (expectedHarvest && new Date() > new Date(expectedHarvest)) {
+        status = "harvested";
+    }
+
+
     const listing = await PreHarvestListing.create({
         farmer: farmerId,
         ...payload,
         images,
-        status: "open",
+        status,
         moderation: "pending"
     })
 
@@ -230,7 +251,11 @@ export const getSinglePreharvestListingService = async (farmerId, role, listingI
 }
 
 export const updatePreHarvestListingService = async (listingId, farmerId, payload, files = null) => {
+
     const listing = await PreHarvestListing.findById(listingId)
+
+    validatePreHarvestDates({ newSowingDate: payload?.sowingDate, newHarvestedDate: payload?.expectedHarvest, existingSowingDate: listing.sowingDate, existingHarvestedDate: listing.expectedHarvest })
+
 
     if (!listing) throw new ApiError(404, "Listing not found")
 
@@ -250,7 +275,8 @@ export const updatePreHarvestListingService = async (listingId, farmerId, payloa
         "expectedPrice",
         "qualityGrade",
         "minimumOrderQuantity",
-        "sowingDate"
+        "sowingDate",
+        "status"
     ]
 
 
@@ -263,14 +289,6 @@ export const updatePreHarvestListingService = async (listingId, farmerId, payloa
 
     //IMAGE REMOVAL OR ADDITION LOGIC HERE 
 
-
-    // if(payload.removeImages?.length){
-    //     for(let img of payload.removeImages){
-    //         await deleteUploadedFile()
-    //     }
-    // }
-
-    //
 
     listing.moderation = 'pending'
     await listing.save()

@@ -76,7 +76,7 @@ const UpdateHarvestDate = ({ currentDate, productId, onUpdate }) => {
               />
             </div>
 
-            {errors.sowingDate && (
+            {errors.expectedHarvest && (
               <span className="text-xs text-destructive">
                 Sowing date is required
               </span>
