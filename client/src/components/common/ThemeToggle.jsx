@@ -3,15 +3,13 @@ import { useThemeStore } from "@/store/useThemeStrore";
 
 const ThemeToggle = () => {
   const { toggleTheme, theme } = useThemeStore();
-
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full border
-     bg-secondary cursor-pointer
+      className="md:p-2 p-1 rounded-full border cursor-pointer
       hover:scale-105 transition"
     >
-      {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+      {theme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
     </button>
   );
 };

@@ -1,5 +1,16 @@
 import { Link } from "react-router-dom";
-import { Menu, User, LogOut, LayoutDashboard, Loader2 } from "lucide-react";
+import {
+  Menu,
+  User,
+  LogOut,
+  LayoutDashboard,
+  Loader2,
+  Store,
+  Tractor,
+  HeartHandshake,
+  Brain,
+  BookMarked,
+} from "lucide-react";
 import { useAuthStore } from "@/store/useAuthStore";
 
 import { Button } from "@/components/ui/button";
@@ -13,6 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useLogoutFarmer } from "@/hooks/auth.hooks";
+import ThemeToggle from "./ThemeToggle";
 
 const DashboardHeader = () => {
   const { user, isAuthenticated, role } = useAuthStore();
@@ -25,13 +37,13 @@ const DashboardHeader = () => {
 
   return (
     <header className="h-16 bg-background border-b flex items-center justify-between px-6">
-      <h1 className="font-semibold">Dashboard</h1>
-      <div className="hidden md:flex md:items-center md:gap-4">
+      <h1 className="font-semibold text-lg">Dashboard</h1>
+      <div className="flex items-center gap-2">
         {isAuthenticated ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-                <Avatar className="h-9 w-9 border-2 border-primary">
+                <Avatar className="md:h-8.5 md:w-8.5 w-7 h-7 border-2 hover:h-9 hover:w-9">
                   <AvatarFallback className={"text-lg font-bold"}>
                     {user.fullname.charAt(0).toUpperCase()}
                   </AvatarFallback>
@@ -66,10 +78,38 @@ const DashboardHeader = () => {
                 </DropdownMenuItem>
               </Link>
 
-              <Link to={`/${role}/dashboard`}>
+              <Link to={`/farmer/mandi`}>
                 <DropdownMenuItem>
-                  <LayoutDashboard className="mr-2 h-4 w-4" />
-                  <span>Dashboard</span>
+                  <Store className="mr-2 h-4 w-4" />
+                  <span>Mandi</span>
+                </DropdownMenuItem>
+              </Link>
+
+              <Link to={`/farmer/schemes`}>
+                <DropdownMenuItem>
+                  <BookMarked className="mr-2 h-4 w-4" />
+                  <span>Schemes</span>
+                </DropdownMenuItem>
+              </Link>
+
+              <Link to={`/farmer/farmland`}>
+                <DropdownMenuItem>
+                  <Tractor className="mr-2 h-4 w-4" />
+                  <span>Farmland</span>
+                </DropdownMenuItem>
+              </Link>
+
+              <Link to={`/farmer/get-suggestion`}>
+                <DropdownMenuItem>
+                  <Brain className="mr-2 h-4 w-4" />
+                  <span>Get Suggestion</span>
+                </DropdownMenuItem>
+              </Link>
+
+              <Link to={`/farmer/support`}>
+                <DropdownMenuItem>
+                  <HeartHandshake className="mr-2 h-4 w-4" />
+                  <span>Help & Support</span>
                 </DropdownMenuItem>
               </Link>
 
@@ -96,6 +136,7 @@ const DashboardHeader = () => {
             </Button>
           </div>
         )}
+        <ThemeToggle />
       </div>
     </header>
   );
