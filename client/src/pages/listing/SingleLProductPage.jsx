@@ -10,6 +10,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Clock,
+  TriangleAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -319,6 +320,29 @@ const ProductViewPage = () => {
                     This product is currently under review by the Mandi
                     administration. It will be visible to buyers once approved.
                   </p>
+                </div>
+              </div>
+            )}
+
+            {product?.moderation === "rejected" && (
+              <div className="bg-destructive/20 border border-destructive/40 rounded-lg p-4 flex gap-3 items-start">
+                <TriangleAlert className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground">
+                    Listing rejected !
+                  </h4>
+                  <p className="text-xs text-primary mt-1">
+                    {product?.rejectionReason ||
+                      "You voilate privacy and policy"}
+                  </p>
+
+                  {product?.reviewedAt && product?.reviewedBy && (
+                    <div>
+                      <p className="text-xs text-primary mt-1">
+                        Reviewed At : {formatDate(product?.reviewedAt)}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

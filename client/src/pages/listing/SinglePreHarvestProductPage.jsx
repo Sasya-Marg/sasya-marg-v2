@@ -12,6 +12,7 @@ import {
   Clock,
   Calendar,
   Box,
+  TriangleAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,7 @@ import UpdatePriceDialog from "./components/harvested/UpdatePriceDialog";
 import UpdateExpectedYeildDialog from "./components/pre-harvested/UpdateExpectYeildDialog";
 import UpdateSowingDate from "./components/pre-harvested/UpdateShowingDate";
 import UpdateHarvestDate from "./components/pre-harvested/UpdateHarvestDate";
+import UpdatePreHarvestProductDialog from "./components/pre-harvested/UpdatePreHarvestListingDialog";
 
 const SinglePreHarvestedProductPage = () => {
   const { id } = useParams();
@@ -101,10 +103,14 @@ const SinglePreHarvestedProductPage = () => {
             {product?.moderation}
           </Badge>
 
-          <UpdateProductDialog
+          <UpdatePreHarvestProductDialog
             title={product.title}
             description={product.description}
-            onUpdate={() => {}}
+            minimumOrderQuantity={product?.minimumOrderQuantity?.value}
+            minimumOrderQuantityUnit={product?.minimumOrderQuantity?.unit}
+            qualityGrade={product?.qualityGrade}
+            status={product?.status}
+            onUpdate={handlePreHarvestedProductUpdate}
             productId={product._id}
           />
         </div>
@@ -180,6 +186,15 @@ const SinglePreHarvestedProductPage = () => {
                   </div>
                   <div>
                     <span className="text-xs text-muted-foreground uppercase tracking-wider block mb-1">
+                      Status
+                    </span>
+                    <span className="text-sm font-medium text-foreground flex items-center gap-1">
+                      <CalendarDays className="h-3 w-3" />
+                      {product?.status}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-muted-foreground uppercase tracking-wider block mb-1">
                       Quality ID
                     </span>
                     <span
@@ -187,6 +202,51 @@ const SinglePreHarvestedProductPage = () => {
                       title={product?._id}
                     >
                       #{product?._id?.slice(-6).toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border shadow-sm bg-card">
+              <CardContent className="p-0">
+                <div className="p-4 border-b border-border flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center text-primary-foreground">
+                    <Box className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground">
+                      Product Details
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      product specialities
+                    </p>
+                  </div>
+                </div>
+                <div className="p-4 space-y-3">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">Quality Grade</span>
+                    <span className="font-medium text-foreground uppercase">
+                      {product?.qualityGrade}
+                    </span>
+                  </div>
+                  <Separator className="bg-border" />
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">Status</span>
+                    <span className="font-medium text-foreground uppercase">
+                      {product?.status}
+                    </span>
+                  </div>
+                  <Separator className="bg-border" />
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">
+                      Min. Order Qunatity
+                    </span>
+                    <span className="font-medium text-foreground">
+                      {product?.minimumOrderQuantity?.value}{" "}
+                      {product?.minimumOrderQuantity?.unit
+                        ?.charAt(0)
+                        .toUpperCase()}
                     </span>
                   </div>
                 </div>
@@ -346,51 +406,6 @@ const SinglePreHarvestedProductPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-border shadow-sm bg-card">
-              <CardContent className="p-0">
-                <div className="p-4 border-b border-border flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center text-primary-foreground">
-                    <Box className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">
-                      Product Details
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      product specialities
-                    </p>
-                  </div>
-                </div>
-                <div className="p-4 space-y-3">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Quality Grade</span>
-                    <span className="font-medium text-foreground uppercase">
-                      {product?.qualityGrade}
-                    </span>
-                  </div>
-                  <Separator className="bg-border" />
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Status</span>
-                    <span className="font-medium text-foreground uppercase">
-                      {product?.status}
-                    </span>
-                  </div>
-                  <Separator className="bg-border" />
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">
-                      Min. Order Qunatity
-                    </span>
-                    <span className="font-medium text-foreground">
-                      {product?.minimumOrderQuantity?.value}{" "}
-                      {product?.minimumOrderQuantity?.unit
-                        ?.charAt(0)
-                        .toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
             {product?.moderation === "pending" && (
               <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 flex gap-3 items-start">
                 <AlertCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -402,6 +417,29 @@ const SinglePreHarvestedProductPage = () => {
                     This product is currently under review by the Mandi
                     administration. It will be visible to buyers once approved.
                   </p>
+                </div>
+              </div>
+            )}
+
+            {product?.moderation === "rejected" && (
+              <div className="bg-destructive/20 border border-destructive/40 rounded-lg p-4 flex gap-3 items-start">
+                <TriangleAlert className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground">
+                    Listing rejected !
+                  </h4>
+                  <p className="text-xs text-primary mt-1">
+                    {product?.rejectionReason ||
+                      "You voilate privacy and policy"}
+                  </p>
+
+                  {product?.reviewedAt && product?.reviewedBy && (
+                    <div>
+                      <p className="text-xs text-primary mt-1">
+                        Reviewed At : {formatDate(product?.reviewedAt)}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

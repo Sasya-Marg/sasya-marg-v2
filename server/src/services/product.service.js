@@ -105,6 +105,10 @@ export const updateStockService = async ({ listingId, farmerId, stock }) => {
 
     if (!product) throw new ApiError(404, "Product not found")
 
+    if (product.moderation === "rejected") {
+        throw new ApiError(403, "You are not allowed to update listing as it is rejected!")
+    }
+
     product.stock = stock
     product.moderation = "pending"
     await product.save({ new: true })
@@ -118,6 +122,10 @@ export const updatePriceService = async ({ listingId, farmerId, price }) => {
 
     if (!product) throw new ApiError(404, "Product not found")
 
+    if (product.moderation === "rejected") {
+        throw new ApiError(403, "You are not allowed to update listing as it is rejected!")
+    }
+
     product.price = price
     product.moderation = "pending"
     await product.save({ new: true })
@@ -130,6 +138,9 @@ export const updateProductListing = async ({ farmerId, listingId, payload, files
     const product = await Product.findOne({ _id: listingId, farmer: farmerId })
 
     if (!product) throw new ApiError(403, "You are not allowed to update listing")
+    if (product.moderation === "rejected") {
+        throw new ApiError(403, "You are not allowed to update listing as it is rejected!")
+    }
 
     const allowedFields = [
         "title",

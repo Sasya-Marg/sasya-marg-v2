@@ -231,12 +231,15 @@ export const getSinglePreharvestListingService = async (farmerId, role, listingI
 
 export const updatePreHarvestListingService = async (listingId, farmerId, payload, files = null) => {
     const listing = await PreHarvestListing.findById(listingId)
-    console.log(payload)
 
     if (!listing) throw new ApiError(404, "Listing not found")
 
     if (listing.farmer.toString() !== farmerId.toString()) {
         throw new ApiError(403, "You are not allowed to update listing")
+    }
+
+    if (listing.moderation === "rejected") {
+        throw new ApiError(403, "You are not allowed to update listing as it is rejected!")
     }
 
     const allowedFields = [
