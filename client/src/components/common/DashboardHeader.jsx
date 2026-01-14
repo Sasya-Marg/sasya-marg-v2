@@ -36,8 +36,8 @@ const DashboardHeader = () => {
   }
 
   return (
-    <header className="h-16 bg-background border-b flex items-center justify-between px-6">
-      <h1 className="font-semibold text-lg">Dashboard</h1>
+    <header className="h-16 bg-background border-b flex items-center justify-between px-10 md:px-23">
+      <h1 className="font-semibold text-xl">Dashboard</h1>
       <div className="flex items-center gap-2">
         {isAuthenticated ? (
           <DropdownMenu>

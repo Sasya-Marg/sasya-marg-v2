@@ -29,6 +29,7 @@ import ListingPage from "@/pages/listing/ListingPage";
 import SinglePreHarvestProductPage from "@/pages/listing/SinglePreHarvestProductPage";
 import ProductViewPage from "@/pages/listing/SingleLProductPage";
 import SchemeDetailPage from "@/pages/scheme/components/SchemeDetailPage";
+import FarmerDashboardPage from "@/pages/FarmerDashboard/FarmerDashboardPage";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -109,10 +110,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </ProtectedRoute>
     ),
-    children: [
-      { index: true, element: <div>Farmer Dashboard</div> },
-      { path: "listings", element: <div>All Listings</div> },
-    ],
+    children: [{ index: true, element: <FarmerDashboardPage /> }],
   },
 
   {

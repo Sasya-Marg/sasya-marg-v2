@@ -60,3 +60,8 @@ export const getSingleSuggestion = async (id) => {
     const { data } = await api.get(`/suggestion/history/${id}`)
     return data
 }
+
+export const farmerDashboard = async () => {
+    const { data } = await api.get('/farmer/dashboard')
+    return data
+}
