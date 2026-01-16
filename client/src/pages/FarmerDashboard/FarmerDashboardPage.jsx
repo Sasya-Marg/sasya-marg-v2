@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFarmerDashboard } from "@/hooks/farmer.hooks";
 import AppLoader from "@/components/common/AppLoader";
 import {
@@ -18,12 +18,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { useLogoutFarmer } from "@/hooks/auth.hooks";
 import { Link } from "react-router-dom";
+import LogoutButton from "@/components/common/LogoutButton";
+import LogoutConfirmDialog from "@/components/common/LogoutDialog";
 
 const FarmerDashboardPage = () => {
   const getDashboard = useFarmerDashboard();
   const logout = useLogoutFarmer();
+  const [isOpen, setIsOpen] = useState(false);
 
-  if (getDashboard.isLoading || getDashboard.isRefetching || getDashboard.isFetching) {
+  if (
+    getDashboard.isLoading ||
+    getDashboard.isRefetching ||
+    getDashboard.isFetching
+  ) {
     return (
       <div className="h-screen w-full flex items-center justify-center">
         <AppLoader />
@@ -87,14 +94,15 @@ const FarmerDashboardPage = () => {
             >
               <RefreshCcw className="mr-2 h-3.5 w-3.5" /> Sync
             </Button>
-            <Button
-              onClick={handleLogout}
-              size="sm"
+            <LogoutButton
+              onClick={() => setIsOpen(true)}
               variant="destructive"
-              className="flex-1 md:flex-none h-9 text-xs shadow-sm"
-            >
-              <LogOut className="mr-2 h-3.5 w-3.5" /> Logout
-            </Button>
+            />
+            <LogoutConfirmDialog
+              onClose={() => setIsOpen(false)}
+              open={isOpen}
+              onConfirm={handleLogout}
+            />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ export const useAuthStore = create((set) => ({
   user: null,
   role: null,
   isAuthenticated: false,
+  authStatus: "loading",
 
   setUser: (user) =>
     set({
@@ -12,6 +13,7 @@ export const useAuthStore = create((set) => ({
       user,
       role: user?.role,
       isAuthenticated: true,
+      authStatus: "authenticated"
     }),
 
   clearUser: () =>
@@ -20,10 +22,11 @@ export const useAuthStore = create((set) => ({
       user: null,
       role: null,
       isAuthenticated: false,
+      authStatus: "unauthenticated"
     }),
 
   startLoading: () => {
-    set({ loading: true })
+    set({ loading: true, authStatus: "loading" })
   },
 
   stopLoading: () =>

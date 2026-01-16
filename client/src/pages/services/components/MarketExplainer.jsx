@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShoppingBag, ArrowRight, Heart, Phone, Store, Truck, CalendarClock, CheckCircle2, PackagePlus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const MarketExplainer = () => {
   const [demoStep, setDemoStep] = useState('input');
@@ -19,14 +20,14 @@ const MarketExplainer = () => {
   return (
     <section className="bg-secondary/20 border-t border-border py-16 lg:py-24 overflow-hidden relative">
       
-      <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-background/80 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-200 h-200 bg-background/80 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* LEFT SIDE: Interactive Demo (Swapped order) */}
           <div className="relative order-1 lg:order-1">
-            <div className="relative mx-auto w-full max-w-[380px] rounded-[3rem] border-8 border-background shadow-2xl overflow-hidden h-[720px] flex flex-col bg-slate-50 dark:bg-slate-900">
+            <div className="relative mx-auto w-full max-w-95 rounded-[3rem] border-8 border-background shadow-2xl overflow-hidden h-180 flex flex-col bg-slate-50 dark:bg-slate-900">
               
               <div className="bg-background px-6 pt-10 pb-4 border-b border-border z-20 shadow-sm">
                 <div className="flex justify-between items-center">
@@ -39,7 +40,7 @@ const MarketExplainer = () => {
                 </div>
               </div>
 
-              <div className="flex-grow flex flex-col relative overflow-hidden">
+              <div className="grow flex flex-col relative overflow-hidden">
                 
                 {demoStep === 'input' && (
                   <div className="p-6 space-y-6 animate-in fade-in zoom-in duration-300">
@@ -233,10 +234,10 @@ const MarketExplainer = () => {
             </div>
 
             <div className="pt-4">
-              <a href="/market-place" className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-8 text-base font-medium text-accent-foreground shadow hover:bg-accent/90 transition-all hover:gap-3 gap-2">
+              <Link href="/market-place" className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-8 text-base font-medium text-accent-foreground shadow hover:bg-accent/90 transition-all hover:gap-3 gap-2">
                 Visit Market Place
                 <ArrowRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
 

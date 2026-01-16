@@ -22,11 +22,14 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useLogoutFarmer } from "@/hooks/auth.hooks";
 import ThemeToggle from "./ThemeToggle";
+import LogoutButton from "./LogoutButton";
+import LogoutConfirmDialog from "./LogoutDialog";
 
 const Navbar = () => {
   const { isAuthenticated, role } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const [open, setOpen] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -162,9 +165,12 @@ const Navbar = () => {
                       <Button asChild>
                         <Link to={`/${role}/dashboard`}>Dashboard</Link>
                       </Button>
-                      <Button variant="destructive" onClick={handleLogout}>
-                        Logout
-                      </Button>
+                      <LogoutButton onClick={() => setOpen(true)} variant="secondary" size="default" />
+                      <LogoutConfirmDialog
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        onConfirm={handleLogout}
+                      />
                     </div>
                   </div>
                 ) : (

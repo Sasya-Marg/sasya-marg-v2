@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Tractor
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const features = [
   {
@@ -58,9 +59,9 @@ const FeaturesSection = () => {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <a
+            <Link
               key={index}
-              href={feature.link}
+              to={feature.link}
               className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 transition-all hover:shadow-lg hover:-translate-y-1"
             >
               <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary group-hover:bg-primary/10 transition-colors">
@@ -76,7 +77,7 @@ const FeaturesSection = () => {
               </p>
 
               <div className="absolute bottom-0 left-0 h-1 w-0 bg-primary transition-all duration-300 group-hover:w-full" />
-            </a>
+            </Link>
           ))}
         </div>
       </div>

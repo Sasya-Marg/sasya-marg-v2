@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -96,22 +97,22 @@ const Footer = () => {
 
 const FooterLink = ({ href, label }) => (
   <li>
-    <a
-      href={href}
+    <Link
+      to={href}
       className="text-sm text-muted-foreground hover:text-primary transition-colors block"
     >
       {label}
-    </a>
+    </Link>
   </li>
 );
 
 const SocialIcon = ({ icon }) => (
-  <a
-    href="#"
+  <Link
+    to="#"
     className="text-muted-foreground hover:text-primary transition-colors"
   >
     {icon}
-  </a>
+  </Link>
 );
 
 export default Footer;

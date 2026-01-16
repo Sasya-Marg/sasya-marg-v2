@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sprout, ArrowRight, CheckCircle2, ScanLine, Database, Sparkles, MapPin, CloudSun, AlertTriangle, XCircle, Wallet } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CropSuggestionExplainer = () => {
   const [demoStep, setDemoStep] = useState('input'); 
@@ -21,8 +22,8 @@ const CropSuggestionExplainer = () => {
   return (
     <section className="bg-background py-16 lg:py-24 overflow-hidden relative">
       
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-150 h-150 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-125 h-125 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -87,15 +88,15 @@ const CropSuggestionExplainer = () => {
             </div>
 
             <div className="pt-4">
-              <a href="/crop-suggestion" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-base font-medium text-primary-foreground shadow hover:bg-primary/90 transition-all hover:gap-3 gap-2">
+              <Link to="/crop-suggestion" className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-base font-medium text-primary-foreground shadow hover:bg-primary/90 transition-all hover:gap-3 gap-2">
                 Start Analysis
                 <ArrowRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
 
           <div className="relative">
-            <div className="relative mx-auto w-full max-w-[380px] rounded-[3rem] border-8 border-muted bg-background shadow-2xl overflow-hidden h-[700px] flex flex-col">
+            <div className="relative mx-auto w-full max-w-95 rounded-[3rem] border-8 border-muted bg-background shadow-2xl overflow-hidden h-175 flex flex-col">
               
               <div className="bg-primary px-6 pt-10 pb-6 text-primary-foreground shrink-0">
                 <div className="flex justify-between items-center mb-4">
@@ -111,7 +112,7 @@ const CropSuggestionExplainer = () => {
                 <p className="text-primary-foreground/80 text-xs">AI-Powered Farming</p>
               </div>
 
-              <div className="p-6 flex-grow flex flex-col overflow-hidden relative">
+              <div className="p-6 grow flex flex-col overflow-hidden relative">
                 
                 {demoStep === 'input' && (
                   <div className="space-y-5 animate-in fade-in zoom-in duration-300">
@@ -156,7 +157,7 @@ const CropSuggestionExplainer = () => {
                 )}
 
                 {demoStep === 'scanning' && (
-                  <div className="flex-grow flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-300">
+                  <div className="grow flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-300">
                     <div className="relative">
                        <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
                        <MapPin className="h-16 w-16 text-blue-500 relative z-10 animate-bounce" />
@@ -172,7 +173,7 @@ const CropSuggestionExplainer = () => {
                 )}
 
                 {demoStep === 'ai' && (
-                  <div className="flex-grow flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-300">
+                  <div className="grow flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-300">
                     <div className="relative h-20 w-20">
                       <div className="absolute inset-0 border-4 border-secondary rounded-full"></div>
                       <div className="absolute inset-0 border-4 border-t-primary rounded-full animate-spin"></div>

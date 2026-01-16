@@ -11,7 +11,12 @@ const AuthProvider = ({ children }) => {
     startLoading();
 
     api
-      .get("/auth/me", { withCredentials: true })
+      .get("/auth/me", {
+        withCredentials: true,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      })
       .then((res) => {
         const payload = res.data.data;
         setUser(payload);

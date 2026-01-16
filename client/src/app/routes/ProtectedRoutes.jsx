@@ -1,21 +1,22 @@
 import { Navigate } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuthStore";
+import AppLoader from "@/components/common/AppLoader";
 
 const ProtectedRoute = ({ children, role, allowGuest }) => {
-  const { loading, isAuthenticated, role: userRole, } = useAuthStore();
+  const {role: userRole, authStatus } = useAuthStore();
 
-  if (loading) return null;
+  if (authStatus === "loading") {
+    return <AppLoader />;
+  }
 
-  // 🔓 guest allowed route (sirf /login)
   if (allowGuest) {
-    if (isAuthenticated) {
+    if (authStatus === "authenticated" && userRole) {
       return <Navigate to={`/${userRole}/dashboard`} replace />;
     }
     return children;
   }
 
-  // 🔐 protected routes
-  if (!isAuthenticated) {
+  if (authStatus === "unauthenticated") {
     return <Navigate to="/" replace />;
   }
 

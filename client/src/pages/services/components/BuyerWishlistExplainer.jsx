@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, Phone, CalendarClock, ShoppingBag, ArrowRight, CheckCircle2, User, Copy, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const BuyerWishlistExplainer = () => {
   const [revealedId, setRevealedId] = useState(null); // Tracks which card's number is visible
@@ -16,14 +17,14 @@ const BuyerWishlistExplainer = () => {
     <section className="bg-secondary/20 border-t border-border py-16 lg:py-24 overflow-hidden relative">
       
       {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-background/80 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute top-0 left-0 h-200 w-200 bg-background/80 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* LEFT SIDE: Interactive Wishlist Demo */}
           <div className="relative order-1 lg:order-1">
-            <div className="relative mx-auto w-full max-w-[380px] rounded-[3rem] border-8 border-background shadow-2xl overflow-hidden h-[720px] flex flex-col bg-slate-50 dark:bg-slate-900">
+            <div className="relative mx-auto w-full max-w-95 rounded-[3rem] border-8 border-background shadow-2xl overflow-hidden h-180 flex flex-col bg-slate-50 dark:bg-slate-900">
               
               {/* App Header */}
               <div className="bg-background px-6 pt-10 pb-4 border-b border-border z-20 shadow-sm">
@@ -39,7 +40,7 @@ const BuyerWishlistExplainer = () => {
               </div>
 
               {/* Wishlist Content */}
-              <div className="flex-grow p-4 space-y-4 overflow-y-auto custom-scrollbar relative">
+              <div className="grow p-4 space-y-4 overflow-y-auto custom-scrollbar relative">
                 
                 {/* Item 1: Pre-Harvest (Advance Booking) */}
                 <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm border border-border relative overflow-hidden group hover:border-blue-400 transition-all">
@@ -193,10 +194,10 @@ const BuyerWishlistExplainer = () => {
             </div>
 
             <div className="pt-4">
-              <a href="/buyer/register" className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-8 text-base font-bold text-accent-foreground shadow hover:bg-accent/90 transition-all hover:gap-3 gap-2">
+              <Link to="/buyer/register" className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-8 text-base font-bold text-accent-foreground shadow hover:bg-accent/90 transition-all hover:gap-3 gap-2">
                 Start Sourcing
                 <ArrowRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
 

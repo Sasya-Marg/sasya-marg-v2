@@ -1,5 +1,6 @@
 import React from 'react';
 import { ClipboardList, Cpu, Sprout } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const steps = [
   {
@@ -39,7 +40,7 @@ const HowItWorks = () => {
         <div className="relative grid gap-12 md:grid-cols-3">
           
           <div className="absolute top-12 left-0 hidden w-full md:block">
-            <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-border to-transparent border-t-2 border-dashed border-border/60"></div>
+            <div className="h-0.5 w-full bg-linear-to-r from-transparent via-border to-transparent border-t-2 border-dashed border-border/60"></div>
           </div>
 
           {steps.map((step, index) => (
@@ -64,12 +65,12 @@ const HowItWorks = () => {
         </div>
 
         <div className="mt-16 flex justify-center">
-          <a
-            href="/crop-suggestion"
+          <Link
+            to="/crop-suggestion"
             className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-transform hover:scale-105 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             Try it Now
-          </a>
+          </Link>
         </div>
 
       </div>
