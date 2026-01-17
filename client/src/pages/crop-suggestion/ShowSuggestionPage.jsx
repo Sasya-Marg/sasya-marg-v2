@@ -21,7 +21,7 @@ import { useGetSingleSuggestion } from "@/hooks/farmer.hooks";
 import AppLoader from "@/components/common/AppLoader";
 
 const getCropName = (cropId) => {
-  // If cropId is an object (populated), return its name
+
   if (typeof cropId === "object" && cropId?.name) return cropId.name;
 
   const idString = String(cropId);
@@ -60,11 +60,11 @@ const ShowSuggestionPage = () => {
   return (
     <div className="min-h-screen bg-background pb-12 animate-in fade-in duration-500">
       <div className="bg-primary/5 border-b border-border pb-8 pt-6 px-4 md:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto container px-10">
           <Button
             variant="ghost"
             onClick={() => navigate(-1)}
-            className="mb-4 pl-0 hover:bg-transparent hover:text-primary gap-2"
+            className="mb-4 pl-0 hover:bg-transparent hover:text-primary gap-2 cursor-pointer dark:hover:bg-transparent"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Advisor
           </Button>
@@ -102,7 +102,7 @@ const ShowSuggestionPage = () => {
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-4 md:px-8 mt-8 space-y-8">
+      <div className="mx-auto container px-4 md:px-8 mt-8 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="border-border/60 bg-card/50">
             <CardHeader className="pb-2">
@@ -161,7 +161,7 @@ const ShowSuggestionPage = () => {
           <Card className="border-border/60 bg-card/50">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                <Wallet className="h-4 w-4 text-green-600" /> Economics
+                <Wallet className="h-4 w-4 text-primary" /> Economics
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -197,11 +197,10 @@ const ShowSuggestionPage = () => {
             <TrendingUp className="h-5 w-5 text-primary" /> Top Recommendation
           </h2>
 
-          <Card className="overflow-hidden border-primary/20 shadow-lg bg-gradient-to-br from-card to-secondary/30">
+          <Card className="overflow-hidden border-primary/20 shadow-lg bg-linear-to-br from-card to-secondary/30">
             <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-              {/* Left: Score & Name */}
               <div className="md:col-span-1 text-center md:text-left space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 border border-green-200 text-sm font-bold">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/50 text-sm font-bold">
                   <CheckCircle2 className="h-4 w-4" /> {winner.score}% Match
                   Score
                 </div>
@@ -226,7 +225,7 @@ const ShowSuggestionPage = () => {
                       key={idx}
                       className="flex items-start gap-2 text-sm text-muted-foreground"
                     >
-                      <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0" />
+                      <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent shrink-0" />
                       {reason}
                     </div>
                   ))}

@@ -119,7 +119,7 @@ const FarmlandForm = ({ onSuccess }) => {
       className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"
       onSubmit={handleSubmit(handleCreateFarmland)}
     >
-      {/* //location Card */}
+
       <Card className={"border-border shadow-sm"}>
         <CardContent>
           <div className="flex items-center gap-2 mb-4 text-primary">

@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 
-const SchemeCard = ({ scheme, onViewDetails }) => {
+const SchemeCard = ({ scheme }) => {
   const navigate = useNavigate();
 
   const formatDate = (date) => {
@@ -35,7 +35,7 @@ const SchemeCard = ({ scheme, onViewDetails }) => {
 
   return (
     <Card className="group flex flex-col justify-between overflow-hidden border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
-      <CardHeader className="bg-secondary/30 p-5 pb-3">
+      <CardHeader className="bg-muted/90 p-5 pb-3">
         <div className="flex justify-between items-start gap-3">
           <div className="flex gap-3">
             <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -71,7 +71,7 @@ const SchemeCard = ({ scheme, onViewDetails }) => {
 
       <CardContent className="p-5 pt-2 grow">
         <div className="my-4 rounded-lg bg-accent/10 border border-accent/20 p-3">
-          <p className="text-xs font-bold text-accent-foreground uppercase tracking-widest mb-1">
+          <p className="text-xs font-bold text-accent-foreground dark:text-accent/80 uppercase tracking-widest mb-1">
             Primary Benefit
           </p>
           <p className="text-lg font-bold text-foreground">{scheme.benefits}</p>

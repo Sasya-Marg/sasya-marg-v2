@@ -16,7 +16,7 @@ const FarmlandHeader = ({ farmland, onEdit }) => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="-ml-2 text-muted-foreground hover:text-primary hover:bg-secondary"
+            className="-ml-2 text-muted-foreground hover:text-primary hover:bg-secondary dark:hover:bg-transparent"
           >
             <ArrowLeft className="h-6 w-6" />
           </Button>

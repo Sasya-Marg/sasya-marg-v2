@@ -129,7 +129,7 @@ const CreateQuerySheet = ({ isOpen, onClose, editData = null }) => {
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] rounded-t-xl sm:h-full sm:max-w-md sm:rounded-none sm:side-right overflow-y-auto"
+        className="h-[90vh] rounded-t-xl sm:h-full sm:max-w-md sm:rounded-none sm:side-right overflow-y-auto px-5"
       >
         <SheetHeader className="mb-6 text-left">
           <SheetTitle className="text-2xl font-bold text-foreground">
@@ -260,14 +260,14 @@ const CreateQuerySheet = ({ isOpen, onClose, editData = null }) => {
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-lg shadow-lg"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 "
           >
             {isPending ? (
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             ) : isEditMode ? (
-              "Update Ticket"
+              "Update Query"
             ) : (
-              "Submit Ticket"
+              "Submit Query"
             )}
           </Button>
         </form>

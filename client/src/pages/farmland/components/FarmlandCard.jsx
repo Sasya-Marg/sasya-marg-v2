@@ -27,8 +27,14 @@ const FarmlandCard = ({ farmland }) => {
           </Badge>
         </div>
       )}
-      <div className="absolute top-0 h-32 w-full bg-linear-to-br from-primary to-primary/80">
-        <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-accent opacity-20 blur-xl"></div>
+      <div className="absolute top-0 h-32 w-full overflow-hidden">
+        <img
+          src="https://res.cloudinary.com/dq0ltmja4/image/upload/f_auto,q_auto/pexels-tkirkgoz-14214360_hfle6x.jpg"
+          alt="Farmland"
+          className="h-full w-full object-cover object-center"
+        />
+
+        <div className="absolute inset-0 bg-black/30"></div>
         {!isActive && (
           <div className="absolute right-4 top-4">
             <Badge className="bg-muted text-muted-foreground border ">
@@ -92,8 +98,9 @@ const FarmlandCard = ({ farmland }) => {
 
       <CardFooter className="border-t border-border bg-muted/30 px-6 py-3">
         <Button
+        variant="outline"
           onClick={() => navigate(`/farmer/farmland/${farmland._id}`)}
-          className="w-full justify-between p-0 hover:bg-primary/80 font-medium"
+          className="w-full justify-between p-0 cursor-pointer dark:hover:text-foreground"
         >
           View Farmland
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />

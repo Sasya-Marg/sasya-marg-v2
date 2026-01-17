@@ -30,6 +30,8 @@ import SinglePreHarvestProductPage from "@/pages/listing/SinglePreHarvestProduct
 import ProductViewPage from "@/pages/listing/SingleLProductPage";
 import SchemeDetailPage from "@/pages/scheme/components/SchemeDetailPage";
 import FarmerDashboardPage from "@/pages/FarmerDashboard/FarmerDashboardPage";
+import Disclaimer from "@/pages/legal/Disclaimer";
+import ComingSoon from "@/pages/CommingSoon";
 
 const router = createBrowserRouter([
   // 🌍 PUBLIC PAGES
@@ -61,8 +63,16 @@ const router = createBrowserRouter([
     path: "/data-usage",
     element: <DataUsage />,
   },
+  {
+    path: "/disclaimer",
+    element: <Disclaimer />,
+  },
+  {
+    path: "/blogs",
+    element: <ComingSoon />,
+  },
 
-  // 🔐 AUTH (GUEST ONLY)
+
   {
     element: (
       <ProtectedRoute allowGuest>
@@ -93,8 +103,8 @@ const router = createBrowserRouter([
         path: "mandi/pre-harvested-product/:id",
         element: <SinglePreHarvestProductPage />,
       },
-      { path: "Schemes", element: <GovernmentSchemesPage /> },
-      { path: "Schemes/:id", element: <SchemeDetailPage /> },
+      { path: "schemes", element: <GovernmentSchemesPage /> },
+      { path: "schemes/:id", element: <SchemeDetailPage /> },
       { path: "support", element: <SupportPage /> },
       { path: "farmland", element: <Farmlands /> },
       { path: "farmland/:farmlandId", element: <SingleFarmland /> },

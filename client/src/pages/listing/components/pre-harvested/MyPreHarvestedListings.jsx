@@ -148,7 +148,7 @@ const MyPreHarvestedListings = () => {
 
             <div className="flex items-center gap-2">
               <Button
-                variant="outline"
+                variant="secondary"
                 size="sm"
                 onClick={() => handlePageChange(filters.page - 1)}
                 disabled={!hasPrevPage || isPlaceholderData}
@@ -157,7 +157,7 @@ const MyPreHarvestedListings = () => {
                 Prev
               </Button>
               <Button
-                variant="outline"
+                variant="secondary"
                 size="sm"
                 onClick={() => handlePageChange(filters.page + 1)}
                 disabled={!hasNextPage || isPlaceholderData}

@@ -20,6 +20,7 @@ import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { getOptimizedImg } from "@/lib/imageHelper";
 
 const PreHarvestCardFarmer = ({ listing }) => {
   const {
@@ -39,9 +40,7 @@ const PreHarvestCardFarmer = ({ listing }) => {
 
   const navigate = useNavigate();
 
-  const mainImage =
-    images?.[0]?.url ||
-    "https://res.cloudinary.com/dq0ltmja4/image/upload/jake-gard-CetB-bTDBtY-unsplash_c8vtsd.jpg";
+  const mainImage = getOptimizedImg(images?.[0]?.url);
 
   const daysToHarvest = differenceInDays(new Date(expectedHarvest), new Date());
   const totalDuration = differenceInDays(

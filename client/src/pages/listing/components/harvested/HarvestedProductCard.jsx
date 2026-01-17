@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { getOptimizedImg } from "@/lib/imageHelper";
 
 const HarvestedProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -32,10 +33,8 @@ const HarvestedProductCard = ({ product }) => {
     description,
   } = product;
 
-  const mainImage =
-    images?.[0]?.url ||
-    "https://res.cloudinary.com/dq0ltmja4/image/upload/jake-gard-CetB-bTDBtY-unsplash_c8vtsd.jpg";
-
+  const mainImage = getOptimizedImg(images?.[0]?.url);
+  
   const statusStyles = {
     approved: "bg-primary text-primary-foreground",
     rejected: "bg-destructive/80 text-destructive-foreground",

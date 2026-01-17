@@ -9,7 +9,6 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-
 /* =========================================================
    SASYAMARG THEME – LIGHT MODE
    ========================================================= */
@@ -84,7 +83,7 @@
   --card-foreground: #fafaf9;
 
   --popover: #232a15;
-  --popover-foreground: #fafaf9;
+  --popover-foreground: #f2f3ee;
 
   /* Brand – Primary */
   --primary: #a6b97a; /* softened olive */
@@ -99,16 +98,16 @@
   --muted-foreground: #c8d1b0;
 
   /* Accent – CTA */
-  --accent: #facc15; /* softer yellow for dark */
+  --accent: #eab308;; /* softer yellow for dark */
   --accent-foreground: #1f2612;
 
   /* Destructive */
-  --destructive: #dc2626;
+  --destructive: #b91c1c;
   --destructive-foreground: #fff7ed;
 
   /* Borders & inputs */
-  --border: #3a4324;
-  --input: #3a4324;
+  --border: #333b20;
+  --input: #333b20;
   --ring: #a6b97a;
 
   /* Charts */

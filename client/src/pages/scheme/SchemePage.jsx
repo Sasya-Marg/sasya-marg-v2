@@ -116,7 +116,7 @@ const GovernmentSchemesPage = () => {
       <div className="mx-auto container space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-border pb-6">
           <div className="space-y-2">
-            <Badge className="bg-accent/10 text-accent-foreground border-accent/20 px-3 py-1 mb-2">
+            <Badge className="bg-accent/10 text-accent-foreground border-accent/20 dark:bg-accent/80 px-3 py-1 mb-2">
               Government Support
             </Badge>
             <h1 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
@@ -221,7 +221,7 @@ const GovernmentSchemesPage = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   onClick={() => handlePageChange(filters.page - 1)}
                   disabled={!hasPrevPage}
@@ -229,7 +229,7 @@ const GovernmentSchemesPage = () => {
                   <ChevronLeft className="h-4 w-4 mr-1" /> Prev
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   onClick={() => handlePageChange(filters.page + 1)}
                   disabled={!hasNextPage}

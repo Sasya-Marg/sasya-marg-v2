@@ -43,8 +43,12 @@ const DashboardHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-                <Avatar className="md:h-8.5 md:w-8.5 w-7 h-7 border-2 hover:h-9 hover:w-9">
-                  <AvatarFallback className={"text-lg font-bold"}>
+                <Avatar className="md:h-8.5 md:w-8.5 w-7 h-7">
+                  <AvatarFallback
+                    className={
+                      "text-lg font-bold dark:bg-primary dark:text-primary-foreground bg-chart-5/20 cursor-pointer"
+                    }
+                  >
                     {user.fullname.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
@@ -72,49 +76,49 @@ const DashboardHeader = () => {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <Link to={`/${role}`}>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-secondary cursor-pointer focus:text-secondary-foreground">
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </DropdownMenuItem>
               </Link>
 
               <Link to={`/farmer/mandi`}>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-secondary cursor-pointer focus:text-secondary-foreground">
                   <Store className="mr-2 h-4 w-4" />
                   <span>Mandi</span>
                 </DropdownMenuItem>
               </Link>
 
               <Link to={`/farmer/schemes`}>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-secondary cursor-pointer focus:text-secondary-foreground">
                   <BookMarked className="mr-2 h-4 w-4" />
                   <span>Schemes</span>
                 </DropdownMenuItem>
               </Link>
 
               <Link to={`/farmer/farmland`}>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-secondary cursor-pointer focus:text-secondary-foreground">
                   <Tractor className="mr-2 h-4 w-4" />
                   <span>Farmland</span>
                 </DropdownMenuItem>
               </Link>
 
               <Link to={`/farmer/get-suggestion`}>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-secondary cursor-pointer focus:text-secondary-foreground">
                   <Brain className="mr-2 h-4 w-4" />
                   <span>Get Suggestion</span>
                 </DropdownMenuItem>
               </Link>
 
               <Link to={`/farmer/support`}>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-secondary cursor-pointer focus:text-secondary-foreground">
                   <HeartHandshake className="mr-2 h-4 w-4" />
                   <span>Help & Support</span>
                 </DropdownMenuItem>
               </Link>
 
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600 focus:text-red-600">
+              <DropdownMenuItem className="text-destructive focus:bg-secondary cursor-pointer focus:text-destructive font-medium">
                 <LogOut className="mr-2 h-4 w-4" />
                 <button onClick={handleLogout}>
                   {isPending ? (

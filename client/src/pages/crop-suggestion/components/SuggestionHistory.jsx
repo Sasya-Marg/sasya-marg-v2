@@ -3,7 +3,7 @@ import { History, Calendar, ArrowUpRight, Sprout } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // Import ScrollBar
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useGetSuggestionHisory } from "@/hooks/farmer.hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -85,7 +85,7 @@ const HistoryCard = ({ item, redirectTo }) => {
         </div>
 
         <Button
-          variant="ghost"
+          variant="outline"
           className="w-full mt-4 h-8 text-xs text-primary hover:text-primary hover:bg-primary/5"
           onClick={redirectTo}
         >

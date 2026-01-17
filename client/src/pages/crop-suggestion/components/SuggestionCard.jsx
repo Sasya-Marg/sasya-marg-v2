@@ -125,7 +125,7 @@ const SuggestionResults = ({ data, onReset }) => {
                     Reliability
                   </span>
                 </div>
-                <span className="font-semibold text-accent-foreground">
+                <span className="font-semibold text-accent-foreground dark:text-foreground/60">
                   {topPick.confidence.level}
                 </span>
               </div>
@@ -163,7 +163,7 @@ const SuggestionResults = ({ data, onReset }) => {
               <Button
                 variant="outline"
                 onClick={onReset}
-                className="flex-1 border-primary/20 text-primary hover:bg-primary/5 h-11"
+                className="flex-1 bg-primary text-primary-foreground hover:text-primary-foreground hover:bg-primary/90 h-11 dark:bg-primary dark:hover:bg-primary/90"
               >
                 <RefreshCw className="mr-2 h-4 w-4" /> Check Again
               </Button>
