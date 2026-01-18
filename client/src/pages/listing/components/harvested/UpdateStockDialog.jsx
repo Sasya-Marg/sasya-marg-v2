@@ -51,8 +51,8 @@ const UpdateStockDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
-          className="w-full border-primary text-primary hover:bg-secondary h-11 text-base"
+          variant="secondary"
+          className="w-full border-primary/50 cursor-pointer text-primary border h-11 text-sm"
         >
           Update Stock
         </Button>

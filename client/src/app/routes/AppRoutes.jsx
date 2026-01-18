@@ -72,7 +72,6 @@ const router = createBrowserRouter([
     element: <ComingSoon />,
   },
 
-
   {
     element: (
       <ProtectedRoute allowGuest>
@@ -109,6 +108,7 @@ const router = createBrowserRouter([
       { path: "farmland", element: <Farmlands /> },
       { path: "farmland/:farmlandId", element: <SingleFarmland /> },
       { path: "farmland/add", element: <AddFarmlandPage /> },
+      { path: "community", element: <ComingSoon /> },
     ],
   },
 

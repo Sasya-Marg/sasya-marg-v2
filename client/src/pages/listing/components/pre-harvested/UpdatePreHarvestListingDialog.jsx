@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Loader2, Package } from "lucide-react";
+import { Edit, Loader2, Package } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -68,7 +68,11 @@ const UpdatePreHarvestProductDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="border border-primary text-primary-foreground hover:bg-secondary hover:text-primary h-11 text-sm md:text-base">
+        <Button
+          variant="secondary"
+          className="border-primary/20 border text-primary cursor-pointer"
+        >
+          <Edit className="h-4 w-4 mr-2" />
           Edit Product
         </Button>
       </DialogTrigger>
@@ -213,7 +217,7 @@ const UpdatePreHarvestProductDialog = ({
                           />
                           {grade.toUpperCase()}
                         </label>
-                      )
+                      ),
                     )}
                   </div>
                 )}

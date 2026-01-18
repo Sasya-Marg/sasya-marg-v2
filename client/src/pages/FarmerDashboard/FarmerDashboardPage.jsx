@@ -87,7 +87,7 @@ const FarmerDashboardPage = () => {
 
           <div className="flex gap-2 w-full md:w-auto">
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               className="flex-1 md:flex-none h-9 text-xs"
               onClick={() => getDashboard.refetch()}

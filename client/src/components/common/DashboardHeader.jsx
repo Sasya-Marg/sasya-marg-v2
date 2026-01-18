@@ -23,17 +23,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useLogoutFarmer } from "@/hooks/auth.hooks";
 import ThemeToggle from "./ThemeToggle";
 
 const DashboardHeader = () => {
   const { user, isAuthenticated, role } = useAuthStore();
-
-  const { mutate, isPending } = useLogoutFarmer();
-
-  function handleLogout() {
-    mutate();
-  }
 
   return (
     <header className="h-16 bg-background border-b flex items-center justify-between px-10 md:px-23">
@@ -116,18 +109,6 @@ const DashboardHeader = () => {
                   <span>Help & Support</span>
                 </DropdownMenuItem>
               </Link>
-
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive focus:bg-secondary cursor-pointer focus:text-destructive font-medium">
-                <LogOut className="mr-2 h-4 w-4" />
-                <button onClick={handleLogout}>
-                  {isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    "Log out"
-                  )}
-                </button>
-              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (

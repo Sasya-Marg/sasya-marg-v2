@@ -165,7 +165,7 @@ const Navbar = () => {
                       <Button asChild>
                         <Link to={`/${role}/dashboard`}>Dashboard</Link>
                       </Button>
-                      <LogoutButton onClick={() => setOpen(true)} variant="secondary" size="default" />
+                      <LogoutButton onClick={() => setOpen(true)} variant="destructive" size="default" />
                       <LogoutConfirmDialog
                         open={open}
                         onClose={() => setOpen(false)}

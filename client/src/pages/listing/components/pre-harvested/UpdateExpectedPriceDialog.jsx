@@ -50,7 +50,7 @@ const UpdateExpectedPriceDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full border border-primary text-primary-foreground hover:bg-secondary hover:text-primary h-11 text-sm md:text-base">
+        <Button className="w-full border border-primary text-primary-foreground hover:bg-secondary hover:text-primary h-11 text-sm cursor-pointer">
           Update Price
         </Button>
       </DialogTrigger>

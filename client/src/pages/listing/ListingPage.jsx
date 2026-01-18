@@ -58,7 +58,7 @@ const ListingPage = () => {
             </TabsContent>
 
             <TabsContent value="harvested" className="m-0 focus-visible:outline-none p-4 md:p-6">
-              <div className="max-w-2xl mx-auto">
+              <div className="max-w-3xl mx-auto">
                  <div className="mb-6">
                     <h2 className="text-xl font-semibold">List Harvested Stock</h2>
                     <p className="text-sm text-muted-foreground">For crops already harvested and ready for delivery.</p>
@@ -68,7 +68,7 @@ const ListingPage = () => {
             </TabsContent>
 
             <TabsContent value="pre-harvest" className="m-0 focus-visible:outline-none p-4 md:p-6">
-              <div className="max-w-2xl mx-auto">
+              <div className="max-w-3xl mx-auto">
                  <div className="mb-6">
                     <h2 className="text-xl font-semibold">Pre-Harvest Booking</h2>
                     <p className="text-sm text-muted-foreground">Secure buyers before you even harvest.</p>

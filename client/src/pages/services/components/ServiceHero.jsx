@@ -11,8 +11,8 @@ import {
 const ServiceHero = () => {
   return (
     <section className="relative w-full overflow-hidden bg-background pt-16 pb-12 lg:pt-24 lg:pb-20 border-b border-border">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-77.5 w-77.5 rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
 
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
@@ -23,7 +23,7 @@ const ServiceHero = () => {
 
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-6">
             Smart Tools for <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
               Great Harvests
             </span>
           </h1>
@@ -74,7 +74,7 @@ const ServiceHero = () => {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center p-4 rounded-xl bg-secondary/20 border border-transparent hover:border-border transition-all">
-            <Book className="h-8 w-8 text-blue-500 mb-2" />
+            <Book className="h-8 w-8 text-chart-2/80 mb-2" />
             <span className="font-semibold text-foreground text-sm">
               Schemes
             </span>

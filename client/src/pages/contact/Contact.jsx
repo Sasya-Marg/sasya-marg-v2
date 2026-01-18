@@ -52,7 +52,7 @@ const ContactPage = () => {
           <div className="lg:col-span-5 space-y-8">
             
             {/* Info Card */}
-            <div className="rounded-3xl bg-primary text-primary-foreground p-8 shadow-xl relative overflow-hidden">
+            <div className="rounded-3xl bg-primary/90 text-primary-foreground p-8 shadow-xl relative overflow-hidden">
               {/* Decorative circle */}
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
               
@@ -68,8 +68,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Call Us</p>
-                    <p className="text-sm opacity-80">+91 98765 43210</p>
-                    <p className="text-sm opacity-80">+91 88000 12345</p>
+                    <p className="text-sm opacity-80">+91 9389623526</p>
+                    <p className="text-sm opacity-80">+91 8650856108</p>
                   </div>
                 </div>
 
@@ -79,8 +79,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Email Us</p>
-                    <p className="text-sm opacity-80">support@sasyamarg.com</p>
-                    <p className="text-sm opacity-80">partners@sasyamarg.com</p>
+                    <p className="text-sm opacity-80">sasyamarg@gmail.com</p>
+                    <p className="text-sm opacity-80">wd.nitin.sharma01@gmail.com</p>
                   </div>
                 </div>
 
@@ -91,8 +91,8 @@ const ContactPage = () => {
                   <div>
                     <p className="font-semibold">Headquarters</p>
                     <p className="text-sm opacity-80">
-                      Agri-Tech Hub, Sector 62,<br />
-                      Noida, Uttar Pradesh - 201301
+                      Agri-Tech Hub,<br />
+                      Agra, Uttar Pradesh - 282006
                     </p>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ const ContactPage = () => {
               </div>
 
               {/* Bottom Decoration */}
-              <div className="mt-8 pt-8 border-t border-white/10 flex items-center gap-2 text-sm opacity-70">
+              <div className="mt-8 pt-8 border-t border-primary-foreground flex items-center gap-2 text-sm opacity-70">
                 <Sprout className="h-4 w-4" />
                 <span>Growing together since 2025</span>
               </div>
@@ -161,7 +161,7 @@ const ContactPage = () => {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Message</label>
-                  <textarea placeholder="How can we help you?" className="flex min-h-[150px] w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-y"></textarea>
+                  <textarea placeholder="How can we help you?" className="flex min-h-37.5 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-y"></textarea>
                 </div>
 
                 <button className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary px-8 text-sm font-bold text-primary-foreground shadow hover:bg-primary/90 transition-colors">

@@ -43,11 +43,7 @@ const UpdateSowingDate = ({ currentDate, productId, onUpdate }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          className="w-full text-sm md:text-base h-11 "
-        >
-          Update sowing
-        </Button>
+        <Button className="w-full text-sm h-11 ">Update sowing</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-106.25 bg-card border-border text-foreground overflow-visible">
         <DialogHeader>

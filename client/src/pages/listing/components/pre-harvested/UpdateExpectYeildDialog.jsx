@@ -50,7 +50,7 @@ const UpdateExpectedYeildDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="w-full border border-primary text-primary h-11 text-sm md:text-base">
+        <Button variant="secondary" className="w-full border border-primary/20 text-primary h-11 text-sm cursor-pointer">
           Update Yeild
         </Button>
       </DialogTrigger>

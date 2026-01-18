@@ -13,22 +13,22 @@ import { Link } from "react-router-dom";
 const SchemeExplainer = () => {
   return (
     <section className="bg-background border-t border-border py-16 lg:py-24 overflow-hidden relative">
-      {/* Background Decor - Yellow Accent */}
+     
       <div className="absolute top-1/2 left-1/2 w-225 h-125 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* LEFT SIDE: Explainer Content */}
+   
           <div className="space-y-8">
             <div>
-              {/* Badge using Accent (Yellow) and Accent Foreground (Dark Green) */}
-              <div className="inline-flex items-center rounded-full border border-accent/50 bg-accent/20 px-3 py-1 text-xs font-bold text-accent-foreground mb-6">
+         
+              <div className="inline-flex items-center rounded-full border border-accent/50 dark:bg-accent/80 bg-accent/20 px-3 py-1 text-xs font-bold text-accent-foreground mb-6">
                 <Landmark className="mr-2 h-3 w-3" />
                 Government Support
               </div>
               <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-6">
                 Never Miss a <br />
-                <span className="text-yellow-600 dark:text-yellow-400">
+                <span className="text-accent/80">
                   Subsidy or Scheme.
                 </span>
               </h1>
@@ -41,7 +41,7 @@ const SchemeExplainer = () => {
 
             <div className="space-y-6">
               <div className="group flex items-start gap-4 p-4 rounded-xl hover:bg-secondary/30 transition-colors">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent-foreground">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/70 text-accent-foreground">
                   <Search className="h-5 w-5" />
                 </div>
                 <div>
@@ -56,7 +56,7 @@ const SchemeExplainer = () => {
               </div>
 
               <div className="group flex items-start gap-4 p-4 rounded-xl hover:bg-secondary/30 transition-colors">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent-foreground">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/70 text-accent-foreground">
                   <FileCheck className="h-5 w-5" />
                 </div>
                 <div>
@@ -71,7 +71,7 @@ const SchemeExplainer = () => {
               </div>
 
               <div className="group flex items-start gap-4 p-4 rounded-xl hover:bg-secondary/30 transition-colors">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent-foreground">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/70 text-accent-foreground">
                   <Banknote className="h-5 w-5" />
                 </div>
                 <div>
@@ -97,10 +97,10 @@ const SchemeExplainer = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE: Static Visual */}
+      
           <div className="relative">
             <div className="relative mx-auto w-full max-w-95 rounded-[3rem] border-8 border-muted bg-background shadow-2xl overflow-hidden h-162.5 flex flex-col">
-              {/* App Header - Using Accent (Yellow) Background with Dark Text */}
+         
               <div className="bg-accent px-6 pt-10 pb-6 shrink-0">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2">
@@ -122,7 +122,7 @@ const SchemeExplainer = () => {
 
               <div className="p-4 grow flex flex-col overflow-hidden relative bg-slate-50 dark:bg-background">
                 <div className="space-y-3 h-full overflow-y-auto custom-scrollbar pb-4">
-                  {/* Card 1 */}
+            
                   <div className="bg-white dark:bg-card p-4 rounded-2xl shadow-sm border border-border transition-all hover:border-accent/50">
                     <div className="flex justify-between items-start mb-2">
                       <span className="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -138,7 +138,7 @@ const SchemeExplainer = () => {
                     </p>
                   </div>
 
-                  {/* Card 2 */}
+          
                   <div className="bg-white dark:bg-card p-4 rounded-2xl shadow-sm border border-border transition-all hover:border-accent/50">
                     <div className="flex justify-between items-start mb-2">
                       <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -154,7 +154,7 @@ const SchemeExplainer = () => {
                     </p>
                   </div>
 
-                  {/* Card 3 */}
+            
                   <div className="bg-white dark:bg-card p-4 rounded-2xl shadow-sm border border-border transition-all hover:border-accent/50">
                     <div className="flex justify-between items-start mb-2">
                       <span className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -170,7 +170,7 @@ const SchemeExplainer = () => {
                     </p>
                   </div>
 
-                  {/* Card 4 */}
+              
                   <div className="bg-white dark:bg-card p-4 rounded-2xl shadow-sm border border-border opacity-75">
                     <div className="flex justify-between items-start mb-2">
                       <span className="bg-secondary text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -189,7 +189,7 @@ const SchemeExplainer = () => {
               </div>
             </div>
 
-            {/* Background Blob */}
+           
             <div className="absolute top-10 -right-10 -z-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl"></div>
           </div>
         </div>

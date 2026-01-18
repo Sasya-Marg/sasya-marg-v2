@@ -113,7 +113,7 @@ const HarvestedProductCard = ({ product }) => {
               </p>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground line-clamp-2 min-h-[40px]">
+          <p className="text-sm text-muted-foreground line-clamp-2 min-h-10">
             {description}
           </p>
         </div>
@@ -139,7 +139,7 @@ const HarvestedProductCard = ({ product }) => {
           </div>
 
           <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/50 border border-border/50">
-            <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center text-accent-foreground">
+            <div className="h-8 w-8 rounded-full bg-accent/10 dark:bg-accent/40 flex items-center justify-center text-accent-foreground">
               <Package className="h-4 w-4" />
             </div>
             <div>

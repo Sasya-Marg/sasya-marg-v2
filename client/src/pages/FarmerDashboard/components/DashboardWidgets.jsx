@@ -373,8 +373,8 @@ export const HarvestActivityLog = ({ listings }) => {
                         <Badge
                           className={`text-[10px] h-5 ${
                             item.status === "harvested"
-                              ? "bg-emerald-100 text-primary hover:bg-primary/80"
-                              : "bg-amber-100 text-destructive hover:bg-destructive/80"
+                              ? "bg-primary/10 text-primary dark:text-accent"
+                              : "bg-accent/10 text-destructive dark:text-accent"
                           }`}
                           variant="outline"
                         >

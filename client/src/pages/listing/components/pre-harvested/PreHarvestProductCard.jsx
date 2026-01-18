@@ -196,8 +196,7 @@ const PreHarvestCardFarmer = ({ listing }) => {
       <CardFooter className="p-4 pt-0 flex gap-2 mt-auto">
         <Button
           onClick={() => navigate(`pre-harvested-product/${listing._id}`)}
-          variant="outline"
-          className="flex-1 border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
+          className="flex-1 border-primary/20 hover:bg-primary/90 hover:text-primary-foreground"
         >
           <Edit className="mr-2 h-4 w-4" />
           Manage

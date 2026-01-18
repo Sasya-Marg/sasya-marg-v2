@@ -63,7 +63,7 @@ const Footer = () => {
                   <FooterLink href="/" label="Home" />
                   <FooterLink href="/about" label="About Us" />
                   <FooterLink href="/services" label="Our Services" />
-                  <FooterLink href="/admin/join" label="Work for Us" />
+                  {/* <FooterLink href="/admin/join" label="Work for Us" /> */}
                 </>
               )}
             </ul>
@@ -84,7 +84,7 @@ const Footer = () => {
                 <>
                   <FooterLink href="/contact" label="Contact Us" />
                   <FooterLink href="/blogs" label="Farming Blog" />
-                  <FooterLink href="/partners" label="Partners" />
+                  {/* <FooterLink href="/partners" label="Partners" /> */}
                 </>
               )}
             </ul>
@@ -103,17 +103,10 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-12 border-t border-border pt-8 text-center">
           <p className="text-center text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Sasya-Marg. All rights reserved.
           </p>
-
-          <div className="flex gap-4">
-            <SocialIcon icon={<Facebook size={20} />} href="#" />
-            <SocialIcon icon={<Twitter size={20} />} href="#" />
-            <SocialIcon icon={<Instagram size={20} />} href="#" />
-            <SocialIcon icon={<Linkedin size={20} />} href="#" />
-          </div>
         </div>
       </div>
     </footer>
@@ -129,15 +122,6 @@ const FooterLink = ({ href, label }) => (
       {label}
     </Link>
   </li>
-);
-
-const SocialIcon = ({ icon, href }) => (
-  <Link
-    to={href}
-    className="text-muted-foreground hover:text-primary transition-colors"
-  >
-    {icon}
-  </Link>
 );
 
 export default Footer;

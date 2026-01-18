@@ -65,8 +65,8 @@ const UpdateProductDialog = ({
       <DialogTrigger asChild>
         <Button
           onClick={() => {}}
-          variant="outline"
-          className="border-primary text-primary hover:bg-primary/10 hover:text-primary"
+          variant="secondary"
+          className="border-primary/20 border text-primary cursor-pointer"
         >
           <Edit className="h-4 w-4 mr-2" />
           Edit Product

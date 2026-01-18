@@ -45,7 +45,7 @@ const UpdateHarvestDate = ({ currentDate, productId, onUpdate }) => {
       <DialogTrigger asChild>
         <Button
         variant="secondary"
-          className="w-full text-sm md:text-base h-11 border border-primary text-primary"
+          className="w-full text-sm h-11 border border-primary/20 text-primary cursor-pointer"
         >
           Update Harvest
         </Button>
