@@ -14,6 +14,7 @@ export const currentUserService = async ({ req }) => {
             email: farmer.email,
             phone: farmer.phone,
             role: req.user.role,
+            isActive : farmer.isActive
 
         }
     }

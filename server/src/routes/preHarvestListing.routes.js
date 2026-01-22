@@ -6,19 +6,20 @@ import { createPreHarvestListingSchema, getMyPreHarvestListingQuerySchema, getPr
 import { authorize } from '../middleware/role.middleware.js'
 import { createPreHarvestList, getMyPreHarvestedListings, getPreHarvestedListings, getSinglePreharvestListing, updatePreHarvestListing } from '../controllers/preHarvestListing.controller.js'
 import { parsePayload } from '../middleware/parsePayload.middleware.js'
+import { activeFarmer } from '../middleware/aciveFarmer.middleware.js'
 
 
 export const preHarvestListingRoute = Router()
 
 
-preHarvestListingRoute.post("/", authLayer, authorize("farmer"), upload.array("images", 5), parsePayload
+preHarvestListingRoute.post("/", authLayer, authorize("farmer"), activeFarmer, upload.array("images", 5), parsePayload
     , validate(createPreHarvestListingSchema), createPreHarvestList)
 
 
-preHarvestListingRoute.get('/', validate(getPreHarvestListingQuerySchema), getPreHarvestedListings)
+preHarvestListingRoute.get('/', validate(getPreHarvestListingQuerySchema), activeFarmer, getPreHarvestedListings)
 
-preHarvestListingRoute.get("/my", authLayer, authorize("farmer"), validate(getMyPreHarvestListingQuerySchema), getMyPreHarvestedListings)
+preHarvestListingRoute.get("/my", authLayer, authorize("farmer"), activeFarmer, validate(getMyPreHarvestListingQuerySchema), getMyPreHarvestedListings)
 
 preHarvestListingRoute.get('/:listingId', authLayer, authorize("farmer", "buyer", "admin"), validate(getSinglePreHarvestListingSchema), getSinglePreharvestListing)
 
-preHarvestListingRoute.patch('/:listingId', authLayer, authorize("farmer"), validate(updatePreHarvestListingSchema), updatePreHarvestListing)
+preHarvestListingRoute.patch('/:listingId', authLayer, authorize("farmer"), activeFarmer, validate(updatePreHarvestListingSchema), updatePreHarvestListing)

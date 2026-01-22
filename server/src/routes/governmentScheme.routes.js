@@ -25,6 +25,7 @@ import {
   getAllSchemeFarmerSchema,
   getSingleSchemeValidator
 } from "../validator/governmentScheme.validator.js"
+import { activeFarmer } from "../middleware/aciveFarmer.middleware.js"
 
 
 export const schemeRouter = Router()
@@ -42,6 +43,7 @@ schemeRouter.post(
 schemeRouter.post(
   "/farmer/schemes",
   authLayer,
+  activeFarmer,
   validate(createSchemeSchema),
   createScheme
 )
@@ -78,6 +80,7 @@ schemeRouter.get(
   "/farmer/schemes",
   authLayer,
   authorize("farmer"),
+  activeFarmer,
   validate(getSchemesForFarmerSchema),
   getSchemesForFarmer
 )
@@ -86,6 +89,7 @@ schemeRouter.get(
   "/farmer/schemes/all",
   authLayer,
   authorize("farmer"),
+  activeFarmer,
   validate(getAllSchemeFarmerSchema),
   getAllSchemesForFarmer
 )
@@ -95,6 +99,7 @@ schemeRouter.get(
   "/farmer/schemes/:schemeId",
   authLayer,
   authorize("farmer"),
+  activeFarmer,
   validate(getSingleSchemeValidator),
   getSingleScheme
 )

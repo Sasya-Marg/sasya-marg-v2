@@ -3,7 +3,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import AppLoader from "@/components/common/AppLoader";
 
 const ProtectedRoute = ({ children, role, allowGuest }) => {
-  const {role: userRole, authStatus } = useAuthStore();
+  const { role: userRole, authStatus, user } = useAuthStore();
 
   if (authStatus === "loading") {
     return <AppLoader />;
@@ -22,6 +22,10 @@ const ProtectedRoute = ({ children, role, allowGuest }) => {
 
   if (role && role !== userRole) {
     return <Navigate to="/unauthorized" replace />;
+  }
+
+  if (role === "farmer" && user?.isActive === false) {
+    return <Navigate to="/blocked" replace />;
   }
 
   return children;

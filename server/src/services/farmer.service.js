@@ -29,7 +29,7 @@ export const registerFarmerService = async ({ fullname, phone, otp, password }) 
         role: "farmer"
     })
 
-    const token = generateToken({ _id: farmer._id, role: "farmer" })
+    const token = generateToken({ _id: farmer._id, role: "farmer", isActive : farmer.isActive })
 
     return { farmer, token }
 }
@@ -41,7 +41,7 @@ export const loginFarmerUsingOtpService = async ({ phone, otp }) => {
 
     await verifyOtpService({ otp, purpose: "login", phone })
 
-    const token = generateToken({ _id: farmerDoc._id, role: "farmer" })
+    const token = generateToken({ _id: farmerDoc._id, role: "farmer", isActive :farmerDoc.isActive })
 
     const farmer = {
         fullname: farmerDoc.fullname,
@@ -65,7 +65,7 @@ export const loginFarmerUsingPasswordService = async ({ phone, password }) => {
 
     if (!isVarified) throw new ApiError(401, "Invalid credentials")
 
-    const token = generateToken({ _id: farmerDoc._id, role: "farmer" })
+    const token = generateToken({ _id: farmerDoc._id, role: "farmer", isActive :farmerDoc.isActive })
 
     const farmer = {
         fullname: farmerDoc.fullname,

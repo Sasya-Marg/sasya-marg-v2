@@ -89,12 +89,13 @@ const FarmerDashboardPage = () => {
             <Button
               variant="secondary"
               size="sm"
-              className="flex-1 md:flex-none h-9 text-xs"
+              className="flex-1 md:flex-none h-9 text-xs cursor-pointer"
               onClick={() => getDashboard.refetch()}
             >
               <RefreshCcw className="mr-2 h-3.5 w-3.5" /> Sync
             </Button>
             <LogoutButton
+              className="cursor-pointer"
               onClick={() => setIsOpen(true)}
               variant="destructive"
             />

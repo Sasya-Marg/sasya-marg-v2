@@ -1,8 +1,18 @@
 import { Button } from "../ui/button";
 
-const LogoutButton = ({ onClick, size = "default", variant = "destructive" }) => {
+const LogoutButton = ({
+  onClick,
+  size = "default",
+  variant = "destructive",
+  className = "",
+}) => {
   return (
-    <Button variant={variant} onClick={onClick} size={size}>
+    <Button
+      variant={variant}
+      onClick={onClick}
+      size={size}
+      className={className}
+    >
       Logout
     </Button>
   );

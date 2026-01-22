@@ -65,3 +65,8 @@ export const farmerDashboard = async () => {
     const { data } = await api.get('/farmer/dashboard')
     return data
 }
+
+export const fetchFarmer = async ()=>{
+    const {data} = await api.get("/farmer/me")
+    return data
+}

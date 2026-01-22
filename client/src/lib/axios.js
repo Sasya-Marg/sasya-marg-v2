@@ -13,6 +13,10 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       useAuthStore.getState().clearUser();
     }
+
+    if (error.response?.status === 403 && error.response?.data?.code === "FARMER_BLOCKED") {
+      window.location.href = "/blocked";
+    }
     return Promise.reject(error);
   }
 );

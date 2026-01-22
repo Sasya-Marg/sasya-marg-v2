@@ -21,6 +21,7 @@ export const createQuerySchema = z.object({
       "weather",
       "pricing",
       "technical",
+      "account",
       "other"
     ]),
 

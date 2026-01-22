@@ -1,4 +1,4 @@
-import { addPreviousCrop, changeIsContactVisisble, createFarmland, farmerDashboard, fetchFarmlands, fetchSingleFarmland, getCropSuggestion, getFarmerDetails, getSingleSuggestion, getSuggestionHisory, toggleFarmActiveStatus, updateFarmerData, updateFarmland } from "@/api/farmer.api"
+import { addPreviousCrop, changeIsContactVisisble, createFarmland, farmerDashboard, fetchFarmer, fetchFarmlands, fetchSingleFarmland, getCropSuggestion, getFarmerDetails, getSingleSuggestion, getSuggestionHisory, toggleFarmActiveStatus, updateFarmerData, updateFarmland } from "@/api/farmer.api"
 import { queryClient } from "@/lib/queryClient"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -108,4 +108,13 @@ export const useFarmerDashboard = () => {
         queryKey: ["farmer-dashboard"],
         queryFn: farmerDashboard
     })
+}
+
+export const useGetFarmer = () => {
+    return useQuery(
+        {
+            queryKey: ["farmer"],
+            queryFn: fetchFarmer
+        }
+    )
 }

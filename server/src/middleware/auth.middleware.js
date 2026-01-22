@@ -21,8 +21,11 @@ export const authLayer = (req, res, next) => {
 
         req.user = {
             _id: decode._id,
-            role: decode.role
+            role: decode.role,
+            isActive: decode.isActive
         }
+
+        console.log("User in request::", req.user)
 
         next()
     } catch (error) {

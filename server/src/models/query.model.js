@@ -36,6 +36,7 @@ const querySchema = new mongoose.Schema({
             "weather",
             "pricing",
             "technical",
+            "account",
             "other"
         ],
         required: true,

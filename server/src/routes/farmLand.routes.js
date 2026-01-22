@@ -5,17 +5,18 @@ import { createFarmLandSchema, updateFarmLandSchema, toggleFarmLandStatus, getSi
 import { createFarmLand, getAllFarms, getSingleFarmland, toggleFarmLandActiveStatus, updateFarmLand } from '../controllers/farmLand.controller.js'
 import { FarmLandLimiter, changeActiveStatusLimiter, getFarmLand } from '../middleware/rate limiter/farmlandRateLimiter.js'
 import { authorize } from '../middleware/role.middleware.js'
+import { activeFarmer } from '../middleware/aciveFarmer.middleware.js'
 
 
 export const farmLandRoutes = Router()
 
 
-farmLandRoutes.post('/create', FarmLandLimiter, validate(createFarmLandSchema), authLayer, authorize("farmer"), createFarmLand)
+farmLandRoutes.post('/create', FarmLandLimiter, validate(createFarmLandSchema), authLayer, activeFarmer, authorize("farmer"), createFarmLand)
 
-farmLandRoutes.get('/', getFarmLand, authLayer, getAllFarms)
+farmLandRoutes.get('/', getFarmLand, authLayer, activeFarmer, getAllFarms)
 
-farmLandRoutes.patch('/:farmLandId', FarmLandLimiter, validate(updateFarmLandSchema), authLayer, authorize("farmer"), updateFarmLand)
+farmLandRoutes.patch('/:farmLandId', FarmLandLimiter, validate(updateFarmLandSchema), authLayer, activeFarmer, authorize("farmer"), updateFarmLand)
 
-farmLandRoutes.patch('/active-status/:farmLandId', changeActiveStatusLimiter, validate(toggleFarmLandStatus), authLayer, authorize("farmer"), toggleFarmLandActiveStatus)
+farmLandRoutes.patch('/active-status/:farmLandId', changeActiveStatusLimiter, validate(toggleFarmLandStatus), authLayer, activeFarmer, authorize("farmer"), toggleFarmLandActiveStatus)
 
-farmLandRoutes.get("/:farmlandId", validate(getSingleFarmlandSchema), authLayer, authorize("farmer"), getSingleFarmland)
+farmLandRoutes.get("/:farmlandId", validate(getSingleFarmlandSchema), authLayer, activeFarmer, authorize("farmer"), getSingleFarmland)
