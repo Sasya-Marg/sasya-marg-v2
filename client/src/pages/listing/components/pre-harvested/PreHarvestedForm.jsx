@@ -49,8 +49,8 @@ const PreHarvestForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const createListing = useCreatePreHarvestListing();
 
-  const { data: farmlandData } = useFetchFarmlands();
-  const farmlands = farmlandData?.data || [];
+  const { data: farmlandData } = useFetchFarmlands({status : "active"});
+  const farmlands = farmlandData?.data?.farmland || [];
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);

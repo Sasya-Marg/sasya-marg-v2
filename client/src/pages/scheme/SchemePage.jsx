@@ -50,7 +50,7 @@ const GovernmentSchemesPage = () => {
     search: search || undefined,
   };
 
-  const { data: farmlandData } = useFetchFarmlands();
+  const { data: farmlandData } = useFetchFarmlands({status :"active"});
   const getScheme = useGetAllSchemes(apiParams);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const GovernmentSchemesPage = () => {
     setFilters((prev) => ({ ...prev, page: 1 }));
   }, [search]);
 
-  const farmlands = farmlandData?.data || [];
+  const farmlands = farmlandData?.data?.farmland || [];
 
   if (getScheme.isError) {
     toast.error("Failed to load schemes. Please try again.");

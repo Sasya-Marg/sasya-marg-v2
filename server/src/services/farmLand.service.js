@@ -105,11 +105,47 @@ export const getFarmlandFromId = async ({ farmlandId, farmerId }) => {
 
 }
 
-export const getAllFarmsService = async ({ farmerId }) => {
-    return await FarmLand.find({ owner: farmerId }).populate({
-        path: "location",
-        select: "locality district state"
-    }).sort({ createdAt: -1 })
+export const getAllFarmsService = async ({ farmerId, query }) => {
+
+    const { status, search, page = 1, limit = 10 } = query
+
+    const filter = {
+        owner: farmerId
+    }
+
+    if (status) {
+        filter.isActive = (status === "active" ? true : false)
+    }
+
+    if (search) {
+        filter.name = { $regex: search, $options: "i" }
+    }
+
+    const skip = (Number(page) - 1) * Number(limit)
+
+    const [farmland, total] = await Promise.all([
+        FarmLand.find(filter)
+            .populate({
+                path: "location",
+                select: "state locality district"
+            })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(Number(limit))
+            .lean(),
+
+        FarmLand.countDocuments(filter)
+    ])
+
+    return {
+        farmland,
+        pagination: {
+            total,
+            page: Number(page),
+            limit: Number(limit),
+            totalPages: Math.ceil(total / limit)
+        }
+    }
 }
 
 export const toggleFarmLandActiveStatusService = async ({ farmerId, farmLandId }) => {

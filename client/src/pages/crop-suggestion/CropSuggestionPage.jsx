@@ -29,7 +29,8 @@ const CropSuggestionPage = () => {
   const [selectedFarmId, setSelectedFarmId] = useState("");
 
   const getSuggestion = useGetCropSUggestion();
-  const { data, isLoading: fetchingFarms, isPending } = useFetchFarmlands();
+ 
+  const { data, isLoading: fetchingFarms, isPending } = useFetchFarmlands({status : "active"});
   const { data: historyData, refetch: refetchHistory } =
     useGetSuggestionHisory();
 
@@ -37,7 +38,8 @@ const CropSuggestionPage = () => {
     return <AppLoader />;
   }
 
-  const farmlands = data?.data;
+  const farmlands = data.data.farmland
+  console.log("farmlands ", farmlands)
 
   if (!farmlands || farmlands.length === 0) {
     return <EmptyFarmlandState />;

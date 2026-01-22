@@ -11,7 +11,8 @@ export const createFarmLand = asyncHandler(async (req, res) => {
 
 
 export const getAllFarms = asyncHandler(async (req, res) => {
-    const farmlands = await getAllFarmsService({ farmerId: req.user._id })
+    const query = req.query
+    const farmlands = await getAllFarmsService({ farmerId: req.user._id, query })
 
     if (!farmlands || farmlands.length === 0) return res.status(200).json(new ApiResponse(200, [], 'No farmland found'))
 

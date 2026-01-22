@@ -15,8 +15,8 @@ export const updateFarmerData = async (payload) => {
     return data
 }
 
-export const fetchFarmlands = async () => {
-    const { data } = await api.get("/farmland/")
+export const fetchFarmlands = async (params) => {
+    const { data } = await api.get("/farmland/", { params: params })
     return data
 }
 
@@ -66,7 +66,7 @@ export const farmerDashboard = async () => {
     return data
 }
 
-export const fetchFarmer = async ()=>{
-    const {data} = await api.get("/farmer/me")
+export const fetchFarmer = async () => {
+    const { data } = await api.get("/farmer/me")
     return data
 }

@@ -16,7 +16,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFetchFarmlands } from "@/hooks/farmer.hooks";
 import ImageUploadPreview from "../ImageUploadPreview";
 import { useCreateProductListing } from "@/hooks/listing.hooks";
-import { useNavigate } from "react-router-dom";
 
 const HarvestedForm = () => {
   const createListing = useCreateProductListing();
@@ -38,9 +37,8 @@ const HarvestedForm = () => {
     },
   });
   const [images, setImages] = useState([]);
-
-  const { data: farmlandData } = useFetchFarmlands();
-  const farmlands = farmlandData?.data || [];
+  const { data: farmlandData } = useFetchFarmlands({status : "active"});
+  const farmlands = farmlandData?.data?.farmland || [];
 
   const onSubmit = async (data) => {
     const formData = new FormData();

@@ -24,10 +24,10 @@ export const useUpdateFarmerData = () => {
     })
 }
 
-export const useFetchFarmlands = () => {
+export const useFetchFarmlands = (params) => {
     return useQuery({
-        queryKey: ["farmlands"],
-        queryFn: fetchFarmlands
+        queryKey: ["farmlands", params],
+        queryFn:()=> fetchFarmlands(params)
     })
 }
 
