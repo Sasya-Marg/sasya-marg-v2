@@ -1,46 +1,73 @@
 import { createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoutes'
+import { Suspense, lazy } from 'react'
+import PageLoader from '@/components/common/PageLoader'
 
-import MainLayout from '@/layouts/MainLayout'
-import AuthLayout from '@/layouts/AuthLayout'
-import DashboardLayout from '@/layouts/DashBoardLayout'
+const MainLayout = lazy(() => import('@/layouts/MainLayout'))
+const AuthLayout = lazy(() => import('@/layouts/AuthLayout'))
+const DashboardLayout = lazy(() => import('@/layouts/DashBoardLayout'))
+const BlockedUserLayout = lazy(() => import('@/layouts/BlockedUserLayout'))
 
-import Home from '@/pages/home/Home'
-import Services from '@/pages/services/Services'
-import DataUsage from '@/pages/legal/DataUsage'
-import TermsOfService from '@/pages/legal/TermsOfService'
-import PrivacyPolicy from '@/pages/legal/PrivacyPolicy'
-import ContactPage from '@/pages/contact/Contact'
-import AboutPage from '@/pages/about/About'
-import UnauthorizedPage from '@/pages/unauthorize/UnAuthorize'
-import NotFoundPage from '@/pages/404/404Page'
-import FarmerSignup from '@/pages/signup/Signup'
-import FarmerLogin from '@/pages/Login/Login'
-import ForgotPassword from '@/pages/forgot-password/ForgotPassword'
-import Profile from '@/pages/profile/Profile'
-import Farmlands from '@/pages/farmland/Farmlands'
-import SingleFarmland from '@/pages/farmland/SingleFarmland'
-import AddFarmlandPage from '@/pages/farmland/AddFarmland'
-import SupportPage from '@/pages/support/SupportPage'
-import CropSuggestionPage from '@/pages/crop-suggestion/CropSuggestionPage'
-import ShowSuggestionPage from '@/pages/crop-suggestion/ShowSuggestionPage'
-import GovernmentSchemesPage from '@/pages/scheme/SchemePage'
-import ListingPage from '@/pages/listing/ListingPage'
-import SinglePreHarvestProductPage from '@/pages/listing/SinglePreHarvestProductPage'
-import ProductViewPage from '@/pages/listing/SingleLProductPage'
-import SchemeDetailPage from '@/pages/scheme/components/SchemeDetailPage'
-import FarmerDashboardPage from '@/pages/FarmerDashboard/FarmerDashboardPage'
-import Disclaimer from '@/pages/legal/Disclaimer'
-import ComingSoon from '@/pages/CommingSoon'
-import BlockedUserLayout from '@/layouts/BlockedUserLayout'
-import BlockedUser from '@/pages/BlockedUser'
+const Home = lazy(() => import('@/pages/home/Home'))
+const Services = lazy(() => import('@/pages/services/Services'))
+
+const DataUsage = lazy(() => import('@/pages/legal/DataUsage'))
+const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'))
+const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'))
+const Disclaimer = lazy(() => import('@/pages/legal/Disclaimer'))
+
+const ContactPage = lazy(() => import('@/pages/contact/Contact'))
+const AboutPage = lazy(() => import('@/pages/about/About'))
+
+const UnauthorizedPage = lazy(() => import('@/pages/unauthorize/UnAuthorize'))
+const NotFoundPage = lazy(() => import('@/pages/404/404Page'))
+
+const FarmerSignup = lazy(() => import('@/pages/signup/Signup'))
+const FarmerLogin = lazy(() => import('@/pages/Login/Login'))
+const ForgotPassword = lazy(() =>
+  import('@/pages/forgot-password/ForgotPassword')
+)
+
+const Profile = lazy(() => import('@/pages/profile/Profile'))
+
+const Farmlands = lazy(() => import('@/pages/farmland/Farmlands'))
+const SingleFarmland = lazy(() => import('@/pages/farmland/SingleFarmland'))
+const AddFarmlandPage = lazy(() => import('@/pages/farmland/AddFarmland'))
+
+const SupportPage = lazy(() => import('@/pages/support/SupportPage'))
+
+const CropSuggestionPage = lazy(() =>
+  import('@/pages/crop-suggestion/CropSuggestionPage')
+)
+const ShowSuggestionPage = lazy(() =>
+  import('@/pages/crop-suggestion/ShowSuggestionPage')
+)
+
+const GovernmentSchemesPage = lazy(() => import('@/pages/scheme/SchemePage'))
+const SchemeDetailPage = lazy(() =>
+  import('@/pages/scheme/components/SchemeDetailPage')
+)
+
+const ListingPage = lazy(() => import('@/pages/listing/ListingPage'))
+const SinglePreHarvestProductPage = lazy(() =>
+  import('@/pages/listing/SinglePreHarvestProductPage')
+)
+const ProductViewPage = lazy(() => import('@/pages/listing/SingleLProductPage'))
+
+const FarmerDashboardPage = lazy(() =>
+  import('@/pages/FarmerDashboard/FarmerDashboardPage')
+)
+
+const ComingSoon = lazy(() => import('@/pages/CommingSoon'))
+const BlockedUser = lazy(() => import('@/pages/BlockedUser'))
 
 const router = createBrowserRouter([
-  // 🌍 PUBLIC PAGES
   {
     element: (
       <ProtectedRoute allowGuest={true}>
-        <MainLayout />
+        <Suspense fallback={<PageLoader />}>
+          <MainLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [
@@ -78,7 +105,9 @@ const router = createBrowserRouter([
     path: '/blocked',
     element: (
       <ProtectedRoute>
-        <BlockedUserLayout />
+        <Suspense fallback={<PageLoader />}>
+          <BlockedUserLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [
@@ -96,7 +125,9 @@ const router = createBrowserRouter([
   {
     element: (
       <ProtectedRoute allowGuest>
-        <AuthLayout />
+        <Suspense fallback={<PageLoader />}>
+          <AuthLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [
@@ -110,7 +141,9 @@ const router = createBrowserRouter([
     path: '/farmer',
     element: (
       <ProtectedRoute role='farmer'>
-        <MainLayout />
+        <Suspense fallback={<PageLoader />}>
+          <MainLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [
@@ -138,14 +171,20 @@ const router = createBrowserRouter([
     path: 'farmer/dashboard',
     element: (
       <ProtectedRoute role='farmer'>
-        <DashboardLayout />
+        <Suspense fallback={<PageLoader />}>
+          <DashboardLayout />
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [{ index: true, element: <FarmerDashboardPage /> }]
   },
 
   {
-    element: <MainLayout />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <MainLayout />
+      </Suspense>
+    ),
     children: [
       { path: '/unauthorized', element: <UnauthorizedPage /> },
       { path: '*', element: <NotFoundPage /> }

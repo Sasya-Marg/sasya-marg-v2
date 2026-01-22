@@ -2,15 +2,15 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ShieldBan, HelpCircle, ChevronRight } from 'lucide-react'
 import { useGetFarmer } from '@/hooks/farmer.hooks'
-import AppLoader from '@/components/common/AppLoader'
 import { Button } from '@/components/ui/button'
+import PageLoader from '@/components/common/PageLoader'
 
 const BlockedUser = () => {
   const navigate = useNavigate()
   const { isLoading, data } = useGetFarmer()
 
   if (isLoading) {
-    return <AppLoader />
+    return <PageLoader />
   }
 
   const farmer = data?.data
