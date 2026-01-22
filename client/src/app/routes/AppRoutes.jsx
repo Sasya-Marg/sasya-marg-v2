@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoutes'
 import { Suspense, lazy } from 'react'
 import PageLoader from '@/components/common/PageLoader'
+import BuyerRegister from '@/pages/buyerRegister/BuyerRegister'
+import BuyerForgotPassword from '@/pages/buyerPasswordChange/BuyerForgotPassword'
 
 const MainLayout = lazy(() => import('@/layouts/MainLayout'))
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout'))
@@ -57,6 +59,8 @@ const ProductViewPage = lazy(() => import('@/pages/listing/SingleLProductPage'))
 const FarmerDashboardPage = lazy(() =>
   import('@/pages/FarmerDashboard/FarmerDashboardPage')
 )
+
+const BuyerLogin = lazy(() => import('@/pages/buyerLogin/BuyerLogin'))
 
 const ComingSoon = lazy(() => import('@/pages/CommingSoon'))
 const BlockedUser = lazy(() => import('@/pages/BlockedUser'))
@@ -122,6 +126,21 @@ const router = createBrowserRouter([
     ]
   },
 
+  //Auth Routes
+
+  {
+    element: (
+      <ProtectedRoute role='buyer' allowGuest>
+        <AuthLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: 'buyer/login', element: <BuyerLogin /> },
+      { path: 'buyer/signup', element: <BuyerRegister /> },
+      { path: 'buyer/forgot-password', element: <BuyerForgotPassword /> }
+    ]
+  },
+
   {
     element: (
       <ProtectedRoute allowGuest>
@@ -136,6 +155,8 @@ const router = createBrowserRouter([
       { path: 'farmer/forgot-password', element: <ForgotPassword /> }
     ]
   },
+
+  // Main Routes
 
   {
     path: '/farmer',
@@ -166,6 +187,31 @@ const router = createBrowserRouter([
     ]
   },
 
+  {
+    path: '/buyer',
+    element: (
+      <ProtectedRoute role='buyer'>
+        <Suspense fallback={<PageLoader />}>
+          <MainLayout />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+    children: [
+      { index: true, element: <Profile /> },
+      { path: 'product/harvested', element: 'harvested Product' },
+      { path: 'product/pre-harvested', element: 'Pre harvested Product' },
+      {
+        path: 'product/harvested/:productId',
+        element: 'harvested Product with ID'
+      },
+      {
+        path: 'product/pre-harvested/:productId',
+        element: 'Pre harvested Product with ID'
+      },
+      { path: 'wishlist', element: 'Wishlist' }
+    ]
+  },
+
   //Dashboard
   {
     path: 'farmer/dashboard',
@@ -178,6 +224,20 @@ const router = createBrowserRouter([
     ),
     children: [{ index: true, element: <FarmerDashboardPage /> }]
   },
+
+  {
+    path: 'buyer/dashboard',
+    element: (
+      <ProtectedRoute role='buyer'>
+        <Suspense fallback={<PageLoader />}>
+          <DashboardLayout />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+    children: [{ index: true, element: 'Buyer Dashboard' }]
+  },
+
+  //unauthorized
 
   {
     element: (

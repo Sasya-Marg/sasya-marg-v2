@@ -61,6 +61,13 @@ const buyerSchema = new mongoose.Schema(
             select: false
         },
 
+        role: {
+        type: String,
+        enum: ["buyer"],
+        immutable: true,
+        default: "buyer"
+    },
+
         address: {
             type: addressSchema,
             default: null

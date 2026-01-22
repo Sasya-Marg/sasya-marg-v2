@@ -16,7 +16,6 @@ export const createProductListing = async ({ farmerId, payload, files }) => {
 
     let images = []
 
-    console.log("Files in create product listing service:::", files)
 
     if (files?.length) {
         for (const file of files) {

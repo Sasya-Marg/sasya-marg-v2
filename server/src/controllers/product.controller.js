@@ -16,9 +16,6 @@ export const createProduct = asyncHandler(async (req, res) => {
     const payload = req.body
     const files = req.files || []
 
-    console.log("REQUEST IN CONTROLLER::", req)
-    console.log("Files in controller ::", files)
-
     const product = await createProductListing({
         farmerId,
         payload,

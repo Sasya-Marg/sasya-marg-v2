@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken'
 
 
 export const authLayer = (req, res, next) => {
-    console.log("Request in auth Middleware")
     try {
         let token;
 
@@ -24,8 +23,6 @@ export const authLayer = (req, res, next) => {
             role: decode.role,
             isActive: decode.isActive
         }
-
-        console.log("User in request::", req.user)
 
         next()
     } catch (error) {

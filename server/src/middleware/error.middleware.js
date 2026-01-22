@@ -4,7 +4,6 @@ import { ZodError } from "zod"
 export const errorHandler = (err, req, res, next) => {
   let error = err;
 
-  console.log("Request in error middleware")
   if (error instanceof ZodError) {
     const formattedErrors = error.errors.map((e) => ({
       path: e.path.join("."),

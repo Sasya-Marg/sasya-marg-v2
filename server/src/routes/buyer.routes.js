@@ -54,7 +54,7 @@ buyerRouter.post(
 )
 
 
-buyerRouter.post(
+buyerRouter.put(
     "/auth/forgot-password",
     validate(forgotBuyerPasswordSchema),
     forgotPassword
@@ -68,7 +68,7 @@ buyerRouter.use(authLayer, authorize("buyer"))
 buyerRouter.get("/me", currentUser)
 
 
-buyerRouter.post(
+buyerRouter.put(
     "/auth/change-password",
     validate(changeBuyerPasswordSchema),
     changePassword

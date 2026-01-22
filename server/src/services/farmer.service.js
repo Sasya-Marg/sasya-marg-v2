@@ -82,7 +82,7 @@ export const forgotPasswordService = async ({ phone, otp, newPassword }) => {
     const farmer = await Farmer.findOne({ phone }).select("+password")
 
     if (!farmer) {
-        throw new ApiError(404, "Buyer not found")
+        throw new ApiError(404, "Farmer not found")
     }
     await verifyOtpService({ otp, purpose: "forgot_password", phone })
 
