@@ -39,7 +39,9 @@ const Navbar = () => {
 
   const buyerLinks = [
     { name: 'Harvested', href: '/buyer/product/harvested' },
-    { name: 'Pre-Harvested', href: '/buyer/product/pre-harvested' }
+    { name: 'Pre-Harvested', href: '/buyer/product/pre-harvested' },
+    { name: 'Help & Support', href: '/buyer/disputes' },
+    { name: 'Wishlist', href: '/buyer/wishlist' }
   ]
 
   const isActive = path => location.pathname === path

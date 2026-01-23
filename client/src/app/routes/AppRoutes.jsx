@@ -4,6 +4,8 @@ import { Suspense, lazy } from 'react'
 import PageLoader from '@/components/common/PageLoader'
 import BuyerRegister from '@/pages/buyerRegister/BuyerRegister'
 import BuyerForgotPassword from '@/pages/buyerPasswordChange/BuyerForgotPassword'
+import ReturnPolicy from '@/pages/legal/ReturnPolicy'
+import ResolutionCenter from '@/pages/buyerResolution/ResolutionCenter'
 
 const MainLayout = lazy(() => import('@/layouts/MainLayout'))
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout'))
@@ -104,6 +106,7 @@ const router = createBrowserRouter([
     path: '/blogs',
     element: <ComingSoon />
   },
+  { path: '/refund-policy', element: <ReturnPolicy /> },
 
   {
     path: '/blocked',
@@ -208,7 +211,8 @@ const router = createBrowserRouter([
         path: 'product/pre-harvested/:productId',
         element: 'Pre harvested Product with ID'
       },
-      { path: 'wishlist', element: 'Wishlist' }
+      { path: 'wishlist', element: 'Wishlist' },
+      { path: 'disputes', element: <ResolutionCenter /> }
     ]
   },
 

@@ -150,8 +150,8 @@ const BuyerLoginForm = () => {
                   {...register('identifier', {
                     required: 'Phone is Required',
                     validate: value => {
-                      const isEmail = emailRegex.text(value)
-                      const isPhone = phoneRegex.text(value)
+                      const isEmail = emailRegex.test(value)
+                      const isPhone = phoneRegex.test(value)
 
                       if (!isEmail && !isPhone) {
                         return 'Enter a valid email or 10-digit phone number'
@@ -219,7 +219,7 @@ const BuyerLoginForm = () => {
                   required: 'Otp is required',
                   minLength: {
                     value: 6,
-                    message: 'Otp must contain 8 character'
+                    message: 'Otp must contain 6 character'
                   }
                 })}
               />
@@ -236,9 +236,9 @@ const BuyerLoginForm = () => {
                 )}
               </button>
             </div>
-            {errors.password && (
+            {errors.otp && (
               <p className='text-xs text-destructive mt-1 ml-1'>
-                {errors.password.message}
+                {errors.otp.message}
               </p>
             )}
           </div>
