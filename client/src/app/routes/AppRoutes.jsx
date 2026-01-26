@@ -6,6 +6,7 @@ import BuyerRegister from '@/pages/buyerRegister/BuyerRegister'
 import BuyerForgotPassword from '@/pages/buyerPasswordChange/BuyerForgotPassword'
 import ReturnPolicy from '@/pages/legal/ReturnPolicy'
 import ResolutionCenter from '@/pages/buyerResolution/ResolutionCenter'
+import ProductBrowsePage from '@/pages/ProductBrowse/ProductBrowsePage'
 
 const MainLayout = lazy(() => import('@/layouts/MainLayout'))
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout'))
@@ -66,6 +67,7 @@ const BuyerLogin = lazy(() => import('@/pages/buyerLogin/BuyerLogin'))
 
 const ComingSoon = lazy(() => import('@/pages/CommingSoon'))
 const BlockedUser = lazy(() => import('@/pages/BlockedUser'))
+const WishlistPage = lazy(() => import('@/pages/wishlist/WishlistPage'))
 
 const router = createBrowserRouter([
   {
@@ -201,7 +203,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Profile /> },
-      { path: 'product/harvested', element: 'harvested Product' },
+      { path: 'product/harvested', element: <ProductBrowsePage /> },
       { path: 'product/pre-harvested', element: 'Pre harvested Product' },
       {
         path: 'product/harvested/:productId',
@@ -211,7 +213,7 @@ const router = createBrowserRouter([
         path: 'product/pre-harvested/:productId',
         element: 'Pre harvested Product with ID'
       },
-      { path: 'wishlist', element: 'Wishlist' },
+      { path: 'wishlist', element: <WishlistPage /> },
       { path: 'disputes', element: <ResolutionCenter /> }
     ]
   },
@@ -246,7 +248,7 @@ const router = createBrowserRouter([
   {
     element: (
       <Suspense fallback={<PageLoader />}>
-        <MainLayout />
+        <AuthLayout />
       </Suspense>
     ),
     children: [

@@ -183,7 +183,7 @@ export const deactivateProductListing = async ({ farmerId, listingId }) => {
 }
 
 export const getProductListingService = async (query) => {
-    const { page = 1, limit = 10, state, district, qualityGrade, minPrice, maxPrice, category, sort } = query
+    const { page = 1, limit = 10, state, district, qualityGrade, minPrice, maxPrice, category, sort, search } = query
 
     const filter = {
         moderation: "approved",
@@ -238,6 +238,10 @@ export const getProductListingService = async (query) => {
         filter.qualityGrade = qualityGrade
     }
 
+    if (search) {
+        filter.title = { $regex: search, $options: "i" }
+    }
+
 
     if (minPrice || maxPrice) {
         filter["price.value"] = {}
@@ -258,22 +262,75 @@ export const getProductListingService = async (query) => {
 
     const skip = (Number(page) - 1) * Number(limit)
 
-    const [products, total] = await Promise.all([
-        Product.find(filter).populate({
-            path: "farmland",
-            select: "name size location",
-            populate: {
-                path: "location",
-                select: "state district locality"
+    const pipeline = [
+        {
+            $match: filter
+        },
+        {
+            $lookup: {
+                from: "farmers",
+                localField: "farmer",
+                foreignField: "_id",
+                as: "farmer"
             }
-        }).sort(sortOptions)
+        },
+        {
+            $unwind: "$farmer"
+        },
+        {
+            $match: {
+                "farmer.isActive": true
+            }
+        },
+        {
+            $lookup: {
+                from: "farmlands",
+                localField: "farmland",
+                foreignField: "_id",
+                as: "farmland"
+            }
+        },
+        {
+            $unwind: "$farmland"
+        },
+        {
+            $lookup: {
+                from: "locations",
+                localField: "farmland.location",
+                foreignField: "_id",
+                as: "location",
+            }
+        },
+        {
+            $unwind: "$farmland.location"
+        }
+    ]
+
+    const [products, total] = await Promise.all([
+        Product.find(filter).populate([
+            {
+                path: "farmland",
+                select: "name size location",
+                populate: {
+                    path: "location",
+                    select: "state district locality"
+                }
+            },
+            {
+                path: "farmer",
+                match: { isActive: true },
+                select: "fullname isActive"
+            }
+        ]).sort(sortOptions)
             .skip(skip)
             .limit(limit),
 
         Product.countDocuments(filter)
     ])
 
-    if (!products || products.length < 1) {
+    const filteredProducts = products.filter(p => p.farmer)
+
+    if (!filteredProducts || filteredProducts.length < 1) {
         return {
             listings: [],
             pagination: {
@@ -285,8 +342,9 @@ export const getProductListingService = async (query) => {
         }
     }
 
+
     return {
-        listings,
+        listings: filteredProducts,
         pagination: {
             total,
             page: Number(page),
